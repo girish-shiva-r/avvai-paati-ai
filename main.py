@@ -3,7 +3,7 @@ import json
 import random
 import uvicorn
 import pandas as pd
-from fastapi import FastAPI, HTTPException
+from fastapi import FastAPI, HTTPException, UploadFile, File
 from pydantic import BaseModel
 from dotenv import load_dotenv
 from huggingface_hub import snapshot_download
@@ -14,6 +14,7 @@ from langchain_core.prompts import ChatPromptTemplate
 from langchain_core.documents import Document
 from langchain_core.runnables import RunnablePassthrough
 from langchain_core.output_parsers import StrOutputParser
+import google.generativeai as genai
 
 # ==========================================
 # 1. SETUP & CUSTOM MODEL LOADING
@@ -75,8 +76,11 @@ async def startup_event():
     
     # 3. Load Data
     print("📂 Loading Knowledge Base...")
-    # Try multiple paths for safety
-    paths = ["aathichoodi_english_rich.csv", "/Users/girishshivar/Documents/Tamizhakaran/aathichoodi_english_rich.csv"]
+    paths = [
+        "aathichoodi_english_rich (1).csv",
+        "aathichoodi_english_rich.csv", 
+        "/Users/girishshivar/Documents/Tamizhakaran/aathichoodi_english_rich.csv"
+    ]
     for p in paths:
         if os.path.exists(p):
             DF = pd.read_csv(p)
@@ -92,7 +96,6 @@ async def startup_event():
 
     # 4. Build Vector DB
     vectorstore = FAISS.from_documents(documents, embeddings)
-    # We fetch 5 verses to give Paatti enough wisdom to choose from
     RETRIEVER = vectorstore.as_retriever(search_kwargs={"k": 5})
     print("✅ Brain is Online: Custom Model Loaded.")
 
@@ -102,18 +105,13 @@ async def startup_event():
 class QueryRequest(BaseModel):
     query: str
 
-@app.post("/chat")
-async def chat_endpoint(request: QueryRequest):
-    if not RETRIEVER: raise HTTPException(status_code=503, detail="Brain loading...")
-        
-    # Key Rotation
+def get_api_key():
     keys = [os.getenv(f"GOOGLE_API_KEY_{i}") for i in range(1, 4) if os.getenv(f"GOOGLE_API_KEY_{i}")]
     if not keys: keys = [os.getenv("GOOGLE_API_KEY")]
-    api_key = random.choice(keys)
+    return random.choice(keys)
 
+def get_rag_chain(api_key):
     llm = ChatGoogleGenerativeAI(model="gemini-2.0-flash", temperature=0.5, google_api_key=api_key)
-
-    # --- THE PERFECTED PROMPT ---
     template = """
     You are 'Avvaiyar Paatti' (Grandma Avvai), a loving and wise Tamil grandmother.
     The user is your grandchild who has come to you with a problem: "{question}"
@@ -132,7 +130,7 @@ async def chat_endpoint(request: QueryRequest):
     Answer:
     """
     prompt = ChatPromptTemplate.from_template(template)
-    chain = (
+    return (
         {"context": RETRIEVER | (lambda docs: "\n\n".join(d.page_content for d in docs)), 
          "question": RunnablePassthrough()} 
         | prompt 
@@ -140,10 +138,45 @@ async def chat_endpoint(request: QueryRequest):
         | StrOutputParser()
     )
 
+@app.post("/chat")
+async def chat_endpoint(request: QueryRequest):
+    if not RETRIEVER: raise HTTPException(status_code=503, detail="Brain loading...")
     try:
+        api_key = get_api_key()
+        chain = get_rag_chain(api_key)
         return {"response": chain.invoke(request.query)}
     except Exception as e:
         return {"response": f"👵 Paatti needs a moment to rest. (Error: {str(e)})"}
+
+@app.post("/chat_audio")
+async def chat_audio_endpoint(file: UploadFile = File(...)):
+    if not RETRIEVER: raise HTTPException(status_code=503, detail="Brain loading...")
+    
+    try:
+        api_key = get_api_key()
+        audio_bytes = await file.read()
+        
+        # 1. Transcribe Audio using Gemini Native SDK
+        genai.configure(api_key=api_key)
+        model = genai.GenerativeModel("gemini-2.0-flash")
+        prompt_stt = "Transcribe the speech in this audio accurately. Return ONLY the transcribed text, nothing else."
+        
+        response_stt = model.generate_content([
+            prompt_stt,
+            {"mime_type": file.content_type or "audio/wav", "data": audio_bytes}
+        ])
+        transcribed_text = response_stt.text.strip()
+        
+        # 2. Run the transcribed text through the existing RAG pipeline
+        chain = get_rag_chain(api_key)
+        paatti_response = chain.invoke(transcribed_text)
+        
+        return {
+            "transcribed_text": transcribed_text,
+            "response": paatti_response
+        }
+    except Exception as e:
+        return {"response": f"👵 Paatti needs a moment to rest. (Audio Error: {str(e)})"}
 
 if __name__ == "__main__":
     uvicorn.run(app, host="0.0.0.0", port=8000)
