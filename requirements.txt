@@ -1,4 +1,4 @@
-streamlit==1.36.0
+streamlit>=1.38.0
 requests==2.32.3
 fastapi==0.111.0
 uvicorn==0.30.1
@@ -9,3 +9,6 @@ langchain-community==0.2.4
 langchain-huggingface==0.0.3
 langchain-google-genai==1.0.6
 faiss-cpu==1.8.0
+python-multipart==0.0.9
+google-generativeai>=0.7.2
+gTTS==2.5.1
