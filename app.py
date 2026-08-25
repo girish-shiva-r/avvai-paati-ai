@@ -1,6 +1,8 @@
 import streamlit as st
 import requests
 import time
+from gtts import gTTS
+import io
 
 # ── Page config ──────────────────────────────────────────────────
 st.set_page_config(
@@ -26,7 +28,7 @@ st.markdown("""
     }
 
     /* ══════════════════════════════════════════════
-       DARK BOTTOM BAR  ← your requested change
+       DARK BOTTOM BAR
     ══════════════════════════════════════════════ */
     [data-testid="stBottom"],
     [data-testid="stBottom"] > div,
@@ -68,8 +70,7 @@ st.markdown("""
     }
 
     /* ══════════════════════════════════════════════
-       SIDEBAR COLLAPSE BUTTON (top-left white square)
-       Using maximum specificity + all possible selectors
+       SIDEBAR COLLAPSE BUTTON
     ══════════════════════════════════════════════ */
     div[data-testid="stSidebarCollapseButton"] button,
     div[data-testid="stSidebarCollapseButton"] > div > button,
@@ -244,7 +245,6 @@ st.markdown("""
 <script>
 (function() {
     function styleCollapseBtn() {
-        // Try multiple selectors Streamlit uses across versions
         const selectors = [
             '[data-testid="stSidebarCollapseButton"] button',
             '[data-testid="collapsedControl"] button',
@@ -257,7 +257,6 @@ st.markdown("""
                 btn.style.setProperty('border', '2px solid #A05A10', 'important');
                 btn.style.setProperty('border-radius', '8px', 'important');
                 btn.style.setProperty('color', '#fff', 'important');
-                // Style inner SVG strokes
                 btn.querySelectorAll('svg, path, polyline, line').forEach(el => {
                     el.style.setProperty('fill', '#FFFFFF', 'important');
                     el.style.setProperty('stroke', '#FFFFFF', 'important');
@@ -265,7 +264,6 @@ st.markdown("""
             });
         });
     }
-    // Run on load and observe DOM changes (Streamlit re-renders)
     styleCollapseBtn();
     const observer = new MutationObserver(styleCollapseBtn);
     observer.observe(document.body, { childList: true, subtree: true });
@@ -273,8 +271,21 @@ st.markdown("""
 </script>
 """, unsafe_allow_html=True)
 
-# ── Backend URL ───────────────────────────────────────────────────
-API_URL = st.secrets.get("API_URL", "https://GSR-608001-avvaiyar-brain.hf.space/chat")
+# ── Backend URLs ──────────────────────────────────────────────────
+API_URL_TEXT = st.secrets.get("API_URL", "https://GSR-608001-avvaiyar-brain.hf.space/chat")
+API_URL_AUDIO = API_URL_TEXT.replace("/chat", "/chat_audio")
+
+def play_paatti_voice(text):
+    """Synthesizes text and plays audio natively in Streamlit."""
+    try:
+        # 'co.in' provides a natural Indian English cadence ideal for Tamil/English mixes
+        tts = gTTS(text=text, lang='en', tld='co.in') 
+        audio_fp = io.BytesIO()
+        tts.write_to_fp(audio_fp)
+        audio_fp.seek(0)
+        st.audio(audio_fp, format='audio/mp3', autoplay=True)
+    except Exception as e:
+        st.error(f"Failed to generate voice: {e}")
 
 # ── Header ────────────────────────────────────────────────────────
 st.markdown("""
@@ -337,8 +348,10 @@ for msg in st.session_state.messages:
 # ── Handle sidebar button prefill ────────────────────────────────
 prefill = st.session_state.pop("prefill", None)
 
-# ── Chat input ────────────────────────────────────────────────────
-user_input = st.chat_input("Tell Paatti what's on your mind...") or prefill
+# ── Chat & Audio Input ────────────────────────────────────────────
+# Place the audio input above the chat input box
+audio_value = st.audio_input("🎙️ Speak your mind to Paatti...")
+user_input = st.chat_input("...Or type to Paatti") or prefill
 
 if user_input:
     st.session_state.messages.append({"role": "user", "content": user_input})
@@ -349,14 +362,9 @@ if user_input:
         placeholder = st.empty()
         with st.spinner("Paatti is thinking... 🤔"):
             try:
-                resp = requests.post(
-                    API_URL,
-                    json={"query": user_input},
-                    timeout=60,
-                )
+                resp = requests.post(API_URL_TEXT, json={"query": user_input}, timeout=60)
                 if resp.status_code == 200:
                     bot_text = resp.json().get("response", "")
-
                     displayed = ""
                     for word in bot_text.split():
                         displayed += word + " "
@@ -364,19 +372,50 @@ if user_input:
                         time.sleep(0.03)
                     placeholder.markdown(displayed.strip())
 
-                    st.session_state.messages.append({
-                        "role": "assistant",
-                        "content": displayed.strip(),
-                    })
+                    st.session_state.messages.append({"role": "assistant", "content": displayed.strip()})
+                    play_paatti_voice(displayed.strip())
 
                 elif resp.status_code == 503:
                     placeholder.warning("Paatti is waking up — please send your message again in a few seconds 🙏")
                 else:
                     placeholder.error(f"Something went wrong (error {resp.status_code}). Please try again.")
+            except Exception as e:
+                placeholder.error(f"Unexpected error: {str(e)}")
 
-            except requests.exceptions.Timeout:
-                placeholder.error("Took too long. Please try again — Paatti is still here 🙏")
-            except requests.exceptions.ConnectionError:
-                placeholder.error("Cannot reach the backend. Please check if the HF Space is running.")
+elif audio_value:
+    st.session_state.messages.append({"role": "user", "content": "🎤 *(Audio Message sent to Paatti)*"})
+    with st.chat_message("user", avatar="🧑"):
+        st.markdown("🎤 *(Audio Message sent to Paatti)*")
+        st.audio(audio_value)
+        
+    with st.chat_message("assistant", avatar="👵"):
+        placeholder = st.empty()
+        transcription_placeholder = st.empty()
+        
+        with st.spinner("Paatti is listening to you... 🎧"):
+            try:
+                files = {"file": (audio_value.name, audio_value.getvalue(), "audio/wav")}
+                resp = requests.post(API_URL_AUDIO, files=files, timeout=60)
+                
+                if resp.status_code == 200:
+                    data = resp.json()
+                    bot_text = data.get("response", "")
+                    user_transcription = data.get("transcribed_text", "")
+                    
+                    if user_transcription:
+                        transcription_placeholder.caption(f"*Paatti heard: {user_transcription}*")
+                        st.session_state.messages[-1]["content"] += f"\n\n*Transcribed: {user_transcription}*"
+                        
+                    displayed = ""
+                    for word in bot_text.split():
+                        displayed += word + " "
+                        placeholder.markdown(displayed + "▌")
+                        time.sleep(0.03)
+                    placeholder.markdown(displayed.strip())
+                    
+                    st.session_state.messages.append({"role": "assistant", "content": displayed.strip()})
+                    play_paatti_voice(displayed.strip())
+                else:
+                    placeholder.error(f"Error {resp.status_code}: Paatti couldn't hear clearly.")
             except Exception as e:
                 placeholder.error(f"Unexpected error: {str(e)}")
