@@ -666,3 +666,17 @@ def test_engine_pins_reply_language_in_prompt():
     assert "REPLY LANGUAGE: Malayalam" in seen["msg"]
     Paatti(llm=Spy(), embedder_spec="none").answer("I feel lazy")
     assert "REPLY LANGUAGE" not in seen["msg"]
+
+
+def test_latin_message_keeps_latin_script():
+    from paatti.engine import language_line
+    assert "REPLY SCRIPT" in language_line("mujhe bahut aalas aata hai")          # Hinglish stays Hinglish
+    assert language_line("I keep procrastinating. Please answer in Hindi.") == ""  # explicit request wins
+    assert "Malayalam" in language_line("എനിക്ക് പഠിക്കാൻ തോന്നുന്നില്ല")
+
+
+def test_native_spellings_of_aathichoodi_become_latin():
+    from paatti.engine import fix_mixed_scripts
+    assert fix_mixed_scripts("आथिशूडी का पाठ") == "Aathichoodi का पाठ"
+    assert fix_mixed_scripts("ఆత్తిచూడి లో") == "Aathichoodi లో"
+    assert fix_mixed_scripts("ஆத்திசூடி") == "ஆத்திசூடி"

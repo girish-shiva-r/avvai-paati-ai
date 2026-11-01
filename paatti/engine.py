@@ -94,7 +94,12 @@ def fix_mixed_scripts(text: str) -> str:
         w = m.group(0)
         return "Aathichoodi" if len(_scripts(w)) > 1 else w
     out = re.sub(r"[^\s.,!?;:'\"()\[\]।]+", fix, text or "")
+    out = _NATIVE_NAME.sub("Aathichoodi", out)
     return re.sub(r"Aathichoodi\s*\(\s*Aathichoodi\s*\)", "Aathichoodi", out)
+
+
+# "Aathichoodi" spelled out in Devanagari / Malayalam / Telugu / Kannada (Tamil replies keep ஆத்திசூடி)
+_NATIVE_NAME = re.compile(r"आ[थत]्?[ितथ्]*ि?[शसच]ू[डद]ी|ആ[ത്തി]+[ചസശ]ൂ[ടഡ]ി|ఆ[త్తి]+[చస]ూ[డద]ి|ಆ[ತ್ತಿ]+[ಚಸ]ೂ[ಡದ]ಿ")
 
 
 def strip_endearments(text: str) -> str:
@@ -111,6 +116,24 @@ _LANG_SCRIPTS = [("Tamil", "Tamil script", 0x0B80, 0x0BFF), ("Hindi", "Devanagar
                  ("Kannada", "Kannada script", 0x0C80, 0x0CFF), ("Bengali", "Bengali script", 0x0980, 0x09FF),
                  ("Gujarati", "Gujarati script", 0x0A80, 0x0AFF), ("Punjabi", "Gurmukhi", 0x0A00, 0x0A7F),
                  ("Odia", "Odia script", 0x0B00, 0x0B7F), ("Urdu", "Urdu (Arabic) script", 0x0600, 0x06FF)]
+
+
+_NAMES_LANGUAGE = re.compile(
+    r"\b(in|into)\s+(hindi|tamil|telugu|malayalam|kannada|bengali|bangla|marathi|gujarati|punjabi|urdu|english|french|"
+    r"spanish|german|arabic|japanese|chinese|devanagari|tanglish|hinglish|romanized|roman)\b", re.I)
+
+
+def language_line(query: str) -> str:
+    """Pin the reply language/script in code, so it doesn't depend on the prompt alone."""
+    lang = detect_script_language(query)
+    if lang:
+        return (f"REPLY LANGUAGE: {lang[0]}, written in {lang[1]}. Write the WHOLE response in {lang[0]} "
+                f"(only the verse transliteration stays in Latin letters).\n\n")
+    if _NAMES_LANGUAGE.search(query or ""):
+        return ""   # the message itself asks for a language: the prompt's rules handle it
+    return ("REPLY SCRIPT: this message is written in Latin letters, so reply in Latin letters: English, or the same "
+            "romanized mix the user wrote (Hinglish stays Hinglish, Tanglish stays Tanglish). Do NOT switch to Devanagari, "
+            "Tamil or any other script, unless earlier in this chat the user asked for a language 'from now on'.\n\n")
 
 
 def detect_script_language(text: str):
@@ -176,8 +199,7 @@ class Paatti:
             + "\n".join(self.kb.get(n).prompt_block() for n in cand_nos)
             + f"\n\nFULL LIST OF 109 VERSES:\n{self.full_list}\n\n"
             + (f"Verses already used in this conversation: {used}\n\n" if used else "")
-            + (f"REPLY LANGUAGE: {lang[0]}, written in {lang[1]}. Write the WHOLE response in {lang[0]} "
-               f"(only the verse transliteration stays in Latin letters).\n\n" if (lang := detect_script_language(query)) else "")
+            + language_line(query)
             + f"GRANDCHILD'S MESSAGE:\n{query}"
         )
         turns = [{"role": t["role"], "content": t["content"]} for t in history] + [{"role": "user", "content": user_block}]

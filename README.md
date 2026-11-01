@@ -49,9 +49,9 @@ message ─▶ crisis check (regex) ─▶ verse lookup? (deterministic) ─▶ 
 |---|---|
 | Advice: right verse chosen | **138/151 = 91.4%** (the v1 system's retrieval got 7% at rank 1) |
 | Verse lookups / off-topic / crisis | 10/10 · 4/4 · 2/2 |
-| Reply in the requested language and script (8 multilingual cases) | 5/8 before the language-pinning fix in this version; re-run pending |
-| LLM judge (gemini-3.1-flash-lite, 1–5, n=148) | relevance 4.92 · faithfulness 4.95 · warmth 4.43 · actionability 4.51 |
-| Latency | p50 3.3 s, p95 7.0 s |
+| Reply in the requested language and script (8 multilingual cases) | 7/8 (was 5/8); a fix for the remaining Hinglish miss is in, not yet re-measured |
+| LLM judge (gemini-3.1-flash-lite, 1–5, n=151) | relevance 4.85 · faithfulness 4.93 · warmth 4.36 · actionability 4.55 |
+| Latency | p50 3.5 s, p95 6.9 s |
 
 Most of the 13 advice "misses" are defensible alternate verses: for "I get angry", #2 (control anger) and #105
 (don't speak in anger) both fit. These cases are label ambiguity rather than wrong answers. Warmth dropped from 5.0
@@ -83,7 +83,7 @@ python -m venv .venv && source .venv/bin/activate
 pip install -r requirements.txt
 cp .env.example .env            # add GOOGLE_API_KEY
 streamlit run app.py            # the whole bot runs in-process
-python -m pytest -q             # 95 offline tests, no key needed
+python -m pytest -q             # 97 offline tests, no key needed
 ```
 
 ## Deploy: Streamlit Community Cloud
