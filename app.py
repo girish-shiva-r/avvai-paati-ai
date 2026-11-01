@@ -1,5 +1,5 @@
 """Streamlit UI for Avvaiyar Paatti. Set API_URL to use the hosted backend; leave empty to run the engine in-process."""
-import io, json, os, time
+import html, io, json, os, time
 import requests
 import streamlit as st
 
@@ -8,276 +8,75 @@ st.set_page_config(
     page_title="Avvaiyar Paatti AI",
     page_icon="👵",
     layout="centered",
-    initial_sidebar_state="expanded",
+    initial_sidebar_state="auto",
 )
 
 # ── Styling ───────────────────────────────────────────────────────
+# Colours come from .streamlit/config.toml (light theme). This CSS only adds the warm accents.
+# Palette (WCAG contrast on its background): text #2A1708 (15.9:1), muted #5C4330 (8.5:1),
+# maroon #8C2A0C (8.0:1), verse card #4A1508 with ivory #FFF6E6 (14:1) and gold #F6CF6A (10:1).
 st.markdown("""
 <style>
-    @import url('https://fonts.googleapis.com/css2?family=Noto+Serif:ital,wght@0,400;0,700;1,400&display=swap');
+@import url('https://fonts.googleapis.com/css2?family=Noto+Serif:wght@600;700&family=Noto+Serif+Tamil:wght@500;700&family=Noto+Sans+Tamil:wght@400;600&display=swap');
 
-    /* ══════════════════════════════════════════════
-       BASE PAGE
-    ══════════════════════════════════════════════ */
-    .stApp,
-    [data-testid="stAppViewContainer"],
-    [data-testid="stHeader"],
-    [data-testid="stHeader"] > div {
-        background-color: #FDF6EC !important;
-    }
+:root{
+  --ink:#2A1708; --muted:#5C4330; --maroon:#8C2A0C; --maroon-dk:#6E1F08;
+  --ivory:#FBF6EE; --sand:#F3E6D0; --line:#E2CDA6; --gold:#F6CF6A;
+  --card:#4A1508; --card-text:#FFF6E6; --user:#E9EEF8; --user-ink:#1C2740;
+}
+/* Tamil text everywhere gets a proper Tamil font; icons keep Streamlit's icon font */
+[data-testid="stMarkdownContainer"] p, [data-testid="stMarkdownContainer"] li{
+  font-family:"Source Sans Pro","Source Sans 3",'Noto Sans Tamil',sans-serif}
 
-    /* ══════════════════════════════════════════════
-       DARK BOTTOM BAR
-    ══════════════════════════════════════════════ */
-    [data-testid="stBottom"],
-    [data-testid="stBottom"] > div,
-    [data-testid="stBottom"] > div > div,
-    [data-testid="stBottom"] > div > div > div {
-        background-color: #1A0A00 !important;
-        border-top: 2px solid #C47A2B !important;
-    }
+/* ---------- header ---------- */
+.paatti-header{text-align:center;padding:.6rem 0 .2rem}
+.paatti-header h1{font-family:'Noto Serif',Georgia,serif;color:var(--maroon);font-size:2.35rem;
+  font-weight:700;margin:0;letter-spacing:-.5px}
+.paatti-header .tamil-sub{font-family:'Noto Serif Tamil',serif;color:var(--ink);font-size:1.15rem;
+  font-weight:500;margin:.25rem 0}
+.paatti-header .tagline{color:var(--muted);font-size:.95rem}
+.paatti-rule{height:3px;margin:.9rem auto 1.4rem;width:120px;border-radius:3px;
+  background:linear-gradient(90deg,var(--maroon),var(--gold),var(--maroon))}
 
-    /* Chat input inside dark bar */
-    [data-testid="stChatInput"] {
-        background-color: transparent !important;
-        padding: 0.6rem 1rem !important;
-    }
-    [data-testid="stChatInput"] textarea {
-        background-color: #2D1200 !important;
-        border: 1.5px solid #C47A2B !important;
-        border-radius: 24px !important;
-        color: #FFE8C0 !important;
-        caret-color: #FFE8C0 !important;
-        font-size: 0.97rem !important;
-    }
-    [data-testid="stChatInput"] textarea::placeholder {
-        color: #A07040 !important;
-    }
-    [data-testid="stChatInput"] textarea:focus {
-        border-color: #E07B00 !important;
-        box-shadow: 0 0 0 2px rgba(196, 122, 43, 0.3) !important;
-    }
-    [data-testid="stChatInput"] button {
-        background-color: #C47A2B !important;
-        border-radius: 50% !important;
-        border: none !important;
-    }
-    [data-testid="stChatInput"] button svg,
-    [data-testid="stChatInput"] button path {
-        fill: #FFFFFF !important;
-        stroke: none !important;
-    }
+/* ---------- sidebar ---------- */
+[data-testid="stSidebar"]{border-right:1px solid var(--line)}
+[data-testid="stSidebar"] h3{color:var(--maroon)!important;font-size:1rem!important}
+[data-testid="stSidebar"] .stButton>button{
+  background:#FFFFFF;color:var(--maroon);border:1.5px solid var(--maroon);border-radius:10px;
+  font-weight:500;font-size:.88rem;text-align:left;justify-content:flex-start;padding:.45rem .8rem;
+  transition:background .15s,color .15s}
+[data-testid="stSidebar"] .stButton>button:hover,
+[data-testid="stSidebar"] .stButton>button:focus-visible{background:var(--maroon);color:#FFFFFF;border-color:var(--maroon)}
+[data-testid="stSidebar"] .stButton>button p{color:inherit}
+.side-note{font-size:.82rem;color:var(--muted);line-height:1.6}
+.side-note b{color:var(--ink)}
 
-    /* ══════════════════════════════════════════════
-       SIDEBAR COLLAPSE BUTTON
-    ══════════════════════════════════════════════ */
-    div[data-testid="stSidebarCollapseButton"] button,
-    div[data-testid="stSidebarCollapseButton"] > div > button,
-    section[data-testid="stSidebar"] ~ div button,
-    button[title="Collapse sidebar"],
-    button[aria-label="Collapse sidebar"],
-    button[title="Open sidebar"],
-    button[aria-label="Open sidebar"],
-    [data-testid="collapsedControl"] button {
-        background-color: #C47A2B !important;
-        border: 2px solid #A05A10 !important;
-        border-radius: 8px !important;
-        width: 36px !important;
-        height: 36px !important;
-        padding: 4px !important;
-        color: #FFFFFF !important;
-    }
-    div[data-testid="stSidebarCollapseButton"] button:hover,
-    [data-testid="collapsedControl"] button:hover {
-        background-color: #A05A10 !important;
-    }
-    div[data-testid="stSidebarCollapseButton"] svg,
-    div[data-testid="stSidebarCollapseButton"] path,
-    div[data-testid="stSidebarCollapseButton"] polyline,
-    div[data-testid="stSidebarCollapseButton"] line,
-    [data-testid="collapsedControl"] svg,
-    [data-testid="collapsedControl"] path,
-    [data-testid="collapsedControl"] polyline,
-    [data-testid="collapsedControl"] line {
-        fill: #FFFFFF !important;
-        stroke: #FFFFFF !important;
-        color: #FFFFFF !important;
-    }
+/* ---------- chat bubbles ---------- */
+[data-testid="stChatMessage"]{border-radius:16px;padding:.85rem 1rem;margin-bottom:.7rem}
+.mk{display:none}
+[data-testid="stChatMessage"]:has(.mk-paatti){
+  background:#FFFFFF;border:1px solid var(--line);box-shadow:0 1px 2px rgba(74,21,8,.06)}
+[data-testid="stChatMessage"]:has(.mk-user){
+  background:var(--user);border:1px solid #C9D3E8}
+[data-testid="stChatMessage"]:has(.mk-user) p{color:var(--user-ink)}
+[data-testid="stChatMessageContent"] p{font-size:1rem;line-height:1.7;color:var(--ink)}
 
-    /* ══════════════════════════════════════════════
-       TOP-RIGHT HEADER BUTTONS
-    ══════════════════════════════════════════════ */
-    header[data-testid="stHeader"] button,
-    [data-testid="stToolbarActions"] button {
-        background-color: #C47A2B !important;
-        border: 1.5px solid #A05A10 !important;
-        border-radius: 8px !important;
-        color: #FFFFFF !important;
-        opacity: 1 !important;
-    }
-    header[data-testid="stHeader"] button:hover {
-        background-color: #A05A10 !important;
-    }
-    header[data-testid="stHeader"] button svg,
-    header[data-testid="stHeader"] button path,
-    [data-testid="stToolbarActions"] svg,
-    [data-testid="stToolbarActions"] path {
-        fill: #FFFFFF !important;
-        stroke: none !important;
-    }
+/* ---------- verse card ---------- */
+.verse-card{background:var(--card);color:var(--card-text);border-radius:14px;padding:1rem 1.15rem;
+  margin:.15rem 0 .8rem;border-left:5px solid var(--gold)}
+.verse-card .vno{font-size:.72rem;letter-spacing:.12em;text-transform:uppercase;color:var(--gold);font-weight:600}
+.verse-card .ta{font-family:'Noto Serif Tamil','Noto Serif',serif;font-size:1.45rem;font-weight:700;
+  color:#FFFFFF;margin:.25rem 0 .1rem;line-height:1.5}
+.verse-card .tr{font-style:italic;color:var(--gold)}
+.verse-card .lit{font-size:.92rem;margin-top:.35rem;color:var(--card-text)}
 
-    /* ══════════════════════════════════════════════
-       BOTTOM-RIGHT FLOATING ICONS
-    ══════════════════════════════════════════════ */
-    [data-testid="stStatusWidget"],
-    [data-testid="stStatusWidget"] > div {
-        background-color: #C47A2B !important;
-        border-radius: 20px !important;
-        border: 1.5px solid #A05A10 !important;
-    }
-    [data-testid="stStatusWidget"] svg,
-    [data-testid="stStatusWidget"] path {
-        fill: #FFFFFF !important;
-        color: #FFFFFF !important;
-    }
-    [class*="viewerBadge"],
-    [class*="profileContainer"] {
-        background-color: #C47A2B !important;
-        border-radius: 50% !important;
-        border: 2px solid #A05A10 !important;
-    }
-    [class*="profileContainer"] svg,
-    [class*="profileContainer"] path {
-        fill: #FFFFFF !important;
-    }
-
-    /* ══════════════════════════════════════════════
-       SIDEBAR
-    ══════════════════════════════════════════════ */
-    [data-testid="stSidebar"] {
-        background-color: #FFF3DC !important;
-        border-right: 2px solid #E8C97A;
-    }
-    [data-testid="stSidebar"] .stButton > button {
-        background-color: #8B2500 !important;
-        color: #FFFFFF !important;
-        border: 1.5px solid #6B1A00 !important;
-        border-radius: 10px !important;
-        text-align: left !important;
-        font-size: 0.85rem !important;
-        font-weight: 500 !important;
-        padding: 0.45rem 0.8rem !important;
-        width: 100% !important;
-        margin-bottom: 3px !important;
-        box-shadow: 0 1px 3px rgba(0,0,0,0.2) !important;
-        transition: background-color 0.18s, transform 0.1s !important;
-    }
-    [data-testid="stSidebar"] .stButton > button:hover {
-        background-color: #6B1A00 !important;
-        transform: translateX(2px) !important;
-    }
-    [data-testid="stSidebar"] .stButton:last-of-type > button {
-        background-color: #5C0F0F !important;
-        border-color: #3D0808 !important;
-    }
-    [data-testid="stSidebar"] .stButton:last-of-type > button:hover {
-        background-color: #3D0808 !important;
-    }
-
-    /* ══════════════════════════════════════════════
-       CHAT BUBBLES
-    ══════════════════════════════════════════════ */
-    [data-testid="stChatMessage"]:has([data-testid="chatAvatarIcon-assistant"]) {
-        background-color: #FFF8EE !important;
-        border: 1px solid #F0D9A0 !important;
-        border-radius: 14px !important;
-        padding: 0.8rem 1rem !important;
-        margin-bottom: 0.6rem !important;
-    }
-    [data-testid="stChatMessage"]:has([data-testid="chatAvatarIcon-user"]) {
-        background-color: #EEF2FF !important;
-        border: 1px solid #C5CFF0 !important;
-        border-radius: 14px !important;
-        padding: 0.8rem 1rem !important;
-        margin-bottom: 0.6rem !important;
-    }
-    [data-testid="stChatMessageContent"] p {
-        font-size: 1rem;
-        line-height: 1.65;
-        color: #2C1A00;
-    }
-
-    /* ── Page header ── */
-    .paatti-header {
-        text-align: center;
-        padding: 1.5rem 0 0.8rem 0;
-    }
-    .paatti-header h1 {
-        font-family: 'Noto Serif', Georgia, serif;
-        color: #7A3B00;
-        font-size: 2.4rem;
-        font-weight: 700;
-        margin-bottom: 0.2rem;
-        letter-spacing: -0.5px;
-    }
-    .paatti-header .tamil-sub {
-        font-size: 1.15rem;
-        color: #C47A2B;
-        font-style: italic;
-        margin-bottom: 0.3rem;
-    }
-    .paatti-header .tagline {
-        font-size: 0.92rem;
-        color: #8B6343;
-    }
-    hr {
-        border: none;
-        border-top: 1px solid #E8C97A;
-        margin: 0.5rem 0 1rem 0;
-    }
-    .stSpinner > div {
-        border-top-color: #E07B00 !important;
-    }
-</style>
-
-<!-- JS fallback: forcibly style the sidebar collapse button by finding it in the DOM -->
-<script>
-(function() {
-    function styleCollapseBtn() {
-        const selectors = [
-            '[data-testid="stSidebarCollapseButton"] button',
-            '[data-testid="collapsedControl"] button',
-            'button[title*="sidebar"]',
-            'button[aria-label*="sidebar"]',
-        ];
-        selectors.forEach(sel => {
-            document.querySelectorAll(sel).forEach(btn => {
-                btn.style.setProperty('background-color', '#C47A2B', 'important');
-                btn.style.setProperty('border', '2px solid #A05A10', 'important');
-                btn.style.setProperty('border-radius', '8px', 'important');
-                btn.style.setProperty('color', '#fff', 'important');
-                btn.querySelectorAll('svg, path, polyline, line').forEach(el => {
-                    el.style.setProperty('fill', '#FFFFFF', 'important');
-                    el.style.setProperty('stroke', '#FFFFFF', 'important');
-                });
-            });
-        });
-    }
-    styleCollapseBtn();
-    const observer = new MutationObserver(styleCollapseBtn);
-    observer.observe(document.body, { childList: true, subtree: true });
-})();
-</script>
-""", unsafe_allow_html=True)
-
-st.markdown("""
-<style>
-.verse-card{background:linear-gradient(135deg,#7A3B00,#A0522D);color:#FFF3DC;border-radius:14px;
-  padding:.9rem 1.1rem;margin:.2rem 0 .7rem 0;border:1px solid #C47A2B}
-.verse-card .vno{font-size:.75rem;letter-spacing:.08em;text-transform:uppercase;opacity:.85}
-.verse-card .ta{font-family:'Noto Serif Tamil','Noto Serif',serif;font-size:1.35rem;font-weight:700;margin:.15rem 0}
-.verse-card .tr{font-style:italic;opacity:.92}
-.verse-card .lit{font-size:.9rem;margin-top:.3rem;opacity:.95}
+/* ---------- inputs ---------- */
+[data-testid="stChatInput"]>div{border:1.5px solid var(--maroon)!important;background:#FFFFFF!important;border-radius:14px}
+[data-testid="stChatInput"] textarea{color:var(--ink)!important}
+[data-testid="stChatInput"] textarea::placeholder{color:var(--muted)!important;opacity:1}
+[data-testid="stExpander"]{border:1px solid var(--line);border-radius:12px;background:#FFFFFF}
+[data-testid="stExpander"] summary p{color:var(--maroon);font-weight:600}
+.stSpinner p{color:var(--muted)}
 </style>""", unsafe_allow_html=True)
 
 
@@ -328,6 +127,14 @@ def verse_card_html(v):
             f"<div class='lit'>“{v['literal']}”</div></div>")
 
 
+def user_md(text):
+    return "<span class='mk mk-user'></span>" + html.escape(text)
+
+
+def paatti_md(text):
+    return "<span class='mk mk-paatti'></span>" + text
+
+
 def speak(text):
     try:
         from gtts import gTTS
@@ -343,23 +150,25 @@ st.markdown("""
     <h1>👵 Avvaiyar Paatti AI</h1>
     <div class="tamil-sub">ஔவையார் பாட்டி</div>
     <div class="tagline">Ancient Tamil wisdom for modern life — ask me anything</div>
-</div>""", unsafe_allow_html=True)
-st.divider()
+</div><div class="paatti-rule"></div>""", unsafe_allow_html=True)
 
 # ── Sidebar ──
 with st.sidebar:
-    st.markdown("<h3 style='color:#7A3B00;font-size:1rem;margin-bottom:.5rem;'>💬 Ask Paatti about...</h3>", unsafe_allow_html=True)
+    st.markdown("### 💬 Ask Paatti about…")
     for ex in ["I keep procrastinating my work", "My friend betrayed my trust", "I am losing motivation to study",
                "I get angry very easily", "I spend my whole salary every month", "I feel jealous of others' success",
                "enakku romba kovam varudhu", "What does verse 54 mean?"]:
         if st.button(ex, key=ex, use_container_width=True):
             st.session_state["prefill"] = ex
     st.divider()
+    st.markdown("### 🎙️ Speak to Paatti")
+    audio_value = st.audio_input("Record your message", label_visibility="collapsed")
+    st.divider()
     voice_on = st.toggle("🔊 Paatti's voice", value=False)
     show_debug = st.toggle("🔎 Show retrieval details", value=False)
-    st.markdown("""<div style='font-size:.78rem;color:#5A3000;line-height:1.6;'><b>About</b><br>
+    st.markdown("""<div class='side-note'><b>About</b><br>
     Life advice rooted in the <i>Aathichoodi</i> of Avvaiyar (109 verses).<br><br>
-    <b>Stack</b><br>Curated verse KB · Hybrid BM25 + embeddings · Gemini · FastAPI · Streamlit</div>""",
+    <b>How it works</b><br>Curated verse knowledge base · multilingual embeddings · Gemini</div>""",
                 unsafe_allow_html=True)
     st.divider()
     if st.button("🗑️ Clear chat", use_container_width=True):
@@ -371,17 +180,18 @@ if "messages" not in st.session_state:
     st.session_state.messages = []
 if not st.session_state.messages:
     with st.chat_message("assistant", avatar="👵"):
-        st.markdown("வணக்கம் Kanna! 🙏\n\nI am Avvaiyar Paatti. Tell me what is on your mind, "
-                    "in English, தமிழ், or Tanglish, and I will share a verse of Aathichoodi to guide you.")
+        st.markdown(paatti_md("வணக்கம் Kanna! 🙏\n\nI am Avvaiyar Paatti. Tell me what is on your mind, "
+                              "in English, தமிழ், or Tanglish, and I will share a verse of Aathichoodi to guide you."),
+                    unsafe_allow_html=True)
 
 for m in st.session_state.messages:
     with st.chat_message(m["role"], avatar="👵" if m["role"] == "assistant" else "🧑"):
         if m.get("verse"):
             st.markdown(verse_card_html(m["verse"]), unsafe_allow_html=True)
-        st.markdown(m["content"])
+        st.markdown(paatti_md(m["content"]) if m["role"] == "assistant" else user_md(m["content"]),
+                    unsafe_allow_html=True)
 
 prefill = st.session_state.pop("prefill", None)
-audio_value = st.audio_input("🎙️ Speak to Paatti")
 user_input = st.chat_input("Type to Paatti…") or prefill
 
 if user_input or audio_value:
@@ -389,7 +199,7 @@ if user_input or audio_value:
         st.stop()  # don't resend the same recording on rerun
     shown = user_input or "🎤 (voice message)"
     with st.chat_message("user", avatar="🧑"):
-        st.markdown(shown)
+        st.markdown(user_md(shown), unsafe_allow_html=True)
     with st.chat_message("assistant", avatar="👵"):
         with st.spinner("Paatti is thinking… 🌿"):
             try:
@@ -398,18 +208,18 @@ if user_input or audio_value:
                 st.error(str(e)); st.stop()
         if not user_input:
             st.session_state["last_audio"] = audio_value.getvalue()[:2048]
-            shown = f"🎤 *{out.get('transcribed_text', '')}*"
+            shown = f"🎤 {out.get('transcribed_text', '')}"
         if out.get("verse"):
             st.markdown(verse_card_html(out["verse"]), unsafe_allow_html=True)
         placeholder, typed = st.empty(), ""
         for w in out["response"].split(" "):
-            typed += w + " "; placeholder.markdown(typed + "▌"); time.sleep(0.015)
-        placeholder.markdown(out["response"])
+            typed += w + " "; placeholder.markdown(paatti_md(typed + "▌"), unsafe_allow_html=True); time.sleep(0.015)
+        placeholder.markdown(paatti_md(out["response"]), unsafe_allow_html=True)
         if show_debug:
             st.caption(f"intent={out.get('intent')} · verse={out.get('verse_no')} · candidates={out.get('candidates')} "
                        f"· {out.get('latency')}s · {out.get('reason', '')}")
         if voice_on:
             speak(out["response"])
-    st.session_state.messages.append({"role": "user", "content": shown.replace("🎤 ", "").strip("*") if not user_input else shown})
+    st.session_state.messages.append({"role": "user", "content": shown})
     st.session_state.messages.append({"role": "assistant", "content": out["response"], "verse": out.get("verse"),
                                       "verse_no": out.get("verse_no")})
