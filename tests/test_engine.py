@@ -372,3 +372,25 @@ def test_advice_without_verse_falls_back_to_retrieval():
 def test_unforced_lookup_with_invalid_verse_shows_no_card():
     o = Paatti(llm=_FixedLLM("lookup", 500), embedder_spec="none").answer("tell me about a verse on kindness")
     assert o["verse"] is None
+
+
+@pytest.mark.parametrize("raw,expected", [
+    ("En chellame, verse 54 is Sombith thiriyel.", "Verse 54 is Sombith thiriyel."),
+    ("Kanna, it hurts when nobody listens.", "It hurts when nobody listens."),
+    ("en chellame! Making plans is easy.", "Making plans is easy."),
+    ("Finish one task today. Stay active and bright, my dear!", "Finish one task today. Stay active and bright!"),
+    ("You are never truly alone, my child. 🌸", "You are never truly alone. 🌸"),
+    ("Thangame, take a breath. Paatti is here, kanna!", "Take a breath. Paatti is here!"),
+    ("The verse means be kind to the dear ones around you.", "The verse means be kind to the dear ones around you."),
+    ("Krishna and Kannagi are names, not pet names.", "Krishna and Kannagi are names, not pet names."),
+])
+def test_strip_endearments(raw, expected):
+    from paatti.engine import strip_endearments
+    assert strip_endearments(raw) == expected
+
+
+def test_no_pet_names_in_fixed_texts():
+    from paatti.safety import CRISIS_RESPONSE
+    from paatti.engine import SYSTEM
+    assert "chellame" not in CRISIS_RESPONSE.lower() and "kanna" not in CRISIS_RESPONSE.lower()
+    assert "Do NOT use pet names" in SYSTEM
