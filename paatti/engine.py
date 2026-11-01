@@ -93,7 +93,8 @@ def fix_mixed_scripts(text: str) -> str:
     def fix(m):
         w = m.group(0)
         return "Aathichoodi" if len(_scripts(w)) > 1 else w
-    return re.sub(r"[^\s.,!?;:'\"()\[\]।]+", fix, text or "")
+    out = re.sub(r"[^\s.,!?;:'\"()\[\]।]+", fix, text or "")
+    return re.sub(r"Aathichoodi\s*\(\s*Aathichoodi\s*\)", "Aathichoodi", out)
 
 
 def strip_endearments(text: str) -> str:
@@ -103,6 +104,27 @@ def strip_endearments(text: str) -> str:
     if t2 != t and t2:
         t2 = t2[0].upper() + t2[1:]
     return _MID.sub("", _TAIL.sub("", t2)).strip()
+
+
+_LANG_SCRIPTS = [("Tamil", "Tamil script", 0x0B80, 0x0BFF), ("Hindi", "Devanagari", 0x0900, 0x097F),
+                 ("Malayalam", "Malayalam script", 0x0D00, 0x0D7F), ("Telugu", "Telugu script", 0x0C00, 0x0C7F),
+                 ("Kannada", "Kannada script", 0x0C80, 0x0CFF), ("Bengali", "Bengali script", 0x0980, 0x09FF),
+                 ("Gujarati", "Gujarati script", 0x0A80, 0x0AFF), ("Punjabi", "Gurmukhi", 0x0A00, 0x0A7F),
+                 ("Odia", "Odia script", 0x0B00, 0x0B7F), ("Urdu", "Urdu (Arabic) script", 0x0600, 0x06FF)]
+
+
+def detect_script_language(text: str):
+    """(language, script) if the message is mostly in a non-Latin Indian/Urdu script, else None.
+    Used to pin the reply language in code instead of trusting the prompt alone."""
+    letters = [ord(c) for c in text or "" if c.isalpha()]
+    if not letters:
+        return None
+    best, n = None, 0
+    for lang, script, lo, hi in _LANG_SCRIPTS:
+        k = sum(lo <= c <= hi for c in letters)
+        if k > n:
+            best, n = (lang, script), k
+    return best if n / len(letters) >= 0.5 else None
 
 
 class Paatti:
@@ -154,6 +176,8 @@ class Paatti:
             + "\n".join(self.kb.get(n).prompt_block() for n in cand_nos)
             + f"\n\nFULL LIST OF 109 VERSES:\n{self.full_list}\n\n"
             + (f"Verses already used in this conversation: {used}\n\n" if used else "")
+            + (f"REPLY LANGUAGE: {lang[0]}, written in {lang[1]}. Write the WHOLE response in {lang[0]} "
+               f"(only the verse transliteration stays in Latin letters).\n\n" if (lang := detect_script_language(query)) else "")
             + f"GRANDCHILD'S MESSAGE:\n{query}"
         )
         turns = [{"role": t["role"], "content": t["content"]} for t in history] + [{"role": "user", "content": user_block}]
@@ -188,4 +212,5 @@ class Paatti:
         verse = self.kb.get(vno) if vno else None
         return {"response": fix_mixed_scripts(strip_endearments(rep.response)), "verse": verse.card() if verse else None,
                 "verse_no": vno, "intent": "lookup" if forced else rep.intent, "reason": rep.reason,
-                "candidates": cand_nos, "latency": round(time.time() - t0, 2)}
+                "candidates": cand_nos, "latency": round(time.time() - t0, 2),
+                "model": getattr(self.llm, "last_model", None) or self.llm.name}

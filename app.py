@@ -221,7 +221,7 @@ if query:
         placeholder.markdown(paatti_md(out["response"]), unsafe_allow_html=True)
         if show_debug:
             st.caption(f"intent={out.get('intent')} · verse={out.get('verse_no')} · candidates={out.get('candidates')} "
-                       f"· {out.get('latency')}s · {out.get('reason', '')}")
+                       f"· {out.get('latency')}s · model={out.get('model', '')} · {out.get('reason', '')}")
     st.session_state.messages.append({"role": "user", "content": shown})
     st.session_state.messages.append({"role": "assistant", "content": out["response"], "verse": out.get("verse"),
                                       "verse_no": out.get("verse_no")})

@@ -176,9 +176,17 @@ def _fake_gemini(monkeypatch, behaviour):
             calls.append(config)
             return behaviour(config, errors, SimpleNamespace)
     monkeypatch.setenv("GOOGLE_API_KEY", "x")
+    monkeypatch.setenv("PAATTI_LLM_MODELS", "gemini-3.5-flash-lite")   # single-model behaviour for these tests
+    monkeypatch.delenv("PAATTI_LLM_FALLBACK", raising=False)
     monkeypatch.setattr("google.genai.Client", lambda api_key, **kw: SimpleNamespace(models=Models()))
     monkeypatch.setattr("time.sleep", lambda s: None)
+    _reset_pool()
     return L.GeminiLLM(), calls
+
+
+def _reset_pool():
+    import paatti.llm as L
+    L.GeminiLLM._cooldown.clear(); L.GeminiLLM._rr = 0; L.GeminiLLM._last_call.clear()
 
 
 def test_gemini3_config_no_temperature(monkeypatch):
@@ -228,8 +236,11 @@ def test_503_is_retried_then_succeeds(monkeypatch):
 
 def test_503_exhausted_uses_fallback_model(monkeypatch):
     pytest.importorskip("google.genai")
+    monkeypatch.setenv("PAATTI_LLM_MODELS", "gemini-3.5-flash-lite")
     monkeypatch.setenv("PAATTI_LLM_FALLBACK", "gemini-backup")
+    monkeypatch.setenv("PAATTI_LLM_STRATEGY", "failover")
     monkeypatch.setenv("PAATTI_LLM_RETRIES", "1")
+    _reset_pool()
     from types import SimpleNamespace
     from google.genai import errors
     import paatti.llm as L
@@ -286,7 +297,7 @@ def test_thinking_rejected_is_dropped(monkeypatch):
             raise errors.ClientError(400, {"error": {"code": 400, "message": "thinking_level is not supported", "status": "INVALID_ARGUMENT"}})
         return NS(parsed=PaattiReply(intent="advice", verse_no=7, response="k"), text="")
     llm, calls = _fake_gemini(monkeypatch, beh)
-    assert llm.reply("s", [{"role": "user", "content": "x"}]).verse_no == 7 and llm._thinking_ok is False
+    assert llm.reply("s", [{"role": "user", "content": "x"}]).verse_no == 7 and "gemini-3.5-flash-lite" in llm._no_thinking
 
 
 def test_eval_stops_cleanly_on_daily_quota(tmp_path, monkeypatch, capsys):
@@ -547,3 +558,111 @@ def test_spoken_numbers_do_not_trigger_lookup():
 def test_llm_crisis_layer_overrides_reply():
     o = Paatti(llm=_FixedLLM("crisis", 5), embedder_spec="none").answer("everything is pointless, I want to disappear")
     assert o["intent"] == "crisis" and o["verse"] is None and "14416" in o["response"]
+
+
+
+def _pool(monkeypatch, models, behaviour, strategy="round_robin"):
+    """GeminiLLM over a pool of fake models. behaviour(model, n_calls_to_that_model) -> response or raise."""
+    from types import SimpleNamespace
+    from google.genai import errors
+    import paatti.llm as L
+    used, count = [], {}
+    class Models:
+        def generate_content(self, model, contents, config):
+            used.append(model); count[model] = count.get(model, 0) + 1
+            return behaviour(model, count[model], errors, SimpleNamespace)
+    monkeypatch.setenv("GOOGLE_API_KEY", "x")
+    monkeypatch.setenv("PAATTI_LLM_MODELS", ",".join(models))
+    monkeypatch.setenv("PAATTI_LLM_STRATEGY", strategy)
+    monkeypatch.delenv("PAATTI_LLM_FALLBACK", raising=False)
+    monkeypatch.setattr("google.genai.Client", lambda api_key, **kw: SimpleNamespace(models=Models()))
+    monkeypatch.setattr("time.sleep", lambda s: None)
+    _reset_pool()
+    llm = L.GeminiLLM(); llm.verbose = False
+    return llm, used
+
+
+def _ok(model, n, errors, NS):
+    return NS(parsed=PaattiReply(intent="advice", verse_no=2, response=model), text="")
+
+
+def _ask(llm):
+    return llm.reply("s", [{"role": "user", "content": "x"}]).response
+
+
+def test_round_robin_rotates_models(monkeypatch):
+    pytest.importorskip("google.genai")
+    llm, used = _pool(monkeypatch, ["a", "b", "c"], _ok)
+    assert [_ask(llm) for _ in range(4)] == ["a", "b", "c", "a"] and llm.last_model == "a"
+
+
+def test_failover_prefers_first_model(monkeypatch):
+    pytest.importorskip("google.genai")
+    llm, used = _pool(monkeypatch, ["a", "b"], _ok, strategy="failover")
+    assert [_ask(llm) for _ in range(3)] == ["a", "a", "a"]
+
+
+def test_daily_quota_cools_model_and_moves_on(monkeypatch):
+    pytest.importorskip("google.genai")
+    def beh(model, n, errors, NS):
+        if model == "a":
+            raise errors.ClientError(429, _DAILY)
+        return _ok(model, n, errors, NS)
+    llm, used = _pool(monkeypatch, ["a", "b"], beh)
+    assert _ask(llm) == "b" and _ask(llm) == "b" and _ask(llm) == "b"
+    assert used.count("a") == 1                     # never retried after the daily quota hit
+    assert llm.pool_status()["a"].startswith("cooling")
+
+
+def test_overloaded_model_fails_over_fast(monkeypatch):
+    pytest.importorskip("google.genai")
+    def beh(model, n, errors, NS):
+        if model == "a":
+            raise errors.ServerError(503, {"error": {"code": 503, "message": "busy", "status": "UNAVAILABLE"}})
+        return _ok(model, n, errors, NS)
+    llm, used = _pool(monkeypatch, ["a", "b"], beh, strategy="failover")
+    assert _ask(llm) == "b" and used == ["a", "a", "b"]      # 1 retry on a, then b
+    assert _ask(llm) == "b" and used[-1] == "b" and used.count("a") == 2   # a is cooling down
+
+
+def test_unavailable_model_is_skipped(monkeypatch):
+    pytest.importorskip("google.genai")
+    def beh(model, n, errors, NS):
+        if model == "gone":
+            raise errors.ClientError(404, {"error": {"code": 404, "message": "not found", "status": "NOT_FOUND"}})
+        return _ok(model, n, errors, NS)
+    llm, used = _pool(monkeypatch, ["gone", "b"], beh, strategy="failover")
+    assert _ask(llm) == "b" and _ask(llm) == "b" and used.count("gone") == 1
+
+
+def test_all_models_out_of_quota(monkeypatch):
+    pytest.importorskip("google.genai")
+    from paatti.llm import DailyQuotaExceeded
+    llm, used = _pool(monkeypatch, ["a", "b"], lambda m, n, errors, NS: (_ for _ in ()).throw(errors.ClientError(429, _DAILY)))
+    with pytest.raises(DailyQuotaExceeded, match="every model"):
+        _ask(llm)
+    with pytest.raises(DailyQuotaExceeded):
+        _ask(llm)
+    assert len(used) == 2                            # second request doesn't even call the API
+
+
+def test_default_pool_and_reply_language_pinning():
+    from paatti.llm import DEFAULT_MODELS
+    from paatti.engine import detect_script_language, fix_mixed_scripts
+    assert DEFAULT_MODELS[0] == "gemini-3.5-flash-lite" and len(DEFAULT_MODELS) >= 3
+    assert detect_script_language("എനിക്ക് പഠിക്കാൻ തോന്നുന്നില്ല") == ("Malayalam", "Malayalam script")
+    assert detect_script_language("mujhe bahut aalas aata hai") is None
+    assert fix_mixed_scripts("आथीசூடி (आथीசூடி) का वचन") == "Aathichoodi का वचन"
+
+
+def test_engine_pins_reply_language_in_prompt():
+    seen = {}
+    class Spy(LLM):
+        name = "spy"
+        def reply(self, system, turns):
+            seen["msg"] = turns[-1]["content"]
+            return PaattiReply(intent="advice", verse_no=101, response="x")
+    Paatti(llm=Spy(), embedder_spec="none").answer("എനിക്ക് പഠിക്കാൻ തോന്നുന്നില്ല")
+    assert "REPLY LANGUAGE: Malayalam" in seen["msg"]
+    Paatti(llm=Spy(), embedder_spec="none").answer("I feel lazy")
+    assert "REPLY LANGUAGE" not in seen["msg"]
