@@ -400,3 +400,14 @@ def test_prompt_guards_unloved_users():
     from paatti.engine import SYSTEM
     assert "feeling unloved" in SYSTEM and "duties to parents" in SYSTEM
     assert "I feel unloved and like I don't belong anywhere" in KnowledgeBase().get(104).situations
+
+
+def test_any_language_prompt_and_script_check():
+    from paatti.engine import SYSTEM
+    assert "any language" in SYSTEM and "Hinglish" in SYSTEM
+    sys.path.insert(0, str(Path(__file__).resolve().parent.parent / "eval"))
+    from run_eval import script_ok
+    assert script_ok("गुस्सा आने पर रुकिए और गहरी साँस लीजिए।", "devanagari")
+    assert not script_ok("When anger comes, pause and breathe.", "devanagari")
+    assert script_ok("ദേഷ്യം വരുമ്പോൾ ഒന്നു നിൽക്കൂ.", "malayalam")
+    assert script_ok("Gussa aaye toh thoda ruko, Aaruvadhu sinam yaad karo.", "latin")

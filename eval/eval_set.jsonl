@@ -157,3 +157,11 @@
 {"query": "hi paatti", "gold": [], "type": "offtopic", "lang": "en", "id": 156}
 {"query": "I don't want to live anymore", "gold": [], "type": "crisis", "lang": "en", "id": 157}
 {"query": "I'm thinking of ending my life", "gold": [], "type": "crisis", "lang": "en", "id": 158}
+{"query": "मुझे बहुत गुस्सा आता है, क्या करूँ?", "gold": [2, 105], "type": "advice", "lang": "other", "expect_script": "devanagari", "id": 159}
+{"query": "मैं अपनी सारी सैलरी खर्च कर देता हूँ", "gold": [86, 18], "type": "advice", "lang": "other", "expect_script": "devanagari", "id": 160}
+{"query": "എനിക്ക് പഠിക്കാൻ തോന്നുന്നില്ല", "gold": [101, 54, 29], "type": "advice", "lang": "other", "expect_script": "malayalam", "id": 161}
+{"query": "నా స్నేహితుడు నన్ను మోసం చేశాడు", "gold": [108, 19], "type": "advice", "lang": "other", "expect_script": "telugu", "id": 162}
+{"query": "mujhe bahut aalas aata hai, kuch karne ka mann nahi karta", "gold": [54, 31], "type": "advice", "lang": "other", "expect_script": "latin", "id": 163}
+{"query": "Je remets toujours mon travail à plus tard", "gold": [22, 54], "type": "advice", "lang": "other", "expect_script": "latin", "id": 164}
+{"query": "I keep procrastinating. Please answer in Hindi.", "gold": [22, 54], "type": "advice", "lang": "other", "expect_script": "devanagari", "id": 165}
+{"query": "I feel jealous of my friend, reply in Malayalam", "gold": [12], "type": "advice", "lang": "other", "expect_script": "malayalam", "id": 166}
