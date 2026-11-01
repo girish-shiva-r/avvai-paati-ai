@@ -8,7 +8,7 @@ from pydantic import BaseModel
 
 
 class PaattiReply(BaseModel):
-    intent: str            # advice | lookup | about | smalltalk | offtopic
+    intent: str            # advice | lookup | about | smalltalk | offtopic | crisis
     verse_no: Optional[int] = None
     reason: str = ""
     response: str
@@ -184,9 +184,11 @@ class GeminiLLM(LLM):
     def transcribe(self, audio, mime):
         from google.genai import types
         r = self._send([types.Part.from_bytes(data=audio, mime_type=mime or "audio/wav"),
-                        "Transcribe this speech exactly as spoken, in whatever language(s) it is in (English, Tamil, "
-                        "Hindi, Tanglish, any language), using that language's usual script. Return only the "
-                        "transcript, nothing else. If there is no intelligible speech, return an empty string."],
+                        "Transcribe this speech exactly as spoken, in whatever language(s) it is in. Write each "
+                        "language in its OWN script: Tamil in Tamil script (தமிழ்), Hindi in Devanagari, Malayalam, "
+                        "Telugu, Kannada, Bengali, Urdu in theirs; use Latin letters only for English words. Never "
+                        "romanize an Indian language. Return only the transcript, nothing else. If there is no "
+                        "intelligible speech (silence, noise, music), return an empty string."],
                        self._config())
         from .voice import clean_transcript
         return clean_transcript(r.text)

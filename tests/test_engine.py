@@ -457,7 +457,7 @@ def test_transcribe_endpoint_and_prompt(monkeypatch):
     import inspect
     from paatti.llm import GeminiLLM
     src = inspect.getsource(GeminiLLM.transcribe)
-    assert "any language" in src and "empty string" in src
+    assert "OWN script" in src and "Never" in src and "empty string" in src
 
 
 @pytest.mark.parametrize("raw,expected", [
@@ -525,3 +525,35 @@ def test_fix_mixed_scripts():
     assert fix_mixed_scripts("आथीசூடி का वचन") == "Aathichoodi का वचन"
     assert fix_mixed_scripts("ஆத்திசூடி கற்போம்.") == "ஆத்திசூடி கற்போம்."
     assert fix_mixed_scripts("Aathichoodi teaches us, कल मिलते हैं।") == "Aathichoodi teaches us, कल मिलते हैं।"
+
+
+def test_voice_suite_skips_novelty_voices(monkeypatch):
+    vc = _voice_check()
+    sample = ("Albert              en_US    # Hello! My name is Albert.\n"
+              "Bad News            en_US    # Hello!\n"
+              "Samantha            en_US    # Hello! My name is Samantha.\n"
+              "Eddy (English (US)) en_US    # Hello!\n")
+    class R: stdout = sample
+    monkeypatch.setattr(vc.subprocess, "run", lambda *a, **k: R())
+    assert vc.installed_voices()["en_US"] == "Samantha"
+
+
+@pytest.mark.parametrize("raw", ["<noise>", "<unintelligible>", "*silence*", "[music]"])
+def test_clean_transcript_tags(raw):
+    from paatti.voice import clean_transcript
+    assert clean_transcript(raw) == ""
+
+
+@pytest.mark.parametrize("q,n", [("What does verse fifty four mean?", 54), ("explain verse one hundred and nine", 109),
+                                 ("tell me the twenty first aathichoodi", 21), ("verse number thirteen", 13)])
+def test_lookup_spoken_numbers(q, n):
+    assert KB.lookup(q) == n
+
+
+def test_spoken_numbers_do_not_trigger_lookup():
+    assert KB.lookup("I have two kids and one job") is None
+
+
+def test_llm_crisis_layer_overrides_reply():
+    o = Paatti(llm=_FixedLLM("crisis", 5), embedder_spec="none").answer("everything is pointless, I want to disappear")
+    assert o["intent"] == "crisis" and o["verse"] is None and "14416" in o["response"]
