@@ -91,7 +91,8 @@ def _secret(name, default=None):
 
 
 API_URL = _secret("API_URL")  # e.g. https://GSR-608001-avvaiyar-brain.hf.space  (empty -> run engine in-process)
-for k in ("GOOGLE_API_KEY", "PAATTI_EMBEDDER", "PAATTI_LLM", "PAATTI_LLM_FALLBACK", "PAATTI_THINKING_LEVEL"):
+for k in ("GOOGLE_API_KEY", "PAATTI_EMBEDDER", "PAATTI_LLM_MODELS", "PAATTI_LLM_STRATEGY", "PAATTI_LLM",
+          "PAATTI_LLM_FALLBACK", "PAATTI_THINKING_LEVEL"):
     if _secret(k) and not os.getenv(k):
         os.environ[k] = _secret(k)
 
