@@ -429,3 +429,8 @@ def test_strip_endearments_other_languages(raw, expected):
 def test_named_language_uses_native_script():
     from paatti.engine import SYSTEM
     assert "ITS OWN SCRIPT" in SYSTEM and "Devanagari" in SYSTEM
+
+
+def test_language_follows_current_message():
+    from paatti.engine import SYSTEM
+    assert "CURRENT message only" in SYSTEM and "from now on" in SYSTEM
