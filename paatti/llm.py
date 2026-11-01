@@ -8,7 +8,7 @@ from pydantic import BaseModel
 
 
 class PaattiReply(BaseModel):
-    intent: str            # advice | lookup | smalltalk | offtopic
+    intent: str            # advice | lookup | about | smalltalk | offtopic
     verse_no: Optional[int] = None
     reason: str = ""
     response: str

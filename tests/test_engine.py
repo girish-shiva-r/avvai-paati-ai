@@ -340,3 +340,35 @@ def test_rejudge_fills_missing_scores(tmp_path, monkeypatch):
     R.cmd_rejudge(argparse.Namespace(file=str(f), judge_llm="x", rpm=0))
     out = [_j.loads(l) for l in f.read_text().splitlines()]
     assert out[0]["judge"]["faithfulness"] == 4 and out[1]["judge"]["relevance"] == 1
+
+
+class _FixedLLM(LLM):
+    """Returns a preset intent/verse to test the engine's verse-card rules."""
+    name = "fixed"
+    def __init__(self, intent, verse_no=None):
+        self.intent, self.verse_no = intent, verse_no
+    def reply(self, system, turns):
+        return PaattiReply(intent=self.intent, verse_no=self.verse_no, response="Kanna...")
+
+
+def test_about_question_shows_no_verse_card():
+    """'How many verses are in Aathichoodi?' after a lookup must not re-show the previous verse."""
+    hist = [{"role": "user", "content": "What does verse 54 mean?"},
+            {"role": "assistant", "content": "...", "verse_no": 54}]
+    o = Paatti(llm=_FixedLLM("about"), embedder_spec="none").answer("how many verses are in aathichoodi", hist)
+    assert o["intent"] == "about" and o["verse"] is None
+
+
+def test_about_with_example_verse_keeps_it():
+    o = Paatti(llm=_FixedLLM("about", 1), embedder_spec="none").answer("what is the first verse about?")
+    assert o["verse_no"] == 1
+
+
+def test_advice_without_verse_falls_back_to_retrieval():
+    o = Paatti(llm=_FixedLLM("advice", None), embedder_spec="none").answer("I keep shouting at my family in anger")
+    assert o["verse"] is not None and o["verse_no"] == o["candidates"][0]
+
+
+def test_unforced_lookup_with_invalid_verse_shows_no_card():
+    o = Paatti(llm=_FixedLLM("lookup", 500), embedder_spec="none").answer("tell me about a verse on kindness")
+    assert o["verse"] is None
