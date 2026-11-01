@@ -1,9 +1,8 @@
 """Streamlit UI for Avvaiyar Paatti. Set API_URL to use the hosted backend; leave empty to run the engine in-process."""
-import hashlib, html, io, json, os, re, time
+import hashlib, html, json, os, time
 import requests
 import streamlit as st
 
-from paatti.voice import tts_lang
 
 # ── Page config ──────────────────────────────────────────────────
 st.set_page_config(
@@ -139,19 +138,6 @@ def paatti_md(text):
     return "<span class='mk mk-paatti'></span>" + text
 
 
-def speak(text):
-    try:
-        from gtts import gTTS
-        clean = re.sub(r"[*_`#>]|[\U0001F300-\U0001FAFF\u2600-\u27BF]", "", text)
-        lang = tts_lang(clean)  # from paatti.voice
-        fp = io.BytesIO()
-        gTTS(text=clean, lang=lang, **({"tld": "co.in"} if lang == "en" else {})).write_to_fp(fp)
-        fp.seek(0)
-        st.audio(fp, format="audio/mp3", autoplay=True)
-    except Exception as e:
-        st.caption(f"(voice unavailable: {e})")
-
-
 # ── Header ──
 st.markdown("""
 <div class="paatti-header">
@@ -172,7 +158,6 @@ with st.sidebar:
     st.markdown("### 🎙️ Speak to Paatti")
     audio_value = st.audio_input("Record your message", label_visibility="collapsed")
     st.divider()
-    voice_on = st.toggle("🔊 Paatti's voice", value=False)
     show_debug = st.toggle("🔎 Show retrieval details", value=False)
     st.markdown("""<div class='side-note'><b>About</b><br>
     Life advice rooted in the <i>Aathichoodi</i> of Avvaiyar (109 verses).<br><br>
@@ -236,8 +221,6 @@ if query:
         if show_debug:
             st.caption(f"intent={out.get('intent')} · verse={out.get('verse_no')} · candidates={out.get('candidates')} "
                        f"· {out.get('latency')}s · {out.get('reason', '')}")
-        if voice_on:
-            speak(out["response"])
     st.session_state.messages.append({"role": "user", "content": shown})
     st.session_state.messages.append({"role": "assistant", "content": out["response"], "verse": out.get("verse"),
                                       "verse_no": out.get("verse_no")})
