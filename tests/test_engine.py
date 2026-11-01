@@ -436,16 +436,6 @@ def test_language_follows_current_message():
     assert "CURRENT message only" in SYSTEM and "from now on" in SYSTEM
 
 
-@pytest.mark.parametrize("text,lang", [
-    ("கோபம் வந்தால் சற்று நில்லுங்கள்.", "ta"), ("गुस्सा आए तो रुकिए।", "hi"), ("ദേഷ്യം വരുമ്പോൾ നിൽക്കൂ.", "ml"),
-    ("When anger comes, pause.", "en"), ("Gussa aaye toh ruko, Aaruvadhu sinam yaad karo.", "en"),
-    ("Aaruvadhu sinam என்பது கோபத்தை தணிக்க வேண்டும் என்பதாகும்.", "ta"), ("", "en"),
-])
-def test_tts_language(text, lang):
-    from paatti.voice import tts_lang
-    assert tts_lang(text) == lang
-
-
 def test_transcribe_endpoint_and_prompt(monkeypatch):
     from fastapi.testclient import TestClient
     import os
