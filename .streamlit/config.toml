@@ -1,0 +1,11 @@
+# Force a light theme so the app looks the same for visitors whose OS/browser is in dark mode.
+[theme]
+base = "light"
+primaryColor = "#8C2A0C"             # maroon: buttons, focus rings, toggles (8.6:1 with white text)
+backgroundColor = "#FBF6EE"          # warm ivory page
+secondaryBackgroundColor = "#F3E6D0" # sand: sidebar, inputs, code
+textColor = "#2A1708"                # deep brown text (15.9:1 on the page)
+font = "sans serif"
+
+[server]
+headless = true
