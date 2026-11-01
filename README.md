@@ -81,7 +81,7 @@ Malayalam, Telugu, spoken verse numbers, off-topic, crisis, silence and noise. T
 ```bash
 python -m venv .venv && source .venv/bin/activate
 pip install -r requirements.txt
-cp .env.example .env            # add GOOGLE_API_KEY
+echo 'GOOGLE_API_KEY="your-gemini-key"' > .env
 streamlit run app.py            # the whole bot runs in-process
 ```
 
@@ -140,7 +140,7 @@ app.py                Streamlit UI (chat, mic in the chat bar, verse card)
 paatti/               engine.py (pipeline, language + persona rules) · kb.py (KB, lookup) · retrieval.py
                       embedders.py · llm.py (Gemini model pool, transcription) · safety.py · voice.py
 data/aathichoodi_kb.json   the curated knowledge base
-requirements.txt · .streamlit/config.toml · .env.example
+requirements.txt · .streamlit/config.toml
 ```
 
 Development tools are on the **[`dev-tools`](https://github.com/girish-shiva-r/avvai-paati-ai/tree/dev-tools)** branch:
