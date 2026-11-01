@@ -1,0 +1,2124 @@
+{
+ "results": [
+  {
+   "hit@1": 0.06993006993006994,
+   "hit@3": 0.17482517482517482,
+   "hit@5": 0.22377622377622378,
+   "mrr": 0.15133626870458153,
+   "n": 143,
+   "name": "bm25 | bm25 | docs=legacy",
+   "secs": 0.3
+  },
+  {
+   "hit@1": 0.5174825174825175,
+   "hit@3": 0.6713286713286714,
+   "hit@5": 0.7342657342657343,
+   "mrr": 0.6241179918719485,
+   "n": 143,
+   "name": "bm25 | bm25 | docs=v2",
+   "secs": 0.1
+  }
+ ],
+ "misses": {
+  "bm25 | bm25 | docs=legacy": [
+   {
+    "q": "I threw my phone against the wall during an argument yesterday",
+    "gold": [
+     2
+    ],
+    "top5": [
+     107,
+     29,
+     46,
+     49,
+     57
+    ]
+   },
+   {
+    "q": "How do I cool down before I say something I regret?",
+    "gold": [
+     2,
+     105,
+     48
+    ],
+    "top5": [
+     97,
+     16,
+     60,
+     9,
+     19
+    ]
+   },
+   {
+    "q": "I have three assignments due and I haven't started any of them",
+    "gold": [
+     22,
+     54,
+     50
+    ],
+    "top5": [
+     107,
+     109,
+     29,
+     60,
+     13
+    ]
+   },
+   {
+    "q": "Every New Year I make resolutions and drop them in a week",
+    "gold": [
+     6,
+     54,
+     22
+    ],
+    "top5": [
+     2,
+     37,
+     29,
+     48,
+     87
+    ]
+   },
+   {
+    "q": "I lie in bed scrolling reels till 2pm on holidays",
+    "gold": [
+     31,
+     54,
+     107
+    ],
+    "top5": [
+     1,
+     2,
+     3,
+     4,
+     5
+    ]
+   },
+   {
+    "q": "I'm 22 and I still have no idea what to do with my life",
+    "gold": [
+     52,
+     34,
+     6
+    ],
+    "top5": [
+     9,
+     75,
+     17,
+     20,
+     102
+    ]
+   },
+   {
+    "q": "I cleared prelims but failed mains for the third time, should I stop preparing?",
+    "gold": [
+     6,
+     59,
+     65
+    ],
+    "top5": [
+     53,
+     25,
+     31,
+     86,
+     2
+    ]
+   },
+   {
+    "q": "My code keeps breaking and I feel like I'm not cut out for programming",
+    "gold": [
+     6,
+     59
+    ],
+    "top5": [
+     26,
+     1,
+     3,
+     2,
+     5
+    ]
+   },
+   {
+    "q": "Nobody replies to my job applications, I'm losing hope",
+    "gold": [
+     6,
+     59
+    ],
+    "top5": [
+     40,
+     1,
+     3,
+     2,
+     5
+    ]
+   },
+   {
+    "q": "I feel so heavy and sad these days, nothing excites me",
+    "gold": [
+     59,
+     88,
+     102
+    ],
+    "top5": [
+     27,
+     1,
+     3,
+     2,
+     5
+    ]
+   },
+   {
+    "q": "The guy who backstabbed me last year wants to collaborate now",
+    "gold": [
+     108,
+     89
+    ],
+    "top5": [
+     29,
+     77,
+     47,
+     2,
+     5
+    ]
+   },
+   {
+    "q": "All my school friends are into drinking and smoking and they keep pulling me in",
+    "gold": [
+     85,
+     45,
+     51,
+     24
+    ],
+    "top5": [
+     108,
+     1,
+     3,
+     2,
+     5
+    ]
+   },
+   {
+    "q": "Is it better to have few good friends or many friends?",
+    "gold": [
+     19,
+     51,
+     45
+    ],
+    "top5": [
+     108,
+     105,
+     107,
+     38,
+     28
+    ]
+   },
+   {
+    "q": "My teammate takes credit for everything and talks only about himself",
+    "gold": [
+     99,
+     5
+    ],
+    "top5": [
+     35,
+     104,
+     9,
+     4,
+     19
+    ]
+   },
+   {
+    "q": "I can't stand seeing my classmate get all the attention",
+    "gold": [
+     12
+    ],
+    "top5": [
+     68,
+     109,
+     92,
+     80,
+     45
+    ]
+   },
+   {
+    "q": "Why do I feel bad when my friends get engaged before me?",
+    "gold": [
+     12
+    ],
+    "top5": [
+     108,
+     60,
+     97,
+     9,
+     19
+    ]
+   },
+   {
+    "q": "I lied to my wife about where I was last night",
+    "gold": [
+     14,
+     27,
+     46
+    ],
+    "top5": [
+     77,
+     47,
+     104,
+     54,
+     34
+    ]
+   },
+   {
+    "q": "I put fake experience on my CV and got the job",
+    "gold": [
+     46,
+     14,
+     27
+    ],
+    "top5": [
+     39,
+     95,
+     3,
+     1,
+     5
+    ]
+   },
+   {
+    "q": "My friend wants me to give a false statement to the police for him",
+    "gold": [
+     14,
+     44,
+     79
+    ],
+    "top5": [
+     108,
+     89,
+     97,
+     84,
+     46
+    ]
+   },
+   {
+    "q": "I padded my travel bills to claim more reimbursement",
+    "gold": [
+     41,
+     13,
+     14
+    ],
+    "top5": [
+     100,
+     1,
+     3,
+     2,
+     5
+    ]
+   },
+   {
+    "q": "My dad is getting old and sick and I'm busy with my job in Bangalore",
+    "gold": [
+     20
+    ],
+    "top5": [
+     1,
+     2,
+     3,
+     4,
+     5
+    ]
+   },
+   {
+    "q": "My mother calls every day and I find it irritating",
+    "gold": [
+     20,
+     17
+    ],
+    "top5": [
+     107,
+     34,
+     89,
+     10,
+     102
+    ]
+   },
+   {
+    "q": "My teacher spent extra hours to help me pass, but I never visited her again",
+    "gold": [
+     21
+    ],
+    "top5": [
+     107,
+     4,
+     38,
+     69,
+     5
+    ]
+   },
+   {
+    "q": "I take my wife's sacrifices for granted",
+    "gold": [
+     21,
+     94
+    ],
+    "top5": [
+     35,
+     1,
+     3,
+     2,
+     5
+    ]
+   },
+   {
+    "q": "I blew my whole bonus on gadgets in one weekend",
+    "gold": [
+     86,
+     18,
+     98
+    ],
+    "top5": [
+     1,
+     2,
+     3,
+     4,
+     5
+    ]
+   },
+   {
+    "q": "I have three credit cards maxed out",
+    "gold": [
+     86,
+     18,
+     8
+    ],
+    "top5": [
+     1,
+     2,
+     3,
+     4,
+     5
+    ]
+   },
+   {
+    "q": "Should I take a 50 lakh loan for a wedding to impress relatives?",
+    "gold": [
+     18,
+     86,
+     60
+    ],
+    "top5": [
+     35,
+     1,
+     3,
+     2,
+     5
+    ]
+   },
+   {
+    "q": "My friends are telling me to invest in some scheme that doubles money in a month",
+    "gold": [
+     49,
+     60,
+     84
+    ],
+    "top5": [
+     108,
+     96,
+     1,
+     2,
+     5
+    ]
+   },
+   {
+    "q": "I've been playing fantasy cricket for money and losing a lot",
+    "gold": [
+     49
+    ],
+    "top5": [
+     25,
+     42,
+     3,
+     1,
+     5
+    ]
+   },
+   {
+    "q": "My husband spends nights on poker apps",
+    "gold": [
+     49
+    ],
+    "top5": [
+     1,
+     2,
+     3,
+     4,
+     5
+    ]
+   },
+   {
+    "q": "I'm 28 and still take pocket money from my dad",
+    "gold": [
+     8,
+     82
+    ],
+    "top5": [
+     35,
+     1,
+     3,
+     2,
+     5
+    ]
+   },
+   {
+    "q": "I want to quit my job tomorrow without telling anyone or having savings",
+    "gold": [
+     60,
+     86
+    ],
+    "top5": [
+     25,
+     59,
+     27,
+     14,
+     17
+    ]
+   },
+   {
+    "q": "I bought a franchise without reading the contract and now I'm stuck",
+    "gold": [
+     60
+    ],
+    "top5": [
+     13,
+     25,
+     59,
+     27,
+     14
+    ]
+   },
+   {
+    "q": "I'm torn between taking an offer in Dubai or staying near family",
+    "gold": [
+     88,
+     60
+    ],
+    "top5": [
+     109,
+     20,
+     107,
+     27,
+     96
+    ]
+   },
+   {
+    "q": "I study for hours but nothing goes into my head",
+    "gold": [
+     88,
+     101,
+     39
+    ],
+    "top5": [
+     107,
+     86,
+     11,
+     1,
+     5
+    ]
+   },
+   {
+    "q": "I'm 50, is it silly to join a degree course now?",
+    "gold": [
+     11,
+     101
+    ],
+    "top5": [
+     10,
+     1,
+     3,
+     2,
+     5
+    ]
+   },
+   {
+    "q": "I'm too shy to raise my hand in lectures",
+    "gold": [
+     39
+    ],
+    "top5": [
+     81,
+     1,
+     3,
+     2,
+     5
+    ]
+   },
+   {
+    "q": "I don't enjoy my engineering subjects at all",
+    "gold": [
+     101,
+     29
+    ],
+    "top5": [
+     50,
+     1,
+     3,
+     2,
+     5
+    ]
+   },
+   {
+    "q": "I only watch short videos, I've stopped reading anything long",
+    "gold": [
+     71,
+     11
+    ],
+    "top5": [
+     66,
+     70,
+     103,
+     50,
+     104
+    ]
+   },
+   {
+    "q": "I believe every forward my uncle sends on WhatsApp",
+    "gold": [
+     84
+    ],
+    "top5": [
+     102,
+     60,
+     97,
+     4,
+     13
+    ]
+   },
+   {
+    "q": "I want to get back at the girl who spread rumours about me",
+    "gold": [
+     38,
+     106
+    ],
+    "top5": [
+     97,
+     1,
+     3,
+     2,
+     5
+    ]
+   },
+   {
+    "q": "There's so much politics and gossip in my office, I'm sick of it",
+    "gold": [
+     43,
+     12
+    ],
+    "top5": [
+     100,
+     1,
+     3,
+     2,
+     5
+    ]
+   },
+   {
+    "q": "I enjoy talking about other people's personal lives",
+    "gold": [
+     12,
+     43,
+     109
+    ],
+    "top5": [
+     104,
+     81,
+     74,
+     4,
+     23
+    ]
+   },
+   {
+    "q": "I always end up in arguments on Twitter",
+    "gold": [
+     87,
+     100
+    ],
+    "top5": [
+     1,
+     2,
+     3,
+     4,
+     5
+    ]
+   },
+   {
+    "q": "In every meeting I jump in to contradict people",
+    "gold": [
+     100,
+     87
+    ],
+    "top5": [
+     104,
+     24,
+     45,
+     102,
+     60
+    ]
+   },
+   {
+    "q": "My neighbour and I have a fight over parking every week",
+    "gold": [
+     87,
+     62,
+     104
+    ],
+    "top5": [
+     102,
+     60,
+     97,
+     4,
+     13
+    ]
+   },
+   {
+    "q": "My father-in-law is rigid and never accepts any opinion",
+    "gold": [
+     93
+    ],
+    "top5": [
+     106,
+     58,
+     7,
+     44,
+     4
+    ]
+   },
+   {
+    "q": "My friends want me to join a gang fight after college",
+    "gold": [
+     92,
+     87,
+     85
+    ],
+    "top5": [
+     108,
+     1,
+     3,
+     2,
+     5
+    ]
+   },
+   {
+    "q": "My juniors are scared of me because I'm very blunt",
+    "gold": [
+     105,
+     17,
+     32
+    ],
+    "top5": [
+     1,
+     2,
+     3,
+     4,
+     5
+    ]
+   },
+   {
+    "q": "I tease people and they get upset but I say it's just a joke",
+    "gold": [
+     48,
+     42
+    ],
+    "top5": [
+     97,
+     104,
+     1,
+     2,
+     5
+    ]
+   },
+   {
+    "q": "I don't know how to speak politely to customers",
+    "gold": [
+     17,
+     97
+    ],
+    "top5": [
+     109,
+     105,
+     99,
+     46,
+     5
+    ]
+   },
+   {
+    "q": "My emails are always misunderstood by clients",
+    "gold": [
+     97
+    ],
+    "top5": [
+     1,
+     2,
+     3,
+     4,
+     5
+    ]
+   },
+   {
+    "q": "I have to give a speech at my sister's wedding and I'm nervous",
+    "gold": [
+     97,
+     53
+    ],
+    "top5": [
+     89,
+     2,
+     105,
+     27,
+     77
+    ]
+   },
+   {
+    "q": "I accidentally said something confidential in front of the client",
+    "gold": [
+     53,
+     79
+    ],
+    "top5": [
+     1,
+     2,
+     3,
+     4,
+     5
+    ]
+   },
+   {
+    "q": "I posted an angry rant about my company on LinkedIn",
+    "gold": [
+     79,
+     53,
+     105
+    ],
+    "top5": [
+     85,
+     45,
+     3,
+     1,
+     5
+    ]
+   },
+   {
+    "q": "I make a mountain out of every small problem",
+    "gold": [
+     90
+    ],
+    "top5": [
+     37,
+     40,
+     102,
+     60,
+     97
+    ]
+   },
+   {
+    "q": "I've moved from my village to Chennai and feel totally out of place",
+    "gold": [
+     10,
+     104
+    ],
+    "top5": [
+     38,
+     50,
+     1,
+     2,
+     5
+    ]
+   },
+   {
+    "q": "I live alone abroad and have no friends",
+    "gold": [
+     104,
+     10
+    ],
+    "top5": [
+     108,
+     81,
+     1,
+     2,
+     5
+    ]
+   },
+   {
+    "q": "I skip all family weddings and functions",
+    "gold": [
+     104
+    ],
+    "top5": [
+     20,
+     88,
+     31,
+     9,
+     27
+    ]
+   },
+   {
+    "q": "I hate my neighbours from a different state",
+    "gold": [
+     62,
+     104
+    ],
+    "top5": [
+     102,
+     59,
+     98,
+     66,
+     80
+    ]
+   },
+   {
+    "q": "I eat whenever I'm bored",
+    "gold": [
+     91,
+     70
+    ],
+    "top5": [
+     82,
+     1,
+     3,
+     2,
+     5
+    ]
+   },
+   {
+    "q": "I haven't seen a doctor in years and I feel unwell often",
+    "gold": [
+     76
+    ],
+    "top5": [
+     2,
+     29,
+     59,
+     39,
+     98
+    ]
+   },
+   {
+    "q": "I'm tempted to have an affair with a colleague",
+    "gold": [
+     94,
+     98,
+     96
+    ],
+    "top5": [
+     1,
+     2,
+     3,
+     4,
+     5
+    ]
+   },
+   {
+    "q": "I keep thinking about my crush and can't concentrate on anything",
+    "gold": [
+     98,
+     88
+    ],
+    "top5": [
+     71,
+     50,
+     3,
+     1,
+     5
+    ]
+   },
+   {
+    "q": "Being honest at my job is making me lose deals, should I bend a little?",
+    "gold": [
+     36,
+     66,
+     73
+    ],
+    "top5": [
+     27,
+     39,
+     102,
+     25,
+     40
+    ]
+   },
+   {
+    "q": "Everyone in my department takes bribes, should I just go along?",
+    "gold": [
+     36,
+     30,
+     44
+    ],
+    "top5": [
+     104,
+     35,
+     32,
+     3,
+     5
+    ]
+   },
+   {
+    "q": "People take advantage of my kindness, should I stop being nice?",
+    "gold": [
+     36,
+     66
+    ],
+    "top5": [
+     104,
+     35,
+     17,
+     21,
+     103
+    ]
+   },
+   {
+    "q": "My brother wants to sponsor a poor kid's education and I think it's a waste",
+    "gold": [
+     4
+    ],
+    "top5": [
+     71,
+     101,
+     29,
+     11,
+     5
+    ]
+   },
+   {
+    "q": "How can I give back to society?",
+    "gold": [
+     34,
+     1,
+     56
+    ],
+    "top5": [
+     89,
+     109,
+     101,
+     28,
+     104
+    ]
+   },
+   {
+    "q": "I feel like I'm living only for myself",
+    "gold": [
+     34,
+     1
+    ],
+    "top5": [
+     104,
+     26,
+     9,
+     4,
+     18
+    ]
+   },
+   {
+    "q": "I'm good at singing but too embarrassed to perform",
+    "gold": [
+     40
+    ],
+    "top5": [
+     28,
+     57,
+     66,
+     80,
+     30
+    ]
+   },
+   {
+    "q": "I don't teach my juniors because they might replace me",
+    "gold": [
+     40,
+     3
+    ],
+    "top5": [
+     59,
+     43,
+     15,
+     1,
+     5
+    ]
+   },
+   {
+    "q": "My friend asks me to help him cheat on the exam",
+    "gold": [
+     28,
+     24,
+     73
+    ],
+    "top5": [
+     108,
+     4,
+     2,
+     1,
+     5
+    ]
+   },
+   {
+    "q": "I got drunk and misbehaved at my cousin's wedding",
+    "gold": [
+     28,
+     24
+    ],
+    "top5": [
+     1,
+     2,
+     3,
+     4,
+     5
+    ]
+   },
+   {
+    "q": "My friends dare me to bike on the highway at 150 km/h",
+    "gold": [
+     25,
+     69
+    ],
+    "top5": [
+     108,
+     1,
+     3,
+     2,
+     5
+    ]
+   },
+   {
+    "q": "We want to swim in the river even though it's flooding",
+    "gold": [
+     69,
+     25
+    ],
+    "top5": [
+     1,
+     2,
+     3,
+     4,
+     5
+    ]
+   },
+   {
+    "q": "I make fun of religious people",
+    "gold": [
+     61
+    ],
+    "top5": [
+     104,
+     37,
+     3,
+     1,
+     5
+    ]
+   },
+   {
+    "q": "I no longer pray and feel disconnected from God",
+    "gold": [
+     57,
+     102
+    ],
+    "top5": [
+     64,
+     1,
+     3,
+     2,
+     5
+    ]
+   },
+   {
+    "q": "I have everything but feel empty inside",
+    "gold": [
+     102,
+     57
+    ],
+    "top5": [
+     1,
+     2,
+     3,
+     4,
+     5
+    ]
+   },
+   {
+    "q": "My grandchildren don't know anything about our Tamil traditions",
+    "gold": [
+     64
+    ],
+    "top5": [
+     50,
+     1,
+     3,
+     2,
+     5
+    ]
+   },
+   {
+    "q": "I never ask experienced people for advice, I figure things out myself",
+    "gold": [
+     83,
+     95,
+     39
+    ],
+    "top5": [
+     104,
+     1,
+     3,
+     2,
+     5
+    ]
+   },
+   {
+    "q": "I have nobody to guide me in my career",
+    "gold": [
+     83,
+     45
+    ],
+    "top5": [
+     61,
+     1,
+     3,
+     2,
+     5
+    ]
+   },
+   {
+    "q": "My grandfather keeps giving advice and I ignore it",
+    "gold": [
+     95,
+     83
+    ],
+    "top5": [
+     56,
+     59,
+     1,
+     2,
+     5
+    ]
+   },
+   {
+    "q": "I keep pursuing a girl who has clearly said no",
+    "gold": [
+     65
+    ],
+    "top5": [
+     53,
+     25,
+     3,
+     1,
+     5
+    ]
+   },
+   {
+    "q": "My shop is losing money for 3 years, should I keep pumping money?",
+    "gold": [
+     65,
+     60
+    ],
+    "top5": [
+     29,
+     2,
+     3,
+     1,
+     5
+    ]
+   },
+   {
+    "q": "I'm the manager and I keep favouring my old friends in appraisals",
+    "gold": [
+     109
+    ],
+    "top5": [
+     108,
+     1,
+     3,
+     2,
+     5
+    ]
+   },
+   {
+    "q": "I have to settle a fight between my two sons",
+    "gold": [
+     109
+    ],
+    "top5": [
+     86,
+     25,
+     73,
+     10,
+     6
+    ]
+   },
+   {
+    "q": "My rival keeps asking about my plans; should I share them?",
+    "gold": [
+     89
+    ],
+    "top5": [
+     108,
+     56,
+     3,
+     1,
+     5
+    ]
+   },
+   {
+    "q": "My employees rely on me and the company is struggling",
+    "gold": [
+     81
+    ],
+    "top5": [
+     85,
+     45,
+     3,
+     1,
+     5
+    ]
+   },
+   {
+    "q": "I do things half-heartedly",
+    "gold": [
+     50
+    ],
+    "top5": [
+     1,
+     2,
+     3,
+     4,
+     5
+    ]
+   },
+   {
+    "q": "I keep breaking promises and people don't rely on me",
+    "gold": [
+     55
+    ],
+    "top5": [
+     104,
+     37,
+     3,
+     1,
+     5
+    ]
+   },
+   {
+    "q": "I wasted my 20s roaming around with nothing to show",
+    "gold": [
+     52,
+     29
+    ],
+    "top5": [
+     34,
+     65,
+     22,
+     3,
+     5
+    ]
+   },
+   {
+    "q": "Is it good to take up organic farming as a career?",
+    "gold": [
+     72,
+     82
+    ],
+    "top5": [
+     35,
+     28,
+     57,
+     66,
+     80
+    ]
+   },
+   {
+    "q": "I hide the truth to look good in front of people",
+    "gold": [
+     14,
+     46
+    ],
+    "top5": [
+     104,
+     40,
+     28,
+     57,
+     109
+    ]
+   },
+   {
+    "q": "I talk a lot of nonsense and people stop listening",
+    "gold": [
+     75
+    ],
+    "top5": [
+     39,
+     104,
+     100,
+     95,
+     5
+    ]
+   },
+   {
+    "q": "I followed my friend's advice blindly and lost money",
+    "gold": [
+     63,
+     60
+    ],
+    "top5": [
+     108,
+     65,
+     80,
+     44,
+     5
+    ]
+   },
+   {
+    "q": "I just do whatever my girlfriend says without thinking",
+    "gold": [
+     63
+    ],
+    "top5": [
+     71,
+     25,
+     59,
+     27,
+     14
+    ]
+   },
+   {
+    "q": "I want to move up in life with honour",
+    "gold": [
+     80,
+     47
+    ],
+    "top5": [
+     55,
+     85,
+     71,
+     102,
+     87
+    ]
+   },
+   {
+    "q": "After my promotion I've become arrogant",
+    "gold": [
+     47,
+     99,
+     15
+    ],
+    "top5": [
+     5,
+     58,
+     1,
+     3,
+     4
+    ]
+   },
+   {
+    "q": "I'm too proud to say sorry to my brother",
+    "gold": [
+     15,
+     37
+    ],
+    "top5": [
+     97,
+     1,
+     3,
+     2,
+     5
+    ]
+   },
+   {
+    "q": "I haven't spoken to my best friend in a year because of ego",
+    "gold": [
+     37,
+     15
+    ],
+    "top5": [
+     108,
+     105,
+     79,
+     29,
+     2
+    ]
+   },
+   {
+    "q": "I keep falling back into my old addiction",
+    "gold": [
+     68,
+     6
+    ],
+    "top5": [
+     1,
+     2,
+     3,
+     4,
+     5
+    ]
+   },
+   {
+    "q": "I take risks with my health for my job",
+    "gold": [
+     76,
+     26
+    ],
+    "top5": [
+     35,
+     25,
+     70,
+     54,
+     107
+    ]
+   },
+   {
+    "q": "My business competitors cheat customers and make more money",
+    "gold": [
+     13,
+     36
+    ],
+    "top5": [
+     37,
+     1,
+     3,
+     2,
+     5
+    ]
+   },
+   {
+    "q": "padikka mood ey illa paatti",
+    "gold": [
+     101,
+     54,
+     29
+    ],
+    "top5": [
+     1,
+     2,
+     3,
+     4,
+     5
+    ]
+   },
+   {
+    "q": "salary ellam shopping la poidudhu",
+    "gold": [
+     86,
+     18
+    ],
+    "top5": [
+     1,
+     2,
+     3,
+     4,
+     5
+    ]
+   },
+   {
+    "q": "thinamum late ah dhan ezhundhirukiren",
+    "gold": [
+     107,
+     31
+    ],
+    "top5": [
+     1,
+     2,
+     3,
+     4,
+     5
+    ]
+   },
+   {
+    "q": "எனக்கு ரொம்ப சோம்பேறித்தனமா இருக்கு",
+    "gold": [
+     54
+    ],
+    "top5": [
+     1,
+     2,
+     3,
+     4,
+     5
+    ]
+   },
+   {
+    "q": "என் நண்பன் என்னை ஏமாற்றிவிட்டான்",
+    "gold": [
+     108,
+     19
+    ],
+    "top5": [
+     1,
+     2,
+     3,
+     4,
+     5
+    ]
+   },
+   {
+    "q": "எதையும் தொடங்க முடியவில்லை, எல்லாம் தள்ளிப் போடுகிறேன்",
+    "gold": [
+     22,
+     54
+    ],
+    "top5": [
+     1,
+     2,
+     3,
+     4,
+     5
+    ]
+   },
+   {
+    "q": "online rummy la panam pochu",
+    "gold": [
+     49
+    ],
+    "top5": [
+     1,
+     2,
+     3,
+     4,
+     5
+    ]
+   }
+  ],
+  "bm25 | bm25 | docs=v2": [
+   {
+    "q": "My manager humiliated me in front of everyone and I'm boiling inside",
+    "gold": [
+     2,
+     32,
+     105
+    ],
+    "top5": [
+     9,
+     27,
+     87,
+     78,
+     18
+    ]
+   },
+   {
+    "q": "Whenever my little sister touches my stuff I explode at her",
+    "gold": [
+     2,
+     87,
+     105
+    ],
+    "top5": [
+     41,
+     48,
+     57,
+     1,
+     5
+    ]
+   },
+   {
+    "q": "I threw my phone against the wall during an argument yesterday",
+    "gold": [
+     2
+    ],
+    "top5": [
+     69,
+     29,
+     54,
+     106,
+     92
+    ]
+   },
+   {
+    "q": "I have three assignments due and I haven't started any of them",
+    "gold": [
+     22,
+     54,
+     50
+    ],
+    "top5": [
+     60,
+     71,
+     86,
+     101,
+     100
+    ]
+   },
+   {
+    "q": "Every New Year I make resolutions and drop them in a week",
+    "gold": [
+     6,
+     54,
+     22
+    ],
+    "top5": [
+     71,
+     9,
+     35,
+     16,
+     7
+    ]
+   },
+   {
+    "q": "My code keeps breaking and I feel like I'm not cut out for programming",
+    "gold": [
+     6,
+     59
+    ],
+    "top5": [
+     55,
+     13,
+     74,
+     37,
+     5
+    ]
+   },
+   {
+    "q": "Nobody replies to my job applications, I'm losing hope",
+    "gold": [
+     6,
+     59
+    ],
+    "top5": [
+     36,
+     101,
+     1,
+     50,
+     72
+    ]
+   },
+   {
+    "q": "I feel so heavy and sad these days, nothing excites me",
+    "gold": [
+     59,
+     88,
+     102
+    ],
+    "top5": [
+     6,
+     75,
+     85,
+     52,
+     4
+    ]
+   },
+   {
+    "q": "My best friend shared my secret with the whole class",
+    "gold": [
+     108,
+     19,
+     51
+    ],
+    "top5": [
+     5,
+     37,
+     85,
+     31,
+     96
+    ]
+   },
+   {
+    "q": "A business partner I trusted ran away with the money",
+    "gold": [
+     108,
+     19,
+     51
+    ],
+    "top5": [
+     49,
+     65,
+     78,
+     63,
+     67
+    ]
+   },
+   {
+    "q": "The guy who backstabbed me last year wants to collaborate now",
+    "gold": [
+     108,
+     89
+    ],
+    "top5": [
+     71,
+     22,
+     29,
+     47,
+     81
+    ]
+   },
+   {
+    "q": "All my school friends are into drinking and smoking and they keep pulling me in",
+    "gold": [
+     85,
+     45,
+     51,
+     24
+    ],
+    "top5": [
+     76,
+     7,
+     11,
+     12,
+     27
+    ]
+   },
+   {
+    "q": "I can't stand seeing my classmate get all the attention",
+    "gold": [
+     12
+    ],
+    "top5": [
+     9,
+     56,
+     80,
+     68,
+     4
+    ]
+   },
+   {
+    "q": "Why do I feel bad when my friends get engaged before me?",
+    "gold": [
+     12
+    ],
+    "top5": [
+     45,
+     108,
+     100,
+     73,
+     75
+    ]
+   },
+   {
+    "q": "My parents want me to marry someone I don't know, I keep fighting with them",
+    "gold": [
+     20,
+     17,
+     87
+    ],
+    "top5": [
+     104,
+     40,
+     19,
+     84,
+     24
+    ]
+   },
+   {
+    "q": "My teacher spent extra hours to help me pass, but I never visited her again",
+    "gold": [
+     21
+    ],
+    "top5": [
+     95,
+     31,
+     75,
+     23,
+     26
+    ]
+   },
+   {
+    "q": "I blew my whole bonus on gadgets in one weekend",
+    "gold": [
+     86,
+     18,
+     98
+    ],
+    "top5": [
+     31,
+     1,
+     3,
+     2,
+     5
+    ]
+   },
+   {
+    "q": "I have three credit cards maxed out",
+    "gold": [
+     86,
+     18,
+     8
+    ],
+    "top5": [
+     1,
+     2,
+     3,
+     4,
+     5
+    ]
+   },
+   {
+    "q": "I'm 28 and still take pocket money from my dad",
+    "gold": [
+     8,
+     82
+    ],
+    "top5": [
+     49,
+     20,
+     73,
+     80,
+     81
+    ]
+   },
+   {
+    "q": "I bought a franchise without reading the contract and now I'm stuck",
+    "gold": [
+     60
+    ],
+    "top5": [
+     59,
+     93,
+     29,
+     71,
+     11
+    ]
+   },
+   {
+    "q": "I study for hours but nothing goes into my head",
+    "gold": [
+     88,
+     101,
+     39
+    ],
+    "top5": [
+     75,
+     93,
+     6,
+     31,
+     26
+    ]
+   },
+   {
+    "q": "I'm 50, is it silly to join a degree course now?",
+    "gold": [
+     11,
+     101
+    ],
+    "top5": [
+     85,
+     29,
+     81,
+     47,
+     45
+    ]
+   },
+   {
+    "q": "I'm too shy to raise my hand in lectures",
+    "gold": [
+     39
+    ],
+    "top5": [
+     40,
+     18,
+     3,
+     1,
+     5
+    ]
+   },
+   {
+    "q": "I enjoy talking about other people's personal lives",
+    "gold": [
+     12,
+     43,
+     109
+    ],
+    "top5": [
+     82,
+     27,
+     17,
+     101,
+     16
+    ]
+   },
+   {
+    "q": "I don't know how to speak politely to customers",
+    "gold": [
+     17,
+     97
+    ],
+    "top5": [
+     104,
+     40,
+     84,
+     64,
+     13
+    ]
+   },
+   {
+    "q": "My emails are always misunderstood by clients",
+    "gold": [
+     97
+    ],
+    "top5": [
+     79,
+     1,
+     3,
+     2,
+     5
+    ]
+   },
+   {
+    "q": "Being honest at my job is making me lose deals, should I bend a little?",
+    "gold": [
+     36,
+     66,
+     73
+    ],
+    "top5": [
+     68,
+     65,
+     99,
+     78,
+     50
+    ]
+   },
+   {
+    "q": "Everyone in my department takes bribes, should I just go along?",
+    "gold": [
+     36,
+     30,
+     44
+    ],
+    "top5": [
+     62,
+     65,
+     78,
+     27,
+     87
+    ]
+   },
+   {
+    "q": "My brother wants to sponsor a poor kid's education and I think it's a waste",
+    "gold": [
+     4
+    ],
+    "top5": [
+     52,
+     56,
+     29,
+     7,
+     14
+    ]
+   },
+   {
+    "q": "My friend lost his job and needs some money; I have savings but pretend I don't",
+    "gold": [
+     3
+    ],
+    "top5": [
+     86,
+     49,
+     39,
+     18,
+     8
+    ]
+   },
+   {
+    "q": "I keep pursuing a girl who has clearly said no",
+    "gold": [
+     65
+    ],
+    "top5": [
+     97,
+     79,
+     53,
+     48,
+     76
+    ]
+   },
+   {
+    "q": "My shop is losing money for 3 years, should I keep pumping money?",
+    "gold": [
+     65,
+     60
+    ],
+    "top5": [
+     8,
+     34,
+     86,
+     28,
+     49
+    ]
+   },
+   {
+    "q": "I want to stop being petty and mean",
+    "gold": [
+     35,
+     103
+    ],
+    "top5": [
+     100,
+     84,
+     4,
+     59,
+     99
+    ]
+   },
+   {
+    "q": "I hide the truth to look good in front of people",
+    "gold": [
+     14,
+     46
+    ],
+    "top5": [
+     40,
+     103,
+     52,
+     66,
+     9
+    ]
+   },
+   {
+    "q": "padikka mood ey illa paatti",
+    "gold": [
+     101,
+     54,
+     29
+    ],
+    "top5": [
+     1,
+     2,
+     3,
+     4,
+     5
+    ]
+   },
+   {
+    "q": "எனக்கு ரொம்ப சோம்பேறித்தனமா இருக்கு",
+    "gold": [
+     54
+    ],
+    "top5": [
+     1,
+     2,
+     3,
+     4,
+     5
+    ]
+   },
+   {
+    "q": "என் நண்பன் என்னை ஏமாற்றிவிட்டான்",
+    "gold": [
+     108,
+     19
+    ],
+    "top5": [
+     1,
+     2,
+     3,
+     4,
+     5
+    ]
+   },
+   {
+    "q": "எதையும் தொடங்க முடியவில்லை, எல்லாம் தள்ளிப் போடுகிறேன்",
+    "gold": [
+     22,
+     54
+    ],
+    "top5": [
+     79,
+     1,
+     3,
+     2,
+     5
+    ]
+   }
+  ]
+ },
+ "lookup_acc": 1.0,
+ "lookup_false_trigger": 0.0
+}
