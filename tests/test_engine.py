@@ -458,3 +458,22 @@ def test_transcribe_endpoint_and_prompt(monkeypatch):
     from paatti.llm import GeminiLLM
     src = inspect.getsource(GeminiLLM.transcribe)
     assert "any language" in src and "empty string" in src
+
+
+@pytest.mark.parametrize("raw,expected", [
+    ("00:00", ""), ("...", ""), ("[silence]", ""), ("(no speech)", ""), ("No speech detected.", ""), ('""', ""),
+    ("  ", ""), (None, ""),
+    ("I get angry very easily. What should I do?", "I get angry very easily. What should I do?"),
+    ("मैं अपनी सारी सैलरी खर्च कर देता हूं", "मैं अपनी सारी सैलरी खर्च कर देता हूं"),
+    ("2 years ago my friend left", "2 years ago my friend left"),
+])
+def test_clean_transcript(raw, expected):
+    from paatti.voice import clean_transcript
+    assert clean_transcript(raw) == expected
+
+
+def test_welcome_child_stripped():
+    from paatti.engine import strip_endearments
+    assert strip_endearments("Welcome, child. Tell me what is on your heart.") == "Welcome. Tell me what is on your heart."
+    assert strip_endearments("Every child deserves care.") == "Every child deserves care."
+    assert strip_endearments("Child, take a breath.") == "Take a breath."

@@ -188,7 +188,8 @@ class GeminiLLM(LLM):
                         "Hindi, Tanglish, any language), using that language's usual script. Return only the "
                         "transcript, nothing else. If there is no intelligible speech, return an empty string."],
                        self._config())
-        return (r.text or "").strip()
+        from .voice import clean_transcript
+        return clean_transcript(r.text)
 
 
 class MockLLM(LLM):
