@@ -43,6 +43,42 @@ def _norm_tamil(s: str) -> str:
     return re.sub(r"[^஀-௿]", "", s)
 
 
+_ONES = {w: i for i, w in enumerate("zero one two three four five six seven eight nine ten eleven twelve thirteen "
+                                    "fourteen fifteen sixteen seventeen eighteen nineteen".split())}
+_TENS = {w: 10 * i for i, w in enumerate("_ _ twenty thirty forty fifty sixty seventy eighty ninety".split()) if w != "_"}
+_ORD = {"first": "one", "second": "two", "third": "three", "fifth": "five", "eighth": "eight", "ninth": "nine",
+        "twelfth": "twelve"}
+
+
+def words_to_numbers(text: str) -> str:
+    """'verse fifty four' -> 'verse 54', 'one hundred and nine' -> '109', 'twenty-first' -> '21'
+    (spoken input arrives as words)."""
+    toks = re.findall(r"[A-Za-z]+|[^A-Za-z]+", text)
+    out, i = [], 0
+    def word(t):
+        t = t.lower()
+        t = _ORD.get(t, t)
+        if t.endswith("ieth"): t = t[:-4] + "y"
+        elif t.endswith("th") and t[:-2] in _ONES: t = t[:-2]
+        return t
+    while i < len(toks):
+        w = word(toks[i])
+        if w in _ONES or w in _TENS or w == "hundred":
+            total, j, last = 0, i, i
+            while j < len(toks):
+                t = word(toks[j])
+                if t in _ONES: total += _ONES[t]; last = j
+                elif t in _TENS: total += _TENS[t]; last = j
+                elif t == "hundred": total = (total or 1) * 100; last = j
+                elif t == "and" and total >= 100: pass
+                elif not re.fullmatch(r"[\s-]+", toks[j]): break
+                j += 1
+            out.append(str(total)); i = last + 1
+        else:
+            out.append(toks[i]); i += 1
+    return "".join(out)
+
+
 class KnowledgeBase:
     def __init__(self, path: Optional[Path] = None):
         path = Path(path or DATA_DIR / "aathichoodi_kb.json")
@@ -64,7 +100,7 @@ class KnowledgeBase:
 
     def lookup(self, query: str) -> Optional[int]:
         """Return a verse number if the user is clearly asking about a specific verse."""
-        q = query.strip()
+        q = words_to_numbers(query.strip())
         m = self._NUM.search(q)
         if m:
             n = int(m.group(1) or m.group(2))

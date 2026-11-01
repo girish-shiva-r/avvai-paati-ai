@@ -19,7 +19,7 @@ def tts_lang(text: str) -> str:
 
 # Things speech models return for silence/noise instead of an empty string.
 _NON_SPEECH = re.compile(
-    r"^\W*(?:\[[^\]]*\]|\([^)]*\)|no\s+(?:intelligible\s+)?speech(?:\s+detected)?|silence|inaudible|"
+    r"^\W*(?:\[[^\]]*\]|\([^)]*\)|<[^>]*>|\*[^*]*\*|no\s+(?:intelligible\s+)?speech(?:\s+detected)?|silence|inaudible|"
     r"unintelligible|empty(?:\s+string)?|none|null|n/?a|music|background\s+noise)\W*$", re.I)
 
 

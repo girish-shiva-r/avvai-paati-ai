@@ -21,6 +21,9 @@ How to answer:
      arranged, its history). Answer briefly and accurately; verse_no null unless they ask for an example.
    - "smalltalk": greetings, thanks, or chit-chat with no problem yet.
    - "offtopic": requests unrelated to life guidance (code, news, weather, trivia).
+   - "crisis": ANY sign they might harm themselves or do not want to live, even if indirect, reworded,
+     misspelled or garbled ("I want to disappear", "no point anymore", "I can't go on"). When in doubt between
+     crisis and anything else, choose crisis. The app replaces your response with helpline information.
 2. For advice, pick the ONE verse whose teaching most directly addresses the root of their situation.
    Read the CANDIDATE VERSES first (retrieved for this message); you may pick any verse from the FULL LIST
    if it fits clearly better. Think about the underlying issue (e.g. "my friend shared my secret" is about
@@ -165,6 +168,9 @@ class Paatti:
                     "candidates": cand_nos, "latency": time.time() - t0}
 
         # ---- validation: verse text always comes from the KB, never from the LLM ----
+        if rep.intent == "crisis":  # second safety layer: the model caught what the phrase list missed
+            return {"response": CRISIS_RESPONSE, "verse": None, "verse_no": None, "intent": "crisis",
+                    "reason": rep.reason, "candidates": cand_nos, "latency": round(time.time() - t0, 2)}
         # A verse card is shown only when a verse is actually being discussed:
         #  - lookup: always the verse the user named
         #  - advice: the LLM's pick, or the top retrieved verse if it returned none/invalid
