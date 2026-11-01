@@ -1,7 +1,9 @@
 """Streamlit UI for Avvaiyar Paatti. Set API_URL to use the hosted backend; leave empty to run the engine in-process."""
-import html, io, json, os, time
+import hashlib, html, io, json, os, re, time
 import requests
 import streamlit as st
+
+from paatti.voice import tts_lang
 
 # ── Page config ──────────────────────────────────────────────────
 st.set_page_config(
@@ -99,26 +101,28 @@ def local_bot():
     return Paatti()
 
 
-def ask(query, history, audio=None):
-    hist = [{"role": m["role"], "content": m["content"], "verse_no": m.get("verse_no")} for m in history
-            if m.get("role") in ("user", "assistant")]
+def ask(query, history):
+    hist = [{"role": m["role"], "content": m["content"].removeprefix("🎤 "), "verse_no": m.get("verse_no")}
+            for m in history if m.get("role") in ("user", "assistant")]
     if API_URL:
         base = API_URL.rstrip("/").removesuffix("/chat")
-        if audio is not None:
-            r = requests.post(f"{base}/chat_audio", files={"file": (audio.name, audio.getvalue(), "audio/wav")},
-                              data={"history": json.dumps(hist)}, timeout=90)
-        else:
-            r = requests.post(f"{base}/chat", json={"query": query, "history": hist}, timeout=90)
+        r = requests.post(f"{base}/chat", json={"query": query, "history": hist}, timeout=90)
         if r.status_code == 503:
             raise RuntimeError("Paatti is waking up — please send again in a few seconds 🙏")
         r.raise_for_status()
         return r.json()
-    bot = local_bot()
-    if audio is not None:
-        text = bot.llm.transcribe(audio.getvalue(), "audio/wav")
-        out = bot.answer(text, hist); out["transcribed_text"] = text
-        return out
-    return bot.answer(query, hist)
+    return local_bot().answer(query, hist)
+
+
+def transcribe(audio) -> str:
+    """Speech -> text (any language). Returns "" when nothing intelligible was said."""
+    data = audio.getvalue()
+    if API_URL:
+        base = API_URL.rstrip("/").removesuffix("/chat")
+        r = requests.post(f"{base}/transcribe", files={"file": (audio.name, data, "audio/wav")}, timeout=90)
+        r.raise_for_status()
+        return r.json().get("text", "").strip()
+    return local_bot().llm.transcribe(data, "audio/wav").strip()
 
 
 def verse_card_html(v):
@@ -138,7 +142,11 @@ def paatti_md(text):
 def speak(text):
     try:
         from gtts import gTTS
-        fp = io.BytesIO(); gTTS(text=text, lang="en", tld="co.in").write_to_fp(fp); fp.seek(0)
+        clean = re.sub(r"[*_`#>]|[\U0001F300-\U0001FAFF\u2600-\u27BF]", "", text)
+        lang = tts_lang(clean)  # from paatti.voice
+        fp = io.BytesIO()
+        gTTS(text=clean, lang=lang, **({"tld": "co.in"} if lang == "en" else {})).write_to_fp(fp)
+        fp.seek(0)
         st.audio(fp, format="audio/mp3", autoplay=True)
     except Exception as e:
         st.caption(f"(voice unavailable: {e})")
@@ -194,21 +202,31 @@ for m in st.session_state.messages:
 prefill = st.session_state.pop("prefill", None)
 user_input = st.chat_input("Type to Paatti…") or prefill
 
-if user_input or audio_value:
-    if audio_value and st.session_state.get("last_audio") == audio_value.getvalue()[:2048] and not user_input:
-        st.stop()  # don't resend the same recording on rerun
-    shown = user_input or "🎤 (voice message)"
+query, shown = user_input, user_input
+if not user_input and audio_value is not None:
+    digest = hashlib.sha1(audio_value.getvalue()).hexdigest()
+    if st.session_state.get("last_audio") != digest:      # a new recording (not a rerun of the old one)
+        st.session_state["last_audio"] = digest
+        with st.spinner("Paatti is listening… 🎧"):
+            try:
+                heard = transcribe(audio_value)
+            except Exception as e:
+                heard = ""
+                st.error(f"Paatti couldn't process the recording: {e}")
+        if heard:
+            query, shown = heard, f"🎤 {heard}"
+        else:
+            st.warning("Paatti couldn't hear any words in that recording. Please try again, a little closer to the mic.")
+
+if query:
     with st.chat_message("user", avatar="🧑"):
         st.markdown(user_md(shown), unsafe_allow_html=True)
     with st.chat_message("assistant", avatar="👵"):
         with st.spinner("Paatti is thinking… 🌿"):
             try:
-                out = ask(user_input, st.session_state.messages, None if user_input else audio_value)
+                out = ask(query, st.session_state.messages)
             except Exception as e:
                 st.error(str(e)); st.stop()
-        if not user_input:
-            st.session_state["last_audio"] = audio_value.getvalue()[:2048]
-            shown = f"🎤 {out.get('transcribed_text', '')}"
         if out.get("verse"):
             st.markdown(verse_card_html(out["verse"]), unsafe_allow_html=True)
         placeholder, typed = st.empty(), ""

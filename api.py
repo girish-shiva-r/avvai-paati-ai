@@ -70,6 +70,14 @@ async def chat_audio(file: UploadFile = File(...), history: str = Form("[]")):
     return out
 
 
+@app.post("/transcribe")
+async def transcribe(file: UploadFile = File(...)):
+    audio = await file.read()
+    if len(audio) > 10 * 1024 * 1024:
+        raise HTTPException(400, "audio too large")
+    return {"text": _ready().llm.transcribe(audio, file.content_type or "audio/wav").strip()}
+
+
 @app.get("/verse/{no}")
 def verse(no: int):
     v = _ready().kb.get(no)

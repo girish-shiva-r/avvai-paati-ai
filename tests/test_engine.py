@@ -434,3 +434,27 @@ def test_named_language_uses_native_script():
 def test_language_follows_current_message():
     from paatti.engine import SYSTEM
     assert "CURRENT message only" in SYSTEM and "from now on" in SYSTEM
+
+
+@pytest.mark.parametrize("text,lang", [
+    ("கோபம் வந்தால் சற்று நில்லுங்கள்.", "ta"), ("गुस्सा आए तो रुकिए।", "hi"), ("ദേഷ്യം വരുമ്പോൾ നിൽക്കൂ.", "ml"),
+    ("When anger comes, pause.", "en"), ("Gussa aaye toh ruko, Aaruvadhu sinam yaad karo.", "en"),
+    ("Aaruvadhu sinam என்பது கோபத்தை தணிக்க வேண்டும் என்பதாகும்.", "ta"), ("", "en"),
+])
+def test_tts_language(text, lang):
+    from paatti.voice import tts_lang
+    assert tts_lang(text) == lang
+
+
+def test_transcribe_endpoint_and_prompt(monkeypatch):
+    from fastapi.testclient import TestClient
+    import os
+    os.environ["PAATTI_LLM_PROVIDER"] = "mock"; os.environ["PAATTI_EMBEDDER"] = "none"
+    import api
+    with TestClient(api.app) as c:
+        r = c.post("/transcribe", files={"file": ("a.wav", b"RIFF0000WAVE", "audio/wav")})
+        assert r.status_code == 200 and r.json()["text"] == "mock transcript"
+    import inspect
+    from paatti.llm import GeminiLLM
+    src = inspect.getsource(GeminiLLM.transcribe)
+    assert "any language" in src and "empty string" in src
