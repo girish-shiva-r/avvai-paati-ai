@@ -394,3 +394,9 @@ def test_no_pet_names_in_fixed_texts():
     from paatti.engine import SYSTEM
     assert "chellame" not in CRISIS_RESPONSE.lower() and "kanna" not in CRISIS_RESPONSE.lower()
     assert "Do NOT use pet names" in SYSTEM
+
+
+def test_prompt_guards_unloved_users():
+    from paatti.engine import SYSTEM
+    assert "feeling unloved" in SYSTEM and "duties to parents" in SYSTEM
+    assert "I feel unloved and like I don't belong anywhere" in KnowledgeBase().get(104).situations
