@@ -1,5 +1,5 @@
 """Streamlit UI for Avvaiyar Paatti. Set API_URL to use the hosted backend; leave empty to run the engine in-process."""
-import hashlib, html, json, os, time
+import html, json, os, time
 import requests
 import streamlit as st
 
@@ -75,6 +75,8 @@ st.markdown("""
 [data-testid="stChatInput"]>div{border:1.5px solid var(--maroon)!important;background:#FFFFFF!important;border-radius:14px}
 [data-testid="stChatInput"] textarea{color:var(--ink)!important}
 [data-testid="stChatInput"] textarea::placeholder{color:var(--muted)!important;opacity:1}
+[data-testid="stChatInput"] button[aria-label="Start recording"]{color:var(--maroon)!important}
+[data-testid="stChatInput"] button[aria-label="Start recording"]:hover{background:var(--sand)!important}
 [data-testid="stExpander"]{border:1px solid var(--line);border-radius:12px;background:#FFFFFF}
 [data-testid="stExpander"] summary p{color:var(--maroon);font-weight:600}
 .stSpinner p{color:var(--muted)}
@@ -155,9 +157,6 @@ with st.sidebar:
         if st.button(ex, key=ex, use_container_width=True):
             st.session_state["prefill"] = ex
     st.divider()
-    st.markdown("### 🎙️ Speak to Paatti")
-    audio_value = st.audio_input("Record your message", label_visibility="collapsed")
-    st.divider()
     show_debug = st.toggle("🔎 Show retrieval details", value=False)
     st.markdown("""<div class='side-note'><b>About</b><br>
     Life advice rooted in the <i>Aathichoodi</i> of Avvaiyar (109 verses).<br><br>
@@ -185,16 +184,18 @@ for m in st.session_state.messages:
                     unsafe_allow_html=True)
 
 prefill = st.session_state.pop("prefill", None)
-user_input = st.chat_input("Type to Paatti…") or prefill
+# One input bar for both: type, or tap the mic inside it to speak (Streamlit >= 1.66 chat_input audio).
+chat = st.chat_input("Type, or tap 🎤 to speak to Paatti…", accept_audio=True)
 
-query, shown = user_input, user_input
-if not user_input and audio_value is not None:
-    digest = hashlib.sha1(audio_value.getvalue()).hexdigest()
-    if st.session_state.get("last_audio") != digest:      # a new recording (not a rerun of the old one)
-        st.session_state["last_audio"] = digest
+query, shown = prefill, prefill
+if chat:
+    typed = (chat.text or "").strip()
+    if typed:
+        query, shown = typed, typed
+    elif chat.audio is not None:
         with st.spinner("Paatti is listening… 🎧"):
             try:
-                heard = transcribe(audio_value)
+                heard = transcribe(chat.audio)
             except Exception as e:
                 heard = ""
                 st.error(f"Paatti couldn't process the recording: {e}")
