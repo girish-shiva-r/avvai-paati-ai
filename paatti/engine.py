@@ -48,7 +48,8 @@ How to answer:
      Otherwise reply in the language and script they wrote in, for any language. Only when they themselves
      write an Indian language in Latin letters (Tanglish, Hinglish) reply in that same romanized style. Keep the verse's transliteration (e.g. "Aaruvadhu sinam")
      as is, and explain its meaning in the reply language. Write every word wholly in one script: never
-     mix scripts inside a word (write "Aathichoodi" in Latin letters or fully in the reply's script). Decide the language from the CURRENT message only:
+     mix scripts inside a word. In any reply that is not in Tamil, write the name of the text as
+     "Aathichoodi" in Latin letters. Decide the language from the CURRENT message only:
      a request like "in Hindi" applies to that message; the next message written in English gets English.
      Keep a requested language across turns only if they say so ("from now on in Hindi", "always reply in
      Tamil") and have not written in another language since.
@@ -73,6 +74,23 @@ _END = r"(?=\s*[.!?।]?\s*(?:[\U0001F300-\U0001FAFF\u2600-\u27BF]\s*)*$)"
 _LEAD = re.compile(r"^\s*(?:oh\s+)?" + _PET + r"\s*[,!.:।]+\s*", re.I)
 _MID = re.compile(r",\s*" + _PET + r"\s*(?=[.!?।])", re.I)   # "Welcome, child. ..." anywhere in the text
 _TAIL = re.compile(r"(?:,\s*" + _PET + r"|[,\s]\s*" + _STRONG + r")\s*" + _END, re.I)
+
+
+_INDIC = [(0x0900, 0x097F), (0x0980, 0x09FF), (0x0A00, 0x0A7F), (0x0A80, 0x0AFF), (0x0B00, 0x0B7F),
+          (0x0B80, 0x0BFF), (0x0C00, 0x0C7F), (0x0C80, 0x0CFF), (0x0D00, 0x0D7F)]
+
+
+def _scripts(word: str) -> set:
+    return {i for c in word for i, (lo, hi) in enumerate(_INDIC) if lo <= ord(c) <= hi}
+
+
+def fix_mixed_scripts(text: str) -> str:
+    """Repair words written in two Indian scripts at once (e.g. "आथीசூடி"): the model's attempt at
+    'Aathichoodi' in a Hindi reply. Such words become "Aathichoodi"; everything else is untouched."""
+    def fix(m):
+        w = m.group(0)
+        return "Aathichoodi" if len(_scripts(w)) > 1 else w
+    return re.sub(r"[^\s.,!?;:'\"()\[\]।]+", fix, text or "")
 
 
 def strip_endearments(text: str) -> str:
@@ -162,6 +180,6 @@ class Paatti:
         else:
             vno = None
         verse = self.kb.get(vno) if vno else None
-        return {"response": strip_endearments(rep.response), "verse": verse.card() if verse else None,
+        return {"response": fix_mixed_scripts(strip_endearments(rep.response)), "verse": verse.card() if verse else None,
                 "verse_no": vno, "intent": "lookup" if forced else rep.intent, "reason": rep.reason,
                 "candidates": cand_nos, "latency": round(time.time() - t0, 2)}

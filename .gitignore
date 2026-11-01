@@ -7,3 +7,4 @@ __pycache__/
 .DS_Store
 .vscode/
 .streamlit/secrets.toml
+eval/voice_samples/
