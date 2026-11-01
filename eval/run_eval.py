@@ -230,8 +230,9 @@ if __name__ == "__main__":
     r.add_argument("--embedders", nargs="+", default=["none"])
     r.add_argument("--docs", nargs="+", default=["legacy", "v2"])
     q = sp.add_parser("pipeline")
-    q.add_argument("--embedder", default="gemini")
-    q.add_argument("--llm", default="gemini", help="gemini (default model) or gemini:<model id>")
+    q.add_argument("--embedder", default="mpnet-ml", help="embedder key (same as the app by default)")
+    q.add_argument("--llm", default="gemini:gemini-3.5-flash-lite",
+                   help="gemini:<model id> (one fixed model keeps runs comparable), gemini:<a>,<b> or plain gemini = the app's model pool")
     q.add_argument("--judge-llm", default="gemini:gemini-3.1-flash-lite",
                    help="model that scores answers; 'same' = reuse --llm")
     q.add_argument("--rpm", type=float, default=9, help="max requests/minute per model (free tier: 10 for Flash-Lite)")
