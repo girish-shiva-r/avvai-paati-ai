@@ -11,14 +11,14 @@ _PATTERNS = [
 _RX = re.compile("|".join(_PATTERNS), re.I)
 
 CRISIS_RESPONSE = (
-    "En chellame, Paatti is so glad you told me this. 🤍 What you are feeling is heavy, "
+    "Paatti is so glad you told me this. 🤍 What you are feeling is heavy, "
     "and you should not carry it alone.\n\n"
     "Please talk to someone right now:\n"
     "- **Tele-MANAS (India, free, 24×7):** call **14416** or **1-800-891-4416**\n"
     "- **Emergency:** **112**\n"
     "- Or reach out to someone you trust and tell them how you feel today.\n\n"
     "If you are outside India, please contact your local emergency number or a crisis line. "
-    "I am still here, kanna. Would you like to tell me what has been weighing on you?"
+    "I am still here. Would you like to tell me what has been weighing on you?"
 )
 
 

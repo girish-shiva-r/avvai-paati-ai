@@ -180,7 +180,7 @@ if "messages" not in st.session_state:
     st.session_state.messages = []
 if not st.session_state.messages:
     with st.chat_message("assistant", avatar="👵"):
-        st.markdown(paatti_md("வணக்கம் Kanna! 🙏\n\nI am Avvaiyar Paatti. Tell me what is on your mind, "
+        st.markdown(paatti_md("வணக்கம்! 🙏\n\nI am Avvaiyar Paatti. Tell me what is on your mind, "
                               "in English, தமிழ், or Tanglish, and I will share a verse of Aathichoodi to guide you."),
                     unsafe_allow_html=True)
 

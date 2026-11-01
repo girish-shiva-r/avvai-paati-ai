@@ -196,7 +196,7 @@ class MockLLM(LLM):
         m = re.search(r"CANDIDATE VERSES.*?\[(\d+)\]", turns[-1]["content"], re.S)
         n = int(m.group(1)) if m else None
         return PaattiReply(intent="advice" if n else "smalltalk", verse_no=n, reason="mock",
-                           response="Kanna, (mock reply) let this verse guide you.")
+                           response="(mock reply) Let this verse guide you.")
     def transcribe(self, audio, mime):
         return "mock transcript"
 

@@ -1,6 +1,6 @@
 """Avvaiyar Paatti engine: safety -> lookup -> hybrid retrieval -> LLM selection+answer -> validation."""
 from __future__ import annotations
-import logging, os, time
+import logging, os, re, time
 from typing import Optional
 
 from .kb import KnowledgeBase
@@ -27,11 +27,16 @@ How to answer:
    trusting the wrong people, not about speech). If they ask for "another verse", choose a different one
    from the ones already used in this conversation.
 3. Write "response" as Paatti:
-   - Address them as "Kanna" or "en chellame". Acknowledge their specific situation in one line.
+   - Do NOT use pet names or endearments of any kind: no "en chellame", "kanna", "thangame", "my dear",
+     "my child", "dear one". Begin by responding directly to what they said, acknowledging their specific
+     situation or feeling in one line. Warmth comes from tone, not from labels.
+   - If they are hurting (lonely, misunderstood, ashamed, sad), acknowledge the feeling first and choose a
+     verse that offers them something constructive to do; never one that implies the pain is their fault.
    - Explain what the verse teaches in simple words, faithful to its meaning (never invent meanings).
      Refer to it by its transliteration (e.g. "Aaruvadhu sinam"); do NOT write the Tamil script verse text,
      the app displays the verse card above your words.
-   - Give 1-2 concrete, practical steps for today. End with one short, loving line.
+   - Give 1-2 concrete, practical steps for today that follow directly from the verse's teaching.
+     End with one short, encouraging line (no pet names).
    - 4-7 sentences. Warm, simple, not preachy. At most 2 emojis.
    - Reply in the grandchild's language and style: English -> English; Tamil script -> Tamil;
      Tanglish (Tamil in Latin letters) -> simple Tanglish/English mix.
@@ -42,6 +47,20 @@ How to answer:
    For "offtopic": kindly say Paatti only shares Aathichoodi's wisdom for life, and invite a life question; verse_no null.
 5. "reason": one short sentence on why this verse fits (for logging, not shown to the user).
 Return JSON only."""
+
+
+_PET = r"(?:en\s+)?(?:chellame|chellam|kanna|kannu|thangame|thangam|my\s+dear(?:est)?|my\s+child|dear\s+one|dear\s+child|my\s+darling|darling|என்\s*செல்லமே|செல்லமே|கண்ணா|தங்கமே)"
+_LEAD = re.compile(r"^\s*(?:oh\s+)?" + _PET + r"\s*[,!.:]+\s*", re.I)
+_TAIL = re.compile(r",\s*" + _PET + r"\s*(?=[.!?]?\s*(?:[\U0001F300-\U0001FAFF\u2600-\u27BF]\s*)*$)", re.I)
+
+
+def strip_endearments(text: str) -> str:
+    """Safety net in case the model still opens/closes with a pet name the prompt asks it to avoid."""
+    t = (text or "").strip()
+    t2 = _LEAD.sub("", t)
+    if t2 != t and t2:
+        t2 = t2[0].upper() + t2[1:]
+    return _TAIL.sub("", t2).strip()
 
 
 class Paatti:
@@ -71,7 +90,7 @@ class Paatti:
         history = (history or [])[-2 * self.history_turns:]
         query = (query or "").strip()
         if not query:
-            return {"response": "Kanna, tell Paatti what is on your mind.", "verse": None, "intent": "smalltalk"}
+            return {"response": "Tell Paatti what is on your mind.", "verse": None, "intent": "smalltalk"}
 
         if is_crisis(query):
             return {"response": CRISIS_RESPONSE, "verse": None, "intent": "crisis", "latency": time.time() - t0}
@@ -102,7 +121,7 @@ class Paatti:
         except Exception as e:
             log.exception("LLM failed")
             v = self.kb.get(forced or (cand_nos[0] if cand_nos else 1))
-            return {"response": f"Kanna, Paatti is a little tired right now, but remember this: {v.meaning}",
+            return {"response": f"Paatti is a little tired right now, but remember this: {v.meaning}",
                     "verse": v.card(), "verse_no": v.no, "intent": "fallback", "error": str(e)[:300],
                     "candidates": cand_nos, "latency": time.time() - t0}
 
@@ -122,6 +141,6 @@ class Paatti:
         else:
             vno = None
         verse = self.kb.get(vno) if vno else None
-        return {"response": rep.response.strip(), "verse": verse.card() if verse else None,
+        return {"response": strip_endearments(rep.response), "verse": verse.card() if verse else None,
                 "verse_no": vno, "intent": "lookup" if forced else rep.intent, "reason": rep.reason,
                 "candidates": cand_nos, "latency": round(time.time() - t0, 2)}
