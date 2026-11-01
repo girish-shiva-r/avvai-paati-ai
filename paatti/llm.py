@@ -184,8 +184,10 @@ class GeminiLLM(LLM):
     def transcribe(self, audio, mime):
         from google.genai import types
         r = self._send([types.Part.from_bytes(data=audio, mime_type=mime or "audio/wav"),
-                        "Transcribe this speech exactly as spoken (it may be English, Tamil, or a mix). "
-                        "Return only the transcript."], self._config())
+                        "Transcribe this speech exactly as spoken, in whatever language(s) it is in (English, Tamil, "
+                        "Hindi, Tanglish, any language), using that language's usual script. Return only the "
+                        "transcript, nothing else. If there is no intelligible speech, return an empty string."],
+                       self._config())
         return (r.text or "").strip()
 
 
