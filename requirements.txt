@@ -3,7 +3,7 @@
 torch                      # CPU-only build: much smaller, no CUDA download
 sentence-transformers>=3.4
 google-genai>=1.50
-streamlit>=1.40
+streamlit>=1.66       # chat_input(accept_audio=True): mic inside the chat bar
 numpy>=1.26
 pandas>=2.2
 pydantic>=2.7
