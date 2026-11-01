@@ -88,7 +88,8 @@ class STEmbedder(Embedder):
         self.device = device or os.getenv("PAATTI_DEVICE") or _best_device()
         self.model = SentenceTransformer(m["id"], device=self.device, token=os.getenv("HF_TOKEN"),
                                          trust_remote_code=bool(m.get("remote")))
-        self.dim = self.model.get_sentence_embedding_dimension()
+        dim_fn = getattr(self.model, "get_embedding_dimension", None) or self.model.get_sentence_embedding_dimension
+        self.dim = dim_fn()  # renamed in sentence-transformers 6
 
     def encode(self, texts, is_query):
         prompt = self.q_prompt if is_query else self.d_prompt
