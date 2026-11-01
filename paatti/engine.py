@@ -28,7 +28,7 @@ How to answer:
    from the ones already used in this conversation.
 3. Write "response" as Paatti:
    - Do NOT use pet names or endearments of any kind, in any language: no "en chellame", "kanna",
-     "thangame", "my dear", "my child", "dear one", "beta", "mere bache", "mone", "mole", etc. Begin by responding directly to what they said, acknowledging their specific
+     "thangame", "my dear", "my child", "child", "dear one", "beta", "mere bache", "mone", "mole", etc. Begin by responding directly to what they said, acknowledging their specific
      situation or feeling in one line. Warmth comes from tone, not from labels.
    - If they are hurting (lonely, misunderstood, ashamed, sad), acknowledge the feeling first and choose a
      verse that offers them something constructive to do; never one that implies the pain is their fault.
@@ -47,7 +47,8 @@ How to answer:
      request in Latin letters unless they explicitly ask for romanized/Hinglish/Tanglish.
      Otherwise reply in the language and script they wrote in, for any language. Only when they themselves
      write an Indian language in Latin letters (Tanglish, Hinglish) reply in that same romanized style. Keep the verse's transliteration (e.g. "Aaruvadhu sinam")
-     as is, and explain its meaning in the reply language. Decide the language from the CURRENT message only:
+     as is, and explain its meaning in the reply language. Write every word wholly in one script: never
+     mix scripts inside a word (write "Aathichoodi" in Latin letters or fully in the reply's script). Decide the language from the CURRENT message only:
      a request like "in Hindi" applies to that message; the next message written in English gets English.
      Keep a requested language across turns only if they say so ("from now on in Hindi", "always reply in
      Tamil") and have not written in another language since.
@@ -66,10 +67,11 @@ _STRONG = (r"(?:en\s+)?(?:chellame|chellam|thangame|my\s+dear(?:est)?|my\s+child
            r"என்\s*செல்லமே|செல்லமே|தங்கமே|"
            r"mere\s+(?:pyare\s+|pyaare\s+)?bacc?h?(?:e|on|a)|मेरे\s+(?:प्यारे\s+)?बच्च(?:े|ों)|"
            r"മോനേ|മോളേ)")
-_WEAK = r"(?:kanna|kannu|கண்ணா|beta|beti|बेटा|बेटी|bachcha|baccha|darling|mone|mole)"
+_WEAK = r"(?:kanna|kannu|கண்ணா|beta|beti|बेटा|बेटी|bachcha|baccha|darling|mone|mole|child|dear)"
 _PET = r"(?:" + _STRONG + r"|" + _WEAK + r")"
 _END = r"(?=\s*[.!?।]?\s*(?:[\U0001F300-\U0001FAFF\u2600-\u27BF]\s*)*$)"
 _LEAD = re.compile(r"^\s*(?:oh\s+)?" + _PET + r"\s*[,!.:।]+\s*", re.I)
+_MID = re.compile(r",\s*" + _PET + r"\s*(?=[.!?।])", re.I)   # "Welcome, child. ..." anywhere in the text
 _TAIL = re.compile(r"(?:,\s*" + _PET + r"|[,\s]\s*" + _STRONG + r")\s*" + _END, re.I)
 
 
@@ -79,7 +81,7 @@ def strip_endearments(text: str) -> str:
     t2 = _LEAD.sub("", t)
     if t2 != t and t2:
         t2 = t2[0].upper() + t2[1:]
-    return _TAIL.sub("", t2).strip()
+    return _MID.sub("", _TAIL.sub("", t2)).strip()
 
 
 class Paatti:
