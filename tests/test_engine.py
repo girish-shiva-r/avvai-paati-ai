@@ -477,3 +477,51 @@ def test_welcome_child_stripped():
     assert strip_endearments("Welcome, child. Tell me what is on your heart.") == "Welcome. Tell me what is on your heart."
     assert strip_endearments("Every child deserves care.") == "Every child deserves care."
     assert strip_endearments("Child, take a breath.") == "Take a breath."
+
+
+def _voice_check():
+    import importlib.util
+    spec = importlib.util.spec_from_file_location("voice_check", Path(__file__).resolve().parent.parent / "scripts" / "voice_check.py")
+    m = importlib.util.module_from_spec(spec); spec.loader.exec_module(m)
+    return m
+
+
+def test_voice_suite_parses_say_voices(monkeypatch):
+    vc = _voice_check()
+    sample = ("Lekha               hi_IN    # नमस्ते, मेरा नाम लेखा है।\n"
+              "Rishi               en_IN    # Hello! My name is Rishi.\n"
+              "Eddy (English (US)) en_US    # Hello! My name is Eddy.\n")
+    class R: stdout = sample
+    monkeypatch.setattr(vc.subprocess, "run", lambda *a, **k: R())
+    v = vc.installed_voices()
+    assert v["hi_IN"] == "Lekha" and v["en_IN"] == "Rishi" and v["en_US"] == "Eddy (English (US))"
+
+
+def test_voice_suite_checks():
+    vc = _voice_check()
+    case = lambda name: next(c for c in vc.CASES if c["name"] == name)
+    assert vc.check(case("silence"), "", {}) == []
+    assert vc.check(case("noise"), "hmm", {}) != []
+    ok = {"verse_no": 86, "intent": "advice", "response": "वेतन मिलते ही कुछ हिस्सा बचाइए।"}
+    assert vc.check(case("hi_salary"), "मैं अपनी सारी सैलरी", ok) == []
+    assert vc.check(case("hi_salary"), "x", {**ok, "response": "Save part of your salary first."})  # wrong script
+    assert vc.check(case("en_crisis"), "I don't want to live anymore.", {"verse_no": None, "intent": "crisis"}) == []
+    assert vc.check(case("en_offtopic"), "weather?", {"verse_no": None, "intent": "smalltalk"}) == []
+    assert vc.check(case("en_lookup_54"), "verse 54", {"verse_no": 2, "intent": "advice"})  # wrong verse + intent
+
+
+def test_voice_suite_generated_clips(tmp_path, monkeypatch):
+    vc = _voice_check()
+    monkeypatch.setattr(vc, "OUT", tmp_path)
+    for g in ("silence", "noise"):
+        p, how = vc.make_clip({"name": g, "gen": g}, {})
+        assert p.exists() and p.stat().st_size > 30000
+    p, why = vc.make_clip(next(c for c in vc.CASES if c["name"] == "ta_angry"), {"en_US": "Samantha"})
+    assert p is None and "ta_IN" in why
+
+
+def test_fix_mixed_scripts():
+    from paatti.engine import fix_mixed_scripts
+    assert fix_mixed_scripts("आथीசூடி का वचन") == "Aathichoodi का वचन"
+    assert fix_mixed_scripts("ஆத்திசூடி கற்போம்.") == "ஆத்திசூடி கற்போம்."
+    assert fix_mixed_scripts("Aathichoodi teaches us, कल मिलते हैं।") == "Aathichoodi teaches us, कल मिलते हैं।"
