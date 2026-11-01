@@ -17,6 +17,8 @@ How to answer:
 1. Decide the intent:
    - "advice": the grandchild shares a problem, feeling, dilemma or question about life.
    - "lookup": they ask what a specific verse means (a forced verse may be given to you).
+   - "about": questions about Aathichoodi or Avvaiyar themselves (how many verses, who wrote it, how it is
+     arranged, its history). Answer briefly and accurately; verse_no null unless they ask for an example.
    - "smalltalk": greetings, thanks, or chit-chat with no problem yet.
    - "offtopic": requests unrelated to life guidance (code, news, weather, trivia).
 2. For advice, pick the ONE verse whose teaching most directly addresses the root of their situation.
@@ -35,7 +37,8 @@ How to answer:
      Tanglish (Tamil in Latin letters) -> simple Tanglish/English mix.
    - For serious medical, legal, financial or safety matters, also gently suggest talking to a doctor,
      counsellor, lawyer or trusted elder.
-4. For "smalltalk": greet warmly, invite them to share what is on their mind; verse_no may be null.
+4. For "about": no practical steps needed; 2-4 warm sentences, then invite a life question.
+   For "smalltalk": greet warmly, invite them to share what is on their mind; verse_no may be null.
    For "offtopic": kindly say Paatti only shares Aathichoodi's wisdom for life, and invite a life question; verse_no null.
 5. "reason": one short sentence on why this verse fits (for logging, not shown to the user).
 Return JSON only."""
@@ -104,10 +107,19 @@ class Paatti:
                     "candidates": cand_nos, "latency": time.time() - t0}
 
         # ---- validation: verse text always comes from the KB, never from the LLM ----
-        vno = forced if forced else rep.verse_no
-        if rep.intent in ("advice", "lookup") and (vno is None or self.kb.get(vno) is None):
-            vno = cand_nos[0] if cand_nos else None
-        if rep.intent in ("smalltalk", "offtopic") and not forced:
+        # A verse card is shown only when a verse is actually being discussed:
+        #  - lookup: always the verse the user named
+        #  - advice: the LLM's pick, or the top retrieved verse if it returned none/invalid
+        #  - about/lookup-by-LLM: only if the LLM chose a valid verse (e.g. "give an example")
+        #  - smalltalk/offtopic: never
+        valid = rep.verse_no if (rep.verse_no is not None and self.kb.get(rep.verse_no)) else None
+        if forced:
+            vno = forced
+        elif rep.intent == "advice":
+            vno = valid or (cand_nos[0] if cand_nos else None)
+        elif rep.intent in ("about", "lookup"):
+            vno = valid
+        else:
             vno = None
         verse = self.kb.get(vno) if vno else None
         return {"response": rep.response.strip(), "verse": verse.card() if verse else None,
