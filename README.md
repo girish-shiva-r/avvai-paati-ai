@@ -73,7 +73,7 @@ when pet names were removed, which was intended.
 The right verse is in Gemini's top 8 for 97% of queries, so retrieval is no longer the bottleneck and fine-tuning
 isn't needed. Adding equal-weight BM25 to a strong dense model hurt (0.650), so BM25 is off by default.
 
-**Voice suite** (`scripts/voice_check.py --suite`) covers English (normal, fast, quiet speech), Hindi, Tamil,
+**Voice suite** (`scripts/voice_check.py --suite`, on the `dev-tools` branch) covers English (normal, fast, quiet speech), Hindi, Tamil,
 Malayalam, Telugu, spoken verse numbers, off-topic, crisis, silence and noise. Transcription takes ~2 s.
 
 ## Run locally
@@ -83,7 +83,6 @@ python -m venv .venv && source .venv/bin/activate
 pip install -r requirements.txt
 cp .env.example .env            # add GOOGLE_API_KEY
 streamlit run app.py            # the whole bot runs in-process
-python -m pytest -q             # 97 offline tests, no key needed
 ```
 
 ## Deploy: Streamlit Community Cloud
@@ -132,34 +131,31 @@ gemini-3.5-flash-lite, gemini-3.1-flash-lite, gemini-3.8-flash, gemini-3.7-flash
 | `PAATTI_EMBEDDER` | `mpnet-ml` | `none` = BM25 only; any key in `paatti/embedders.py` (e.g. `bge-m3`) or `st:<hf id>` |
 | `PAATTI_BM25_WEIGHT` | `0` | keyword weight in fusion (0 = dense only) |
 | `PAATTI_DEVICE` | auto | `cpu` / `mps` / `cuda` |
-| `API_URL` | – | send chat to the optional FastAPI backend instead of running in-process |
 
-## Evaluate
+## Repository layout
 
+`main` holds only what the Streamlit app needs to run:
+```
+app.py                Streamlit UI (chat, mic in the chat bar, verse card)
+paatti/               engine.py (pipeline, language + persona rules) · kb.py (KB, lookup) · retrieval.py
+                      embedders.py · llm.py (Gemini model pool, transcription) · safety.py · voice.py
+data/aathichoodi_kb.json   the curated knowledge base
+requirements.txt · .streamlit/config.toml · .env.example
+```
+
+Development tools are on the **[`dev-tools`](https://github.com/girish-shiva-r/avvai-paati-ai/tree/dev-tools)** branch:
+the 167-query eval set and runners (`eval/`), saved results (`eval/results/`), the embedder benchmark, the voice
+test suite, offline tests, the KB sources (`scripts/kb_part*.py` + `build_kb.py`) and the optional FastAPI backend.
 ```bash
-pip install -r requirements-eval.txt
-python eval/bench_embedders.py                       # retrieval benchmark of raw models (--purge-cache if low on disk)
-python eval/run_eval.py pipeline --judge             # end-to-end: verse accuracy, language, LLM judge
-python eval/run_eval.py pipeline --judge --resume    # continue after a quota stop
-python scripts/voice_check.py --suite                # voice: macOS `say` clips -> transcript -> reply
+git checkout dev-tools && pip install -r requirements-eval.txt
+python -m pytest -q                                  # offline tests, no key needed
+python eval/run_eval.py pipeline --judge             # end-to-end eval (--resume after a quota stop)
+python scripts/voice_check.py --suite                # voice tests (macOS)
 ```
-
-The pipeline eval pins one model (`gemini-3.5-flash-lite`) so runs stay comparable. The judge runs on
-`gemini-3.1-flash-lite`, so no model grades its own answers. Requests are paced at 9/min, and results are saved
-after every question. A full run takes ~340 requests (~25 min).
-Never copy eval queries into the KB situations, because that leaks the test set.
-
-## Layout
-```
-paatti/   engine.py (pipeline, language + persona rules) · kb.py (KB, lookup) · retrieval.py · embedders.py
-          llm.py (Gemini model pool, transcription) · safety.py (crisis) · voice.py (transcript clean-up)
-data/     aathichoodi_kb.json (built by scripts/build_kb.py from kb_part1-4.py)
-eval/     eval_set.jsonl (167) · make_eval.py · run_eval.py · bench_embedders.py · bench_colab.ipynb
-app.py (Streamlit) · api.py (optional FastAPI) · scripts/voice_check.py · tests/
-```
+If you change code on `main`, merge `main` into `dev-tools` before running the tests there.
 
 ## Next steps
-1. Have a Tamil scholar review the meanings and situations in `scripts/kb_part*.py`. This makes the meanings more
+1. Have a Tamil scholar review the meanings and situations in `scripts/kb_part*.py` (on `dev-tools`), then rebuild `data/aathichoodi_kb.json`. This makes the meanings more
    faithful and settles which verse is "right" in ambiguous cases.
 2. Collect real user queries with 👍/👎 feedback and grow the eval set from them.
 3. Fine-tune an embedder on KB situations only if real traffic shows retrieval misses.

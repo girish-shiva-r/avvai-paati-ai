@@ -162,28 +162,14 @@ def make_embedder(spec: Optional[str]) -> Optional[Embedder]:
 
 # ---------------- docs ----------------
 def build_docs(kb: KnowledgeBase, mode: str = "v2") -> tuple[list[str], list[int]]:
-    """mode='v2': multi-vector (meaning+themes, plus each situation).
-       mode='legacy': one long 'Rich_English_Explanation'-style doc per verse (old project)."""
+    """Multi-vector docs: meaning+themes, plus one doc per situation."""
     texts, owners = [], []
-    if mode == "legacy":
-        legacy = kb_legacy_texts()
-        for n, t in legacy.items():
-            texts.append(t); owners.append(n)
-        return texts, owners
     for v in kb.verses:
         texts.append(f"{v.literal} {v.meaning} Themes: {', '.join(v.themes)}. {v.translit} {v.tamil} {v.tamil_meaning}")
         owners.append(v.no)
         for s in v.situations:
             texts.append(s); owners.append(v.no)
     return texts, owners
-
-
-def kb_legacy_texts() -> dict[int, str]:
-    import pandas as pd
-    p = Path(__file__).resolve().parent.parent / "data" / "legacy_aathichoodi_english_rich.csv"
-    df = pd.read_csv(p)
-    col = "Embedding_Text" if "Embedding_Text" in df.columns else "Rich_English_Explanation"
-    return {int(r["Verse_No"]): str(r[col]) for _, r in df.iterrows()}
 
 
 class HybridRetriever:
