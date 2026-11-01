@@ -1,6 +1,5 @@
-"""Streamlit UI for Avvaiyar Paatti. Set API_URL to use the hosted backend; leave empty to run the engine in-process."""
+"""Streamlit UI for Avvaiyar Paatti. The whole bot runs in-process."""
 import html, json, os, time
-import requests
 import streamlit as st
 
 
@@ -90,8 +89,8 @@ def _secret(name, default=None):
         return os.getenv(name, default)
 
 
-API_URL = _secret("API_URL")  # e.g. https://GSR-608001-avvaiyar-brain.hf.space  (empty -> run engine in-process)
-for k in ("GOOGLE_API_KEY", "PAATTI_EMBEDDER", "PAATTI_LLM", "PAATTI_LLM_FALLBACK", "PAATTI_THINKING_LEVEL"):
+for k in ("GOOGLE_API_KEY", "PAATTI_EMBEDDER", "PAATTI_LLM_MODELS", "PAATTI_LLM_STRATEGY", "PAATTI_LLM",
+          "PAATTI_LLM_FALLBACK", "PAATTI_THINKING_LEVEL"):
     if _secret(k) and not os.getenv(k):
         os.environ[k] = _secret(k)
 
@@ -105,24 +104,12 @@ def local_bot():
 def ask(query, history):
     hist = [{"role": m["role"], "content": m["content"].removeprefix("🎤 "), "verse_no": m.get("verse_no")}
             for m in history if m.get("role") in ("user", "assistant")]
-    if API_URL:
-        base = API_URL.rstrip("/").removesuffix("/chat")
-        r = requests.post(f"{base}/chat", json={"query": query, "history": hist}, timeout=90)
-        if r.status_code == 503:
-            raise RuntimeError("Paatti is waking up — please send again in a few seconds 🙏")
-        r.raise_for_status()
-        return r.json()
     return local_bot().answer(query, hist)
 
 
 def transcribe(audio) -> str:
     """Speech -> text (any language). Returns "" when nothing intelligible was said."""
     data = audio.getvalue()
-    if API_URL:
-        base = API_URL.rstrip("/").removesuffix("/chat")
-        r = requests.post(f"{base}/transcribe", files={"file": (audio.name, data, "audio/wav")}, timeout=90)
-        r.raise_for_status()
-        return r.json().get("text", "").strip()
     return local_bot().llm.transcribe(data, "audio/wav").strip()
 
 
