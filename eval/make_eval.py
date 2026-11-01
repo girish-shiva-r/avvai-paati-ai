@@ -153,6 +153,17 @@ MIXED = [
  ("எதையும் தொடங்க முடியவில்லை, எல்லாம் தள்ளிப் போடுகிறேன்", [22, 54]),
  ("online rummy la panam pochu", [49]),
 ]
+# Other languages (expect = script the reply must be written in; "latin" for romanized or Latin-script languages)
+MULTI = [
+ ("मुझे बहुत गुस्सा आता है, क्या करूँ?", [2, 105], "devanagari"),
+ ("मैं अपनी सारी सैलरी खर्च कर देता हूँ", [86, 18], "devanagari"),
+ ("എനിക്ക് പഠിക്കാൻ തോന്നുന്നില്ല", [101, 54, 29], "malayalam"),
+ ("నా స్నేహితుడు నన్ను మోసం చేశాడు", [108, 19], "telugu"),
+ ("mujhe bahut aalas aata hai, kuch karne ka mann nahi karta", [54, 31], "latin"),
+ ("Je remets toujours mon travail à plus tard", [22, 54], "latin"),
+ ("I keep procrastinating. Please answer in Hindi.", [22, 54], "devanagari"),
+ ("I feel jealous of my friend, reply in Malayalam", [12], "malayalam"),
+]
 LOOKUP = [
  ("What does verse 54 mean?", [54]),
  ("Explain ஆறுவது சினம்", [2]),
@@ -182,6 +193,8 @@ for q, g in MIXED: rows.append({"query": q, "gold": g, "type": "advice", "lang":
 for q, g in LOOKUP: rows.append({"query": q, "gold": g, "type": "lookup", "lang": "mixed"})
 for q, g in OFFTOPIC: rows.append({"query": q, "gold": g, "type": "offtopic", "lang": "en"})
 for q, g in CRISIS: rows.append({"query": q, "gold": g, "type": "crisis", "lang": "en"})
+# appended last so ids of the original 159 queries stay stable (old results files remain resumable)
+for q, g, sc in MULTI: rows.append({"query": q, "gold": g, "type": "advice", "lang": "other", "expect_script": sc})
 for i, r in enumerate(rows): r["id"] = i
 out = Path(__file__).parent / "eval_set.jsonl"
 out.write_text("\n".join(json.dumps(r, ensure_ascii=False) for r in rows) + "\n")

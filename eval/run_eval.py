@@ -114,7 +114,7 @@ def cmd_pipeline(a):
                       f"{' --judge' if a.judge else ''} --resume {out}")
                 break
             o.update(id=r["id"], llm=bot.llm.name, query=r["query"], gold=r["gold"], type=r["type"],
-                     correct=_correct(r, o))
+                     correct=_correct(r, o), expect_script=r.get("expect_script"))
             if judge_llm and r["type"] == "advice" and o.get("verse") and o.get("intent") not in ("fallback", "error"):
                 o["judge"] = judge(judge_llm, r["query"], o)
                 judge_fails = judge_fails + 1 if o["judge"] is None else 0
@@ -141,6 +141,23 @@ def _correct(r, o):
     return o.get("intent") == "crisis"
 
 
+_SCRIPTS = {"devanagari": (0x0900, 0x097F), "malayalam": (0x0D00, 0x0D7F), "telugu": (0x0C00, 0x0C7F),
+            "tamil": (0x0B80, 0x0BFF), "kannada": (0x0C80, 0x0CFF), "bengali": (0x0980, 0x09FF)}
+
+
+def script_ok(text, expect):
+    """True if most letters in the reply are in the expected script ('latin' = ASCII/Latin letters)."""
+    letters = [c for c in text or "" if c.isalpha()]
+    if not letters:
+        return False
+    if expect == "latin":
+        hit = sum(c.isascii() or "\u00c0" <= c <= "\u024f" for c in letters)
+    else:
+        lo, hi = _SCRIPTS[expect]
+        hit = sum(lo <= ord(c) <= hi for c in letters)
+    return hit / len(letters) >= 0.6
+
+
 def summarize_pipeline(outs, use_judge, out):
     print()
     bad = [o for o in outs if o.get("intent") in ("fallback", "error")]
@@ -152,6 +169,10 @@ def summarize_pipeline(outs, use_judge, out):
         if xs:
             c = sum(o["correct"] for o in xs)
             print(f"{t:9s} accuracy {c}/{len(xs)} = {c / len(xs):.3f}")
+    ml = [o for o in ok if o.get("expect_script")]
+    if ml:
+        c = sum(script_ok(o.get("response", ""), o["expect_script"]) for o in ml)
+        print(f"language  replied in the requested language/script {c}/{len(ml)} = {c / len(ml):.3f}")
     lat = [o.get("latency", 0) for o in ok if o.get("latency")]
     if lat:
         print(f"latency p50={statistics.median(lat):.2f}s p95={sorted(lat)[int(.95 * (len(lat) - 1))]:.2f}s")
