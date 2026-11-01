@@ -411,3 +411,21 @@ def test_any_language_prompt_and_script_check():
     assert not script_ok("When anger comes, pause and breathe.", "devanagari")
     assert script_ok("ദേഷ്യം വരുമ്പോൾ ഒന്നു നിൽക്കൂ.", "malayalam")
     assert script_ok("Gussa aaye toh thoda ruko, Aaruvadhu sinam yaad karo.", "latin")
+
+
+@pytest.mark.parametrize("raw,expected", [
+    ("Hamesha sachai ke raste par chalte rahein mere bache.", "Hamesha sachai ke raste par chalte rahein."),
+    ("Beta, gussa mat karo.", "Gussa mat karo."),
+    ("हमेशा सच के रास्ते पर चलिए, मेरे बच्चे।", "हमेशा सच के रास्ते पर चलिए।"),
+    ("The beta version is out.", "The beta version is out."),
+    ("Use the beta", "Use the beta"),
+    ("Mone, take care.", "Take care."),
+])
+def test_strip_endearments_other_languages(raw, expected):
+    from paatti.engine import strip_endearments
+    assert strip_endearments(raw) == expected
+
+
+def test_named_language_uses_native_script():
+    from paatti.engine import SYSTEM
+    assert "ITS OWN SCRIPT" in SYSTEM and "Devanagari" in SYSTEM

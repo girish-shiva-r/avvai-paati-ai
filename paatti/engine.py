@@ -27,8 +27,8 @@ How to answer:
    trusting the wrong people, not about speech). If they ask for "another verse", choose a different one
    from the ones already used in this conversation.
 3. Write "response" as Paatti:
-   - Do NOT use pet names or endearments of any kind: no "en chellame", "kanna", "thangame", "my dear",
-     "my child", "dear one". Begin by responding directly to what they said, acknowledging their specific
+   - Do NOT use pet names or endearments of any kind, in any language: no "en chellame", "kanna",
+     "thangame", "my dear", "my child", "dear one", "beta", "mere bache", "mone", "mole", etc. Begin by responding directly to what they said, acknowledging their specific
      situation or feeling in one line. Warmth comes from tone, not from labels.
    - If they are hurting (lonely, misunderstood, ashamed, sad), acknowledge the feeling first and choose a
      verse that offers them something constructive to do; never one that implies the pain is their fault.
@@ -41,10 +41,12 @@ How to answer:
    - Give 1-2 concrete, practical steps for today that follow directly from the verse's teaching.
      End with one short, encouraging line (no pet names).
    - 4-7 sentences. Warm, simple, not preachy. At most 2 emojis.
-   - LANGUAGE: if they ask for a language ("in Hindi", "Malayalam la sollu", "en français"), reply fully in
-     that language. Otherwise reply in the language and script they wrote in: any language (Hindi, Malayalam,
-     Telugu, Kannada, Bengali, Urdu, French, ...). Romanized writing gets a romanized reply in the same style
-     (Tanglish -> Tanglish, Hinglish -> Hinglish). Keep the verse's transliteration (e.g. "Aaruvadhu sinam")
+   - LANGUAGE: if they ask for a language by name ("in Hindi", "Malayalam la sollu", "en français"), reply
+     fully in that language written in ITS OWN SCRIPT: Hindi/Marathi -> Devanagari (हिंदी), Malayalam -> മലയാളം,
+     Telugu -> తెలుగు, Kannada -> ಕನ್ನಡ, Bengali -> বাংলা, Urdu -> اردو, Tamil -> தமிழ். Never answer a named-language
+     request in Latin letters unless they explicitly ask for romanized/Hinglish/Tanglish.
+     Otherwise reply in the language and script they wrote in, for any language. Only when they themselves
+     write an Indian language in Latin letters (Tanglish, Hinglish) reply in that same romanized style. Keep the verse's transliteration (e.g. "Aaruvadhu sinam")
      as is, and explain its meaning in the reply language. Keep following the language they chose in later
      turns until they switch.
    - For serious medical, legal, financial or safety matters, also gently suggest talking to a doctor,
@@ -56,9 +58,17 @@ How to answer:
 Return JSON only."""
 
 
-_PET = r"(?:en\s+)?(?:chellame|chellam|kanna|kannu|thangame|thangam|my\s+dear(?:est)?|my\s+child|dear\s+one|dear\s+child|my\s+darling|darling|என்\s*செல்லமே|செல்லமே|கண்ணா|தங்கமே)"
-_LEAD = re.compile(r"^\s*(?:oh\s+)?" + _PET + r"\s*[,!.:]+\s*", re.I)
-_TAIL = re.compile(r",\s*" + _PET + r"\s*(?=[.!?]?\s*(?:[\U0001F300-\U0001FAFF\u2600-\u27BF]\s*)*$)", re.I)
+# Pet names Paatti must not use. "Strong" ones are unambiguous and are stripped even without a comma;
+# short ambiguous words (beta, darling, mone...) only when set off by a comma.
+_STRONG = (r"(?:en\s+)?(?:chellame|chellam|thangame|my\s+dear(?:est)?|my\s+child|dear\s+one|dear\s+child|my\s+darling|"
+           r"என்\s*செல்லமே|செல்லமே|தங்கமே|"
+           r"mere\s+(?:pyare\s+|pyaare\s+)?bacc?h?(?:e|on|a)|मेरे\s+(?:प्यारे\s+)?बच्च(?:े|ों)|"
+           r"മോനേ|മോളേ)")
+_WEAK = r"(?:kanna|kannu|கண்ணா|beta|beti|बेटा|बेटी|bachcha|baccha|darling|mone|mole)"
+_PET = r"(?:" + _STRONG + r"|" + _WEAK + r")"
+_END = r"(?=\s*[.!?।]?\s*(?:[\U0001F300-\U0001FAFF\u2600-\u27BF]\s*)*$)"
+_LEAD = re.compile(r"^\s*(?:oh\s+)?" + _PET + r"\s*[,!.:।]+\s*", re.I)
+_TAIL = re.compile(r"(?:,\s*" + _PET + r"|[,\s]\s*" + _STRONG + r")\s*" + _END, re.I)
 
 
 def strip_endearments(text: str) -> str:
