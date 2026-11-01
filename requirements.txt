@@ -1,14 +1,12 @@
-streamlit>=1.38.0
-requests==2.32.3
-fastapi==0.111.0
-uvicorn==0.30.1
-pandas==2.2.2
-python-dotenv==1.0.1
-huggingface-hub==0.23.4
-langchain-community==0.2.4
-langchain-huggingface==0.0.3
-langchain-google-genai==1.0.6
-faiss-cpu==1.8.0
-python-multipart==0.0.9
-google-generativeai>=0.7.2
-gTTS==2.5.1
+# Streamlit app (Streamlit Community Cloud installs this file). Runs the whole bot in-process.
+--extra-index-url https://download.pytorch.org/whl/cpu
+torch                      # CPU-only build: much smaller, no CUDA download
+sentence-transformers>=3.4
+google-genai>=1.50
+streamlit>=1.40
+numpy>=1.26
+pandas>=2.2
+pydantic>=2.7
+python-dotenv>=1.0
+requests>=2.32
+gTTS>=2.5

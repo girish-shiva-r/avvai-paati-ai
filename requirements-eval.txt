@@ -1,0 +1,8 @@
+-r requirements.txt
+-r requirements-api.txt
+httpx
+sentence-transformers>=3.4
+transformers>=4.51        # Qwen3-Embedding
+einops                    # jina-v3 (optional)
+pyarrow>=15
+pytest>=8

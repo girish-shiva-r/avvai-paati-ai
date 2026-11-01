@@ -1,0 +1,2679 @@
+[
+ {
+  "no": 1,
+  "letter": "அ",
+  "tamil": "அறம் செய்ய விரும்பு",
+  "translit": "Aram seyya virumbu",
+  "tamil_meaning": "தருமம் செய்ய நீ விரும்புவாயாக நல்ல செயல்களைச் செய்வதற்கு மனம் விருப்பம் கொள்ள வேண்டும். மனம் விருப்பம் கொள்ள அந்த நல்ல செயல்களை மகிழ்வுடன் செய்ய முடியும்.",
+  "source_english": "Intend to do the right deeds.",
+  "literal": "Desire to do good (dharma).",
+  "meaning": "Want to do good deeds. When the heart truly wishes to do right, good actions come naturally and joyfully instead of feeling like a duty.",
+  "themes": [
+   "doing good",
+   "charity",
+   "kindness",
+   "volunteering",
+   "ethics",
+   "purpose",
+   "helping"
+  ],
+  "situations": [
+   "I want to do something meaningful for others but never start",
+   "I found a wallet on the road, should I return it?",
+   "Is it worth doing good when nobody notices?",
+   "I feel my life has no purpose",
+   "nallathu pannanum nu thonudhu aana start panna mudiyala",
+   "How do I become a better person?"
+  ]
+ },
+ {
+  "no": 2,
+  "letter": "ஆ",
+  "tamil": "ஆறுவது சினம்",
+  "translit": "Aaruvadhu sinam",
+  "tamil_meaning": "கோபம் தணிக்கப்பட வேண்டியதாகும். கோபம் வரும் போது நமது சிந்திக்கும் அறிவு குறைந்து உணர்ச்சி வசப்பட்டுத் தவறான முடிவு எடுக்கும் சூழ்நிலை உருவாகும். அஃது எல்லோருக்கும் நல்லது அல்ல.",
+  "source_english": "The nature of anger is to subside.",
+  "literal": "Anger is meant to be cooled.",
+  "meaning": "Anger must be calmed. When anger rises, thinking shrinks and we make wrong decisions, so let it cool before you act or speak.",
+  "themes": [
+   "anger",
+   "temper",
+   "rage",
+   "calm",
+   "frustration",
+   "emotional control"
+  ],
+  "situations": [
+   "I get angry very easily",
+   "I shouted at my mother and regret it",
+   "My boss makes me so furious I want to quit on the spot",
+   "How do I control my temper?",
+   "enakku romba kovam varudhu",
+   "I snapped at my friend over something small"
+  ]
+ },
+ {
+  "no": 3,
+  "letter": "இ",
+  "tamil": "இயல்வது கரவேல்",
+  "translit": "Iyalvadhu karavel",
+  "tamil_meaning": "உன்னால் கொடுக்கக்கூடிய பொருளை யாசிப்பவர்க்கு ஒளிக்காது கொடு.",
+  "source_english": "Help others as much as you can.",
+  "literal": "Do not hide what you are able to give.",
+  "meaning": "When someone in need asks and you are able to help, do not hide your means or pretend you cannot. Give what you can.",
+  "themes": [
+   "generosity",
+   "sharing",
+   "stinginess",
+   "helping the needy",
+   "giving"
+  ],
+  "situations": [
+   "My cousin asked for a loan and I lied that I have no money",
+   "Should I help a friend who is struggling financially?",
+   "I feel guilty for not sharing my notes with classmates",
+   "I'm being stingy and I know it",
+   "A poor man asked me for food and I walked away"
+  ]
+ },
+ {
+  "no": 4,
+  "letter": "ஈ",
+  "tamil": "ஈவது விலக்கேல்",
+  "translit": "Eevadhu vilakkel",
+  "tamil_meaning": "ஒருவர், மற்றவர்க்குக் கொடுப்பதை, வேண்டாமென்று தடுக்காதே",
+  "source_english": "Do not stop or avoid charitable deeds.",
+  "literal": "Do not stop others from giving.",
+  "meaning": "Never discourage or block someone else's generosity. When a person wants to give or help, do not stand in the way.",
+  "themes": [
+   "generosity",
+   "interfering",
+   "discouraging charity",
+   "family money"
+  ],
+  "situations": [
+   "My father wants to donate to a temple and I want to stop him",
+   "My wife gives money to her poor relatives and it annoys me",
+   "Should I stop my friend from helping a stranger?",
+   "I told my mom not to give to beggars",
+   "My roommate keeps lending money and I keep telling him not to"
+  ]
+ },
+ {
+  "no": 5,
+  "letter": "உ",
+  "tamil": "உடையது விளம்பேல்",
+  "translit": "udaiyathu vilambel",
+  "tamil_meaning": "உன்னிடத்திலுள்ள பொருளை அல்லது இரகசியங்களைப் பிறர் அறியுமாறு சொல்லாதே. உனக்குள்ள பொருள் மற்றும் சிறப்புகளைப் பலரும் அறியும்படி பெருமையாகப் பேசாதே. உன்னுடைய பலவீனத்தையும் பலரும் அறியும்படி சொல்லாதே. அதனால் நல்ல பயன் எதுவும் இல்லை.",
+  "source_english": "Do not brag about your possessions.",
+  "literal": "Do not boast of what you possess.",
+  "meaning": "Do not show off your wealth, achievements or secrets to everyone. Bragging invites envy and exposes your weaknesses.",
+  "themes": [
+   "bragging",
+   "showing off",
+   "humility",
+   "privacy",
+   "social media flexing",
+   "secrets"
+  ],
+  "situations": [
+   "I love posting my new things on Instagram",
+   "I told everyone about my salary and now people treat me differently",
+   "My friend keeps flexing his car",
+   "Is it wrong to show off my achievements?",
+   "I shared my personal secrets with everyone and regret it"
+  ]
+ },
+ {
+  "no": 6,
+  "letter": "ஊ",
+  "tamil": "ஊக்கமது கைவிடேல்",
+  "translit": "ookkamathu kaividhel",
+  "tamil_meaning": "எப்போதும் முயற்சியைக் கைவிடக்கூடாது.",
+  "source_english": "Never lose hope or motivation.",
+  "literal": "Never give up your enthusiasm.",
+  "meaning": "Never let go of your drive and effort. Keep trying even after failure; perseverance is what carries you to success.",
+  "themes": [
+   "motivation",
+   "giving up",
+   "perseverance",
+   "failure",
+   "hope",
+   "persistence",
+   "determination"
+  ],
+  "situations": [
+   "I failed my exam again and want to quit",
+   "I've lost all motivation",
+   "My startup failed, should I just give up?",
+   "I got rejected from 20 jobs",
+   "I feel like nothing I do works out",
+   "ellam vittudalam nu thonudhu"
+  ]
+ },
+ {
+  "no": 7,
+  "letter": "எ",
+  "tamil": "எண் எழுத்து இகழேல்",
+  "translit": "enn ezhuthu igazhel",
+  "tamil_meaning": "எண்ணும் எழுத்தும் மக்களுக்கு இன்றியமையாதன; ஆகவே, அவற்றை வீணென்று இகழ்ந்து கற்காமல் விட்டு விடாதே.",
+  "source_english": "Do not despise numbers and letters.",
+  "literal": "Do not neglect numbers and letters.",
+  "meaning": "Mathematics and literacy are essential for every person. Do not look down on them or skip learning them as useless.",
+  "themes": [
+   "education",
+   "maths",
+   "literacy",
+   "basic skills",
+   "studies",
+   "learning"
+  ],
+  "situations": [
+   "I hate maths, why do I even need it?",
+   "I think school subjects are useless",
+   "I want to drop out because studies are boring",
+   "My kid refuses to learn reading",
+   "Is learning basics really important if I want to do business?"
+  ]
+ },
+ {
+  "no": 8,
+  "letter": "ஏ",
+  "tamil": "ஏற்பது இகழ்ச்சி",
+  "translit": "yerpathu igazhchi",
+  "tamil_meaning": "இரந்து வாழ்வது இழிவானது. அதனால் யாசிக்கக் கூடாது.",
+  "source_english": "Do not beg.",
+  "literal": "Begging/receiving is shameful.",
+  "meaning": "Living by asking others for things is degrading. Earn your own way and keep your dignity and self-reliance.",
+  "themes": [
+   "self-reliance",
+   "dependence",
+   "borrowing",
+   "dignity",
+   "independence",
+   "asking for money"
+  ],
+  "situations": [
+   "I keep borrowing money from friends",
+   "I depend on my parents for everything even at 25",
+   "Is it okay to keep asking for help instead of working?",
+   "I feel ashamed asking my brother for money every month",
+   "How do I become financially independent?"
+  ]
+ },
+ {
+  "no": 9,
+  "letter": "ஐ",
+  "tamil": "ஐயமிட்டு உண்",
+  "translit": "aiyamittu unn",
+  "tamil_meaning": "யாசிப்பவர்கட்குக் கொடுத்துப் பிறகு உண்ண வேண்டும்.",
+  "source_english": "Eat after offering alms.",
+  "literal": "Share with the needy, then eat.",
+  "meaning": "Before you eat, give to those who are hungry. Sharing your food and blessings with others is basic goodness.",
+  "themes": [
+   "sharing food",
+   "generosity",
+   "hunger",
+   "feeding others",
+   "compassion"
+  ],
+  "situations": [
+   "I waste a lot of food while others go hungry",
+   "Should I share my lunch with a classmate who has none?",
+   "How can I help hungry people near me?",
+   "My neighbour's family has no food this week",
+   "I feel selfish eating in front of someone hungry"
+  ]
+ },
+ {
+  "no": 10,
+  "letter": "ஒ",
+  "tamil": "ஒப்புரவு ஒழுகு",
+  "translit": "oppuravu ozhugu",
+  "tamil_meaning": "உலக நடையை அறிந்துகொண்டு, அத்தோடு பொருந்துமாறு நடந்துகொள்.",
+  "source_english": "Adapt to your changing world.",
+  "literal": "Live in harmony with the ways of the world.",
+  "meaning": "Understand how society works and adjust your behaviour to fit in with others, cooperating rather than living in isolation.",
+  "themes": [
+   "adapting",
+   "fitting in",
+   "new place",
+   "social norms",
+   "cooperation",
+   "change"
+  ],
+  "situations": [
+   "I moved to a new city and can't adjust",
+   "Everyone at my new job does things differently",
+   "I find it hard to adapt to change",
+   "I refuse to follow customs I don't understand",
+   "I feel like an outsider in my hostel"
+  ]
+ },
+ {
+  "no": 11,
+  "letter": "ஓ",
+  "tamil": "ஓதுவது ஒழியேல்",
+  "translit": "oodhuvadhu ozhiyel",
+  "tamil_meaning": "நல்ல நூல்களை எப்பொழுதும் படித்துக்கொண்டிரு. கற்றுக்கொள்வதை நிறுத்தாதே.",
+  "source_english": "Never stop learning.",
+  "literal": "Never stop studying.",
+  "meaning": "Keep reading good books and learning throughout life. Never stop learning, whatever your age.",
+  "themes": [
+   "lifelong learning",
+   "studying",
+   "reading",
+   "education",
+   "upskilling"
+  ],
+  "situations": [
+   "I finished college, do I still need to study?",
+   "I'm 40, is it too late to learn something new?",
+   "I stopped reading after school",
+   "Should I learn a new skill for my career?",
+   "I feel my knowledge is outdated"
+  ]
+ },
+ {
+  "no": 12,
+  "letter": "ஒள",
+  "tamil": "ஒளவியம் பேசேல்",
+  "translit": "avviam pesel",
+  "tamil_meaning": "ஒருவரிடமும் பொறாமை கொண்டு பேசாதே.",
+  "source_english": "Do not speak ill about others.",
+  "literal": "Do not speak out of envy.",
+  "meaning": "Do not speak about others with jealousy. Envy poisons your words and your own peace.",
+  "themes": [
+   "jealousy",
+   "envy",
+   "backbiting",
+   "comparison",
+   "speaking ill"
+  ],
+  "situations": [
+   "I feel jealous of my friend's success",
+   "I talk badly about my colleague because she got promoted",
+   "My cousin got a better job and I can't stop comparing",
+   "I envy people on social media",
+   "Why do I feel bitter when others do well?",
+   "avanga success paathu poramaiya irukku"
+  ]
+ },
+ {
+  "no": 13,
+  "letter": "ஃ",
+  "tamil": "ஃகஞ் சுருக்கேல்",
+  "translit": "aganj surukkel",
+  "tamil_meaning": "அதிக இலாபத்துக்காகத் தானியங்களைக் குறைத்து அளந்து விற்காதே.",
+  "source_english": "Do not hamper development or creativity.",
+  "literal": "Do not short-measure grain (cheat in trade).",
+  "meaning": "Do not cheat customers by giving less than what was paid for to make extra profit. Be honest in business.",
+  "themes": [
+   "business ethics",
+   "cheating customers",
+   "fair trade",
+   "honest business",
+   "profit",
+   "fraud"
+  ],
+  "situations": [
+   "Should I cut corners in my shop to make more profit?",
+   "My boss asks me to overcharge customers",
+   "Is it okay to sell low quality goods at full price?",
+   "I run a small business and competitors cheat, should I too?",
+   "I'm tempted to fudge the bill"
+  ]
+ },
+ {
+  "no": 14,
+  "letter": "க",
+  "tamil": "கண்டொன்று சொல்லேல்",
+  "translit": "kandondru sollel",
+  "tamil_meaning": "கண்ணாற் கண்டதற்கு மாறாக சொல்லாதே",
+  "source_english": "Do not see one and say another.",
+  "literal": "Do not say otherwise than what you saw.",
+  "meaning": "Do not report something different from what you actually saw. Tell the truth, especially when you are a witness.",
+  "themes": [
+   "honesty",
+   "lying",
+   "truth",
+   "witness",
+   "false testimony",
+   "covering up"
+  ],
+  "situations": [
+   "My friend wants me to lie about what happened",
+   "I saw my colleague steal but I'm afraid to tell",
+   "I lied to someone I care about",
+   "Should I cover up for my brother?",
+   "I gave a false statement to protect someone",
+   "I keep lying to my parents"
+  ]
+ },
+ {
+  "no": 15,
+  "letter": "ங",
+  "tamil": "ஙப் போல் வளை",
+  "translit": "ngab pol valai",
+  "tamil_meaning": "மெய் எழுத்தான “ங்” என்ற எழுத்தின் உயிர்மெய் வடிவங்கள் எங்கும் பயன்பாட்டில் இல்லை. எனினும், “ங்” என்ற ஓரெழுத்து அதன் உயிர்மெய் எழுத்துக்களை காலத்தில் புதைந்துவிடாமல் காத்து வருகிறது. இந்த “ங்” எப்படி தன் வரிசையைக் காக்கிறதோ, அவ்வாறே நாமும் நம் உற்றார் உறவினர் அனைவரையும் கனிவுடன் காக்க வேண்டும்.",
+  "source_english": "Bend like the letter ங.",
+  "literal": "Bend like the letter ங.",
+  "meaning": "Like the letter ங, which humbly carries its family of letters, be humble and support your relatives and dependents, bending with grace rather than rigid pride.",
+  "themes": [
+   "humility",
+   "supporting family",
+   "flexibility",
+   "caring for relatives",
+   "ego"
+  ],
+  "situations": [
+   "My relatives depend on me and I feel burdened",
+   "I am too proud to apologise",
+   "Should I support my extended family?",
+   "I'm rigid and refuse to compromise",
+   "How do I stay humble after success?"
+  ]
+ },
+ {
+  "no": 16,
+  "letter": "ச",
+  "tamil": "சனி நீராடு",
+  "translit": "sani neeradu",
+  "tamil_meaning": "“சனி” என்றால் “குளிர்ந்த” என்பது பொருள். ஔவையார் இந்த பாடல் மூலமாக நம்மை குளிர்ந்த நீரில் நீராட சொல்கிறார்.",
+  "source_english": "Ablute on Saturdays.",
+  "literal": "Bathe in cool water (oil bath on Saturdays).",
+  "meaning": "Bathe regularly in cool water and keep your body clean and refreshed; physical care keeps the mind calm too.",
+  "themes": [
+   "hygiene",
+   "self-care",
+   "body heat",
+   "health routine",
+   "freshness"
+  ],
+  "situations": [
+   "I feel sluggish and heated all the time",
+   "I neglect my personal hygiene when stressed",
+   "What simple habits keep me healthy?",
+   "I don't take care of my body",
+   "How do I refresh myself after a tiring week?"
+  ]
+ },
+ {
+  "no": 17,
+  "letter": "ஞ",
+  "tamil": "ஞயம்பட உரை",
+  "translit": "nyampada urai",
+  "tamil_meaning": "பிறர் மகிழும்படி பேசு",
+  "source_english": "Sweeten your speech.",
+  "literal": "Speak pleasantly.",
+  "meaning": "Speak in a way that makes others glad. Sweet, kind words win hearts and make life smoother.",
+  "themes": [
+   "kind words",
+   "speech",
+   "communication",
+   "politeness",
+   "rudeness",
+   "tone"
+  ],
+  "situations": [
+   "People say I sound rude when I talk",
+   "How do I talk nicely to my in-laws?",
+   "My words always come out wrong",
+   "I want to communicate better with my team",
+   "How do I give feedback without hurting?"
+  ]
+ },
+ {
+  "no": 18,
+  "letter": "ட",
+  "tamil": "இடம்பட வீடு எடேல்",
+  "translit": "idampada veedu edael",
+  "tamil_meaning": "ஆடம்பர ஆசைகளுக்கு இடந் தராதே. தேவைகளை சுருக்கி வாழப் பழகுக.",
+  "source_english": "Judiciously space your home.",
+  "literal": "Do not build a house larger than needed.",
+  "meaning": "Don't give in to luxury and show. Keep your needs simple and live within your means.",
+  "themes": [
+   "luxury",
+   "overspending",
+   "simple living",
+   "EMI",
+   "materialism",
+   "debt",
+   "showing off"
+  ],
+  "situations": [
+   "I want to buy a huge house on a big loan to impress people",
+   "My EMIs are crushing me",
+   "Should I upgrade my lifestyle after a raise?",
+   "I keep buying expensive things I don't need",
+   "Everyone has a big car, I feel I need one too"
+  ]
+ },
+ {
+  "no": 19,
+  "letter": "ண",
+  "tamil": "இணக்கம் அறிந்து இணங்கு",
+  "translit": "inakkam arindhu inangu",
+  "tamil_meaning": "நற்குண நற்செய்கை உடையவர் என்பது தெரிந்து கொண்டு ஒருவரோடு நட்பு செய்",
+  "source_english": "Befriend the best.",
+  "literal": "Know a person's nature, then befriend.",
+  "meaning": "Make friends only after you know they have good character and good conduct.",
+  "themes": [
+   "choosing friends",
+   "trust",
+   "friendship",
+   "new people",
+   "relationships"
+  ],
+  "situations": [
+   "I trust people too quickly",
+   "I made new friends in college but I'm not sure they are good",
+   "How do I know if someone is a true friend?",
+   "I got hurt because I trusted the wrong person",
+   "Should I get close to this new group?"
+  ]
+ },
+ {
+  "no": 20,
+  "letter": "த",
+  "tamil": "தந்தை தாய்ப் பேண்",
+  "translit": "thanthai thaai pen",
+  "tamil_meaning": "உன் தாய் தந்தையரை அன்புடன் போற்றி காப்பாற்று",
+  "source_english": "Protect your parents.",
+  "literal": "Cherish your father and mother.",
+  "meaning": "Love, respect and take care of your parents, especially as they grow old.",
+  "themes": [
+   "parents",
+   "caring for elders",
+   "family duty",
+   "old age",
+   "respect",
+   "mother",
+   "father"
+  ],
+  "situations": [
+   "My parents are getting old and I live far away",
+   "I fight with my dad all the time",
+   "Should I put my parents in an old age home?",
+   "I don't spend time with my mother",
+   "My parents annoy me",
+   "amma appa kitta sandai poduren"
+  ]
+ },
+ {
+  "no": 21,
+  "letter": "ந",
+  "tamil": "நன்றி மறவேல்",
+  "translit": "nandri maravel",
+  "tamil_meaning": "ஒருவர் உனக்கு செய்த உதவியை மறவாதே",
+  "source_english": "Don't forget gratitude.",
+  "literal": "Do not forget gratitude.",
+  "meaning": "Never forget the help someone gave you. Remember and honour those who stood by you.",
+  "themes": [
+   "gratitude",
+   "thankfulness",
+   "ungratefulness",
+   "remembering help",
+   "appreciation"
+  ],
+  "situations": [
+   "I never appreciate what I have",
+   "Someone helped me a lot and I forgot to thank them",
+   "My friend helped me get this job and now I ignore him",
+   "How do I feel more thankful?",
+   "People who helped me feel I've forgotten them"
+  ]
+ },
+ {
+  "no": 22,
+  "letter": "ப",
+  "tamil": "பருவத்தே பயிர் செய்",
+  "translit": "paruvatthae payir sey",
+  "tamil_meaning": "எச்செயலையும் அதற்குரிய காலத்திலேயே செய்ய வேண்டும்",
+  "source_english": "Sow during the season.",
+  "literal": "Sow in the right season.",
+  "meaning": "Do every task at its proper time. Opportunities have a season; delay and you miss them.",
+  "themes": [
+   "timing",
+   "procrastination",
+   "opportunity",
+   "deadlines",
+   "doing things on time"
+  ],
+  "situations": [
+   "I keep procrastinating my work",
+   "I always study at the last minute",
+   "I missed a great opportunity because I delayed",
+   "When is the right time to start investing?",
+   "I keep postponing important decisions",
+   "naalaiku pannalam nu thalli podren"
+  ]
+ },
+ {
+  "no": 23,
+  "letter": "ம",
+  "tamil": "மண் பறித்து உண்ணேல்",
+  "translit": "Man parithu unnael",
+  "tamil_meaning": "பிறர் நிலத்தை திருடி அதன் மூலம் வாழாதே",
+  "source_english": "Don't grab land.",
+  "literal": "Do not live by grabbing others' land.",
+  "meaning": "Do not take or live off land or property that belongs to others.",
+  "themes": [
+   "property dispute",
+   "land grabbing",
+   "stealing property",
+   "inheritance",
+   "greed"
+  ],
+  "situations": [
+   "My relatives want to grab our ancestral land",
+   "Should I occupy my neighbour's extra land since he's not using it?",
+   "There is a property dispute with my brother",
+   "I'm tempted to take more than my share of inheritance",
+   "Someone encroached on our plot"
+  ]
+ },
+ {
+  "no": 24,
+  "letter": "ய",
+  "tamil": "இயல்பு அலாதன செய்யேல்",
+  "translit": "iyalbu aladhana seyyel",
+  "tamil_meaning": "நல்லொழுக்கத்துக்கு மாறான செயல்களைச் செய்யாதே",
+  "source_english": "Desist demeaning deeds.",
+  "literal": "Do not do what is against good conduct.",
+  "meaning": "Do not do things that go against good character and your true nature.",
+  "themes": [
+   "bad behaviour",
+   "character",
+   "acting out of character",
+   "wrong deeds",
+   "peer pressure"
+  ],
+  "situations": [
+   "My friends pressure me to do things I know are wrong",
+   "I did something I'm ashamed of",
+   "I'm becoming someone I don't like",
+   "Should I do something unethical to fit in?",
+   "I behaved badly at a party"
+  ]
+ },
+ {
+  "no": 25,
+  "letter": "ர",
+  "tamil": "அரவம் ஆட்டேல்",
+  "translit": "aravam aattel",
+  "tamil_meaning": "பாம்புகளை பிடித்து விளையாடாதே",
+  "source_english": "Don't play with snakes.",
+  "literal": "Do not play with snakes.",
+  "meaning": "Do not play with dangerous things. Avoid needless risks that can harm you.",
+  "themes": [
+   "danger",
+   "risk",
+   "recklessness",
+   "playing with fire",
+   "safety"
+  ],
+  "situations": [
+   "I like doing dangerous stunts for videos",
+   "Is it okay to take crazy risks for thrill?",
+   "My friends dare me to do risky things",
+   "I'm messing with dangerous people for fun",
+   "I drive recklessly"
+  ]
+ },
+ {
+  "no": 26,
+  "letter": "ல",
+  "tamil": "இலவம் பஞ்சில் துயில்",
+  "translit": "ilavam panjil thuyil",
+  "tamil_meaning": "இலவம் பஞ்சினாற் செய்த மெத்தையிலே உறங்கு",
+  "source_english": "Sleep on a silk cotton bed.",
+  "literal": "Sleep on a silk-cotton mattress.",
+  "meaning": "Rest well and comfortably. Good sleep keeps the body and mind healthy.",
+  "themes": [
+   "sleep",
+   "rest",
+   "insomnia",
+   "exhaustion",
+   "burnout",
+   "health"
+  ],
+  "situations": [
+   "I can't sleep at night",
+   "I only sleep 4 hours because of work",
+   "I feel exhausted all the time",
+   "Is it okay to sacrifice sleep to study?",
+   "I'm burnt out",
+   "thookam varala"
+  ]
+ },
+ {
+  "no": 27,
+  "letter": "வ",
+  "tamil": "வஞ்சகம் பேசேல்",
+  "translit": "vanjakam pesel",
+  "tamil_meaning": "கபடச் சொற்களை பேசாதே",
+  "source_english": "Don't wile.",
+  "literal": "Do not speak deceitfully.",
+  "meaning": "Do not speak cunning, deceitful words to trick or manipulate others.",
+  "themes": [
+   "deceit",
+   "manipulation",
+   "cunning",
+   "tricking",
+   "fake",
+   "lying"
+  ],
+  "situations": [
+   "I manipulated my friend to get what I want",
+   "Is it okay to sweet talk people to get my way?",
+   "I tricked my parents into giving me money",
+   "My colleague manipulates everyone",
+   "I feel I'm being two-faced"
+  ]
+ },
+ {
+  "no": 28,
+  "letter": "ழ",
+  "tamil": "அழகு அலாதன செய்யேல்",
+  "translit": "azhagu aladhana seyyel",
+  "tamil_meaning": "இழிவான செயல்களை செய்யாதே",
+  "source_english": "Do not do ugly deeds.",
+  "literal": "Do not do unseemly deeds.",
+  "meaning": "Do not do disgraceful, ugly acts that bring shame on you.",
+  "themes": [
+   "shameful acts",
+   "dignity",
+   "bad behaviour",
+   "disgrace",
+   "self-respect"
+  ],
+  "situations": [
+   "I did something embarrassing when drunk",
+   "I'm tempted to do something disgraceful for money",
+   "I cheated in an exam and feel ashamed",
+   "How do I keep my dignity?",
+   "I acted badly in public"
+  ]
+ },
+ {
+  "no": 29,
+  "letter": "ள",
+  "tamil": "இளமையில் கல்",
+  "translit": "ilamaiyil kal",
+  "tamil_meaning": "இளமைப் பருவத்திலேயே படிக்கத் தொடங்கி கல்வியைக் கற்று கொள்",
+  "source_english": "Learn when young.",
+  "literal": "Learn in your youth.",
+  "meaning": "Begin learning while young. What you study early stays with you for life.",
+  "themes": [
+   "youth",
+   "education",
+   "studying",
+   "students",
+   "wasting youth",
+   "learning early"
+  ],
+  "situations": [
+   "I'm a student but I waste all my time on my phone",
+   "I'm young, why should I study now?",
+   "I want to enjoy college instead of studying",
+   "My younger brother doesn't want to study",
+   "I regret not studying when I was young"
+  ]
+ },
+ {
+  "no": 30,
+  "letter": "ற",
+  "tamil": "அறனை மறவேல்",
+  "translit": "aranai maravel",
+  "tamil_meaning": "தருமத்தை எப்போதும் மறவாமல் செய்",
+  "source_english": "Never forget your moral duty.",
+  "literal": "Never forget dharma.",
+  "meaning": "Never forget your moral duty. Keep doing what is right, every day, not just when convenient.",
+  "themes": [
+   "moral duty",
+   "ethics",
+   "conscience",
+   "values",
+   "responsibility"
+  ],
+  "situations": [
+   "I've become so busy I forgot my values",
+   "I only do good when it's convenient",
+   "How do I stay ethical in a corrupt workplace?",
+   "I feel I've lost my moral compass",
+   "I ignore my responsibilities to others"
+  ]
+ },
+ {
+  "no": 31,
+  "letter": "ன",
+  "tamil": "அனந்தல் ஆடேல்",
+  "translit": "anandhal aattel",
+  "tamil_meaning": "மிகுதியாக தூங்காதே",
+  "source_english": "Oversleeping is obnoxious.",
+  "literal": "Do not oversleep.",
+  "meaning": "Do not sleep excessively. Too much sleep breeds laziness and wastes your life.",
+  "themes": [
+   "oversleeping",
+   "laziness",
+   "waking late",
+   "sloth",
+   "wasting time"
+  ],
+  "situations": [
+   "I sleep 12 hours and still feel lazy",
+   "I can't wake up in the morning",
+   "I sleep through my alarms and miss classes",
+   "I spend my whole weekend in bed",
+   "I keep napping instead of working"
+  ]
+ },
+ {
+  "no": 32,
+  "letter": "க",
+  "tamil": "கடிவது மற",
+  "translit": "kadivadhu mar",
+  "tamil_meaning": "யாரையும் கோபத்தில் கடிந்து பேசிவிடாதே.",
+  "source_english": "Forget scolding others.",
+  "literal": "Forget harsh scolding.",
+  "meaning": "Do not scold or speak sharply to others in anger. Let go of harsh words.",
+  "themes": [
+   "scolding",
+   "yelling",
+   "harsh words",
+   "criticism",
+   "parenting",
+   "anger at others"
+  ],
+  "situations": [
+   "I keep yelling at my kids",
+   "I scold my juniors harshly at work",
+   "I always criticise my wife",
+   "How do I stop shouting at people?",
+   "I lost my temper and scolded my maid"
+  ]
+ },
+ {
+  "no": 33,
+  "letter": "கா",
+  "tamil": "காப்பது விரதம்",
+  "translit": "kaappathu viratham",
+  "tamil_meaning": "தான் செய்யத் தொடங்கிய தருமத்தை விடாமல் செய்வதே விரதமாகும் (அல்லது) பிற உயிர்களுக்குத் துன்பம் செய்யாமல் அவற்றைக் காப்பாற்றுவதே தவம் ஆகும்.",
+  "source_english": "Preservation is equal to fasting.",
+  "literal": "Protecting (life/dharma) is the true vow.",
+  "meaning": "Steadily protecting others and continuing the good you started is the real penance, more than rituals or fasting.",
+  "themes": [
+   "protecting others",
+   "compassion",
+   "non-harm",
+   "commitment",
+   "true religion",
+   "rituals"
+  ],
+  "situations": [
+   "I fast and do poojas but I'm unkind to people",
+   "What is real spirituality?",
+   "I started helping an NGO but stopped",
+   "Is ritual more important than kindness?",
+   "I want to protect animals and nature"
+  ]
+ },
+ {
+  "no": 34,
+  "letter": "கி",
+  "tamil": "கிழமைப்பட வாழ்",
+  "translit": "kizhamaippada vaal",
+  "tamil_meaning": "உன் உடலாலும் பொருளாலும் பிறருக்கு நன்மை செய்து வாழ்",
+  "source_english": "Live according to days.",
+  "literal": "Live so that you are useful to others.",
+  "meaning": "Use your strength and wealth to benefit others. A life is rich when it is useful to people.",
+  "themes": [
+   "being useful",
+   "service",
+   "contribution",
+   "community",
+   "purpose",
+   "helping"
+  ],
+  "situations": [
+   "I feel my life is useless",
+   "How can I contribute to society?",
+   "I only think about myself",
+   "I have money and time, how should I use it?",
+   "I want my work to matter"
+  ]
+ },
+ {
+  "no": 35,
+  "letter": "கீ",
+  "tamil": "கீழ்மை அகற்று",
+  "translit": "keezhmai akatru",
+  "tamil_meaning": "இழிவான குணஞ் செயல்களை நீக்கு",
+  "source_english": "Remove poverty.",
+  "literal": "Remove baseness.",
+  "meaning": "Get rid of mean, low qualities and petty behaviour in yourself.",
+  "themes": [
+   "self-improvement",
+   "bad habits",
+   "pettiness",
+   "meanness",
+   "character"
+  ],
+  "situations": [
+   "I have some bad habits I want to drop",
+   "I'm petty and hold grudges over small things",
+   "How do I become a better version of myself?",
+   "I behave meanly when I'm insecure",
+   "I want to remove my negative traits"
+  ]
+ },
+ {
+  "no": 36,
+  "letter": "கு",
+  "tamil": "குணமது கைவிடேல்",
+  "translit": "kunamadhu kaividhel",
+  "tamil_meaning": "நன்மை தரக்கூடிய நல்ல குணங்களைப் பின்பற்றுவதை நிறுத்திவிடாதே(கைவிடேல்).",
+  "source_english": "Don't lose character.",
+  "literal": "Never abandon good character.",
+  "meaning": "Never give up your good qualities, whatever pressure or temptation comes.",
+  "themes": [
+   "character",
+   "integrity",
+   "values",
+   "temptation",
+   "compromise",
+   "staying good"
+  ],
+  "situations": [
+   "Everyone around me is corrupt, should I also compromise?",
+   "I'm losing my good values in this job",
+   "Being nice gets me nowhere, should I change?",
+   "I'm tempted to give up my principles for money",
+   "People take advantage of my kindness"
+  ]
+ },
+ {
+  "no": 37,
+  "letter": "கூ",
+  "tamil": "கூடிப் பிரியேல்",
+  "translit": "koodip piriyel",
+  "tamil_meaning": "நல்லவரோடு நட்பு செய்து பின் அவரைப் பிரியாதே",
+  "source_english": "Don't forsake friends.",
+  "literal": "Do not part after joining (good friends).",
+  "meaning": "Once you have made good friends, stay loyal; do not abandon them.",
+  "themes": [
+   "friendship",
+   "loyalty",
+   "drifting apart",
+   "abandoning friends",
+   "reconciling"
+  ],
+  "situations": [
+   "I'm drifting apart from my best friend",
+   "I ignored my old friends after getting rich",
+   "Should I cut off a good friend over a small fight?",
+   "How do I keep friendships alive?",
+   "My friend and I stopped talking after an argument"
+  ]
+ },
+ {
+  "no": 38,
+  "letter": "கெ",
+  "tamil": "கெடுப்பது ஒழி",
+  "translit": "keduppudhu ozi",
+  "tamil_meaning": "பிறருக்குக் கேடு விளைவிக்கும் செயல்களைச் செய்யாதே.",
+  "source_english": "Abandon animosity.",
+  "literal": "Give up harming others.",
+  "meaning": "Do not do things that harm others. Give up revenge and the urge to ruin anyone.",
+  "themes": [
+   "revenge",
+   "harming others",
+   "sabotage",
+   "spite",
+   "hatred"
+  ],
+  "situations": [
+   "I want revenge on my ex",
+   "I want to sabotage my colleague's project",
+   "Someone hurt me and I want to hurt them back",
+   "I'm planning to spread something bad about someone",
+   "I feel like destroying the person who betrayed me"
+  ]
+ },
+ {
+  "no": 39,
+  "letter": "கே",
+  "tamil": "கேள்வி முயல்",
+  "translit": "kelvi muyal",
+  "tamil_meaning": "கற்றவர் சொல்லும் நூற் பொருளைக் கேட்பதற்கு முயற்சி செய்",
+  "source_english": "Learn by asking questions.",
+  "literal": "Strive to listen and learn.",
+  "meaning": "Make an effort to learn by listening to the learned and asking questions.",
+  "themes": [
+   "asking questions",
+   "listening",
+   "learning",
+   "mentors",
+   "curiosity",
+   "shyness"
+  ],
+  "situations": [
+   "I'm afraid to ask doubts in class",
+   "I don't understand my job but I'm scared to ask",
+   "How do I learn faster?",
+   "I never listen to advice",
+   "I feel stupid asking questions"
+  ]
+ },
+ {
+  "no": 40,
+  "letter": "கை",
+  "tamil": "கைவினை கரவேல்",
+  "translit": "kaivinai karavel",
+  "tamil_meaning": "உங்களுக்குத் தெரிந்த கைத்தொழிலை மற்றவர்களிடமிருந்து ஒளியாமற் செய்து கொண்டிருக்கவும்.",
+  "source_english": "Learn handicraft.",
+  "literal": "Do not hide your craft.",
+  "meaning": "Do not hide the skills you have. Practise your craft openly and share it.",
+  "themes": [
+   "skills",
+   "talent",
+   "hiding talent",
+   "sharing knowledge",
+   "craft",
+   "hobby"
+  ],
+  "situations": [
+   "I'm good at drawing but I hide it",
+   "I don't share my skills with juniors because I fear competition",
+   "Should I pursue my hobby seriously?",
+   "I'm shy about showing my talent",
+   "I don't teach others what I know"
+  ]
+ },
+ {
+  "no": 41,
+  "letter": "கொ",
+  "tamil": "கொள்ளை விரும்பேல்",
+  "translit": "kollai virumbel",
+  "tamil_meaning": "பிறர் பொருளைத் திருடுவதற்கு ஆசைப்படாதே.",
+  "source_english": "Don't swindle.",
+  "literal": "Do not desire to rob.",
+  "meaning": "Do not even wish to take what belongs to others. Wealth gained by theft or exploitation never lasts.",
+  "themes": [
+   "stealing",
+   "theft",
+   "greed",
+   "exploitation",
+   "dishonest money",
+   "fraud"
+  ],
+  "situations": [
+   "I'm tempted to steal money from my office",
+   "My friend is planning a scam and wants me to join",
+   "Is it okay to pirate stuff?",
+   "I took something from a shop without paying",
+   "I want easy money even if it's illegal"
+  ]
+ },
+ {
+  "no": 42,
+  "letter": "கோ",
+  "tamil": "கோதாட்டு ஒழி",
+  "translit": "kodhaattu ozhi",
+  "tamil_meaning": "குற்றமான விளையாட்டை விட்டு விடு (நீக்கு)",
+  "source_english": "Ban hurtful games.",
+  "literal": "Give up wicked games.",
+  "meaning": "Give up harmful, wrong kinds of play, such as cruel pranks and games that hurt or corrupt.",
+  "themes": [
+   "harmful games",
+   "pranks",
+   "bullying",
+   "addictive games",
+   "cruel fun"
+  ],
+  "situations": [
+   "My friends play cruel pranks on juniors",
+   "I'm addicted to violent games",
+   "Is ragging just harmless fun?",
+   "I bully someone for fun",
+   "We play games that hurt animals"
+  ]
+ },
+ {
+  "no": 43,
+  "letter": "கெள",
+  "tamil": "கெளவை அகற்று",
+  "translit": "Kavvai akatru",
+  "tamil_meaning": "வாழ்வில் செயற்கையாக ஏற்படும் துன்பத்தை நீக்கு",
+  "source_english": "Avoid gossiping.",
+  "literal": "Remove (needless) sorrow and scandal.",
+  "meaning": "Remove the needless troubles and scandals you create in your own life; keep away from drama and gossip that bring grief.",
+  "themes": [
+   "drama",
+   "gossip",
+   "scandal",
+   "self-created trouble",
+   "rumours",
+   "stress"
+  ],
+  "situations": [
+   "My life is full of unnecessary drama",
+   "There's a lot of gossip and politics in my office",
+   "I keep getting into messy situations",
+   "I'm stressed by rumours about me",
+   "How do I stop creating problems for myself?"
+  ]
+ },
+ {
+  "no": 44,
+  "letter": "ச",
+  "tamil": "சக்கர நெறி நில்",
+  "translit": "sakkara neri nil",
+  "tamil_meaning": "தர்மசக்கர நெறிப்படி வாழ வேண்டும். ( அரசன் = ஆள்பவர், தலைவர் )",
+  "source_english": "Obey the laws of the land.",
+  "literal": "Stand by the just order (rule of law).",
+  "meaning": "Follow the righteous path laid by just rule and the laws of the land.",
+  "themes": [
+   "law",
+   "rules",
+   "following rules",
+   "breaking law",
+   "citizenship",
+   "justice"
+  ],
+  "situations": [
+   "Is it okay to break traffic rules if no one is watching?",
+   "Should I bribe the official to get my work done?",
+   "I want to avoid paying taxes",
+   "Rules seem pointless to me",
+   "My friend drives without a licence"
+  ]
+ },
+ {
+  "no": 45,
+  "letter": "சா",
+  "tamil": "சான்றோர் இனத்து இரு",
+  "translit": "saandroar inathu iru",
+  "tamil_meaning": "அறிவொழுக்கங்களில் நிறைந்த பெரியோர்களுடன் சேர்ந்து இரு.",
+  "source_english": "Associate with the noble.",
+  "literal": "Be among the noble.",
+  "meaning": "Spend your time with wise, learned and virtuous people.",
+  "themes": [
+   "good company",
+   "mentors",
+   "wise people",
+   "influence",
+   "environment"
+  ],
+  "situations": [
+   "My friends are a bad influence",
+   "How do I find good mentors?",
+   "I want to surround myself with better people",
+   "Who I spend time with makes me lazy",
+   "Should I join a group of serious learners?"
+  ]
+ },
+ {
+  "no": 46,
+  "letter": "சி",
+  "tamil": "சித்திரம் பேசேல்",
+  "translit": "chitthiram pesel",
+  "tamil_meaning": "பொய்யான வார்த்தைகளை மெய் போலப் பேசாதே",
+  "source_english": "Stop exaggeration.",
+  "literal": "Do not speak false things as true (embellish).",
+  "meaning": "Do not dress up lies to look like truth, or decorate stories with falsehood.",
+  "themes": [
+   "exaggeration",
+   "embellishing",
+   "fake stories",
+   "lying",
+   "resume lies"
+  ],
+  "situations": [
+   "I exaggerate my achievements in interviews",
+   "I made up a story to look cool",
+   "Should I fake my resume?",
+   "I keep embellishing stories",
+   "I told a lie that sounded true and now it's growing"
+  ]
+ },
+ {
+  "no": 47,
+  "letter": "சீ",
+  "tamil": "சீர்மை மறவேல்",
+  "translit": "seermai maravel",
+  "tamil_meaning": "புகழுக்குக் காரணமான நல்ல குணங்களை மறந்து விடாதே.",
+  "source_english": "Remember to be righteous.",
+  "literal": "Do not forget the good qualities that bring honour.",
+  "meaning": "Never forget the good qualities and right conduct that earn you respect.",
+  "themes": [
+   "righteousness",
+   "reputation",
+   "good qualities",
+   "respect",
+   "honour"
+  ],
+  "situations": [
+   "After getting famous I forgot my roots",
+   "How do I keep my reputation clean?",
+   "I've stopped behaving well since I got promoted",
+   "People used to respect me and now they don't",
+   "I want to be remembered as a good person"
+  ]
+ },
+ {
+  "no": 48,
+  "letter": "சு",
+  "tamil": "சுளிக்கச் சொல்லேல்",
+  "translit": "sulikka sollel",
+  "tamil_meaning": "கேட்பவருக்குக் கோபமும் வெறுப்பும் உண்டாகும்படி பேசாதீர்",
+  "source_english": "Don't hurt others feelings.",
+  "literal": "Do not speak so others frown.",
+  "meaning": "Do not say things that make others angry or disgusted. Avoid hurtful words.",
+  "themes": [
+   "hurtful words",
+   "offending people",
+   "sarcasm",
+   "insults",
+   "feelings"
+  ],
+  "situations": [
+   "My jokes hurt people",
+   "I keep offending people without meaning to",
+   "I said something that hurt my sister",
+   "My sarcasm is ruining my friendships",
+   "How do I stop hurting people with my words?"
+  ]
+ },
+ {
+  "no": 49,
+  "letter": "சூ",
+  "tamil": "சூது விரும்பேல்",
+  "translit": "soodhu virumbel",
+  "tamil_meaning": "ஒருபொதும் சூதாட்டத்தை விரும்பாதே.",
+  "source_english": "Don't gamble.",
+  "literal": "Do not desire gambling.",
+  "meaning": "Never be drawn to gambling. It destroys wealth, peace and families.",
+  "themes": [
+   "gambling",
+   "betting",
+   "crypto speculation",
+   "online rummy",
+   "addiction",
+   "risky money"
+  ],
+  "situations": [
+   "I lost money in online betting",
+   "I'm addicted to rummy apps",
+   "Should I put all my savings in crypto to get rich fast?",
+   "My dad is gambling away our money",
+   "I bet on cricket matches",
+   "I want to try IPL betting"
+  ]
+ },
+ {
+  "no": 50,
+  "letter": "செ",
+  "tamil": "செய்வன திருந்தச் செய்",
+  "translit": "seyvan thirundha sei",
+  "tamil_meaning": "செய்யும் செயல்களைத் தவறோ குறையோ ஏதும் இல்லாமல் செய்யவும்",
+  "source_english": "Act your best.",
+  "literal": "Do whatever you do, flawlessly.",
+  "meaning": "Whatever you do, do it well and without careless mistakes. Give your best effort.",
+  "themes": [
+   "excellence",
+   "quality",
+   "careless work",
+   "doing your best",
+   "perfection",
+   "diligence"
+  ],
+  "situations": [
+   "I do my work half-heartedly",
+   "My boss says my work is sloppy",
+   "How do I stop making careless mistakes?",
+   "Is it okay to just do the minimum?",
+   "I want to be excellent at my job"
+  ]
+ },
+ {
+  "no": 51,
+  "letter": "சே",
+  "tamil": "சேரிடம் அறிந்து சேர்",
+  "translit": "seridam arindhu ser",
+  "tamil_meaning": "நீ பழகும் நபர்கள் நல்ல குணங்கள் உடையவர்களா என நன்கு ஆராய்ந்து பின்பு அவர்களுடன் பழகு.",
+  "source_english": "Seek out good friends.",
+  "literal": "Know the place (company) before you join.",
+  "meaning": "Examine whether people are of good character before associating with them.",
+  "themes": [
+   "choosing company",
+   "friends",
+   "joining groups",
+   "new job",
+   "association"
+  ],
+  "situations": [
+   "Should I join this new friend group?",
+   "I'm not sure about this company's culture",
+   "How do I pick the right people to hang out with?",
+   "I joined bad company and got in trouble",
+   "My new roommates seem shady"
+  ]
+ },
+ {
+  "no": 52,
+  "letter": "சை",
+  "tamil": "சையெனத் திரியேல்",
+  "translit": "saiyenath thiriyael",
+  "tamil_meaning": "பெரியோர் 'சீ' என வெறுக்கும்படி வீணாய்த் திரியாதே",
+  "source_english": "Avoid being insulted.",
+  "literal": "Do not roam about so that others say 'chee'.",
+  "meaning": "Do not wander aimlessly or behave in a way that makes respected people look at you with contempt.",
+  "themes": [
+   "aimlessness",
+   "wasting time",
+   "reputation",
+   "loitering",
+   "being looked down on"
+  ],
+  "situations": [
+   "I just roam around with friends doing nothing",
+   "People in my area look down on me",
+   "I have no direction in life",
+   "My relatives think I'm a waste",
+   "I hang out all night with no purpose"
+  ]
+ },
+ {
+  "no": 53,
+  "letter": "சொ",
+  "tamil": "சொற் சோர்வு படேல்",
+  "translit": "sor sorvu padel",
+  "tamil_meaning": "பிறருடன் பேசும் பொழுது மறந்தும் குற்றமுண்டாகப் பேசாதே",
+  "source_english": "Don't show fatigue in conversation.",
+  "literal": "Do not falter in speech.",
+  "meaning": "Be careful when speaking. Do not let careless or faulty words slip out, even by mistake.",
+  "themes": [
+   "careless speech",
+   "slip of tongue",
+   "speaking carefully",
+   "presentation",
+   "interview"
+  ],
+  "situations": [
+   "I said something stupid in a meeting",
+   "I blurt things out without thinking",
+   "How do I speak confidently in an interview?",
+   "I keep saying the wrong thing",
+   "I revealed something I shouldn't have"
+  ]
+ },
+ {
+  "no": 54,
+  "letter": "சோ",
+  "tamil": "சோம்பித் திரியேல்",
+  "translit": "sombith thiriyel",
+  "tamil_meaning": "முயற்சியின்றிச் சோம்பேறியாகத் திரியாதே.",
+  "source_english": "Don't be lazy.",
+  "literal": "Do not wander about lazily.",
+  "meaning": "Do not idle around without effort. Laziness wastes your talents and your life.",
+  "themes": [
+   "laziness",
+   "idleness",
+   "procrastination",
+   "no effort",
+   "sloth",
+   "unemployment"
+  ],
+  "situations": [
+   "I feel lazy and unmotivated",
+   "I don't do anything all day",
+   "I'm a somberi, how to change?",
+   "I avoid work and just scroll my phone",
+   "I have time but I'm too lazy to use it",
+   "somberithanam jaasthi"
+  ]
+ },
+ {
+  "no": 55,
+  "letter": "த",
+  "tamil": "தக்கோன் எனத் திரி",
+  "translit": "thakkoan enath thiri",
+  "tamil_meaning": "பெரியோர்கள் உன்னைத் தக்கவன்(யோக்கியன்,நல்லவன்) என்று புகழும்படி நடந்துக்கொள்",
+  "source_english": "Be trustworthy.",
+  "literal": "Live so that you are called worthy.",
+  "meaning": "Behave so that the wise call you a trustworthy, worthy person.",
+  "themes": [
+   "trustworthiness",
+   "reliability",
+   "reputation",
+   "integrity",
+   "being dependable"
+  ],
+  "situations": [
+   "People don't trust me anymore",
+   "How do I become reliable?",
+   "I keep breaking my promises",
+   "I want my boss to trust me with bigger work",
+   "How do I rebuild my reputation?"
+  ]
+ },
+ {
+  "no": 56,
+  "letter": "தா",
+  "tamil": "தானமது விரும்பு",
+  "translit": "thaanamadhu virumbu",
+  "tamil_meaning": "யாசிப்பவர்களுக்குத் தானம் செய்.",
+  "source_english": "Be kind to the unfortunate.",
+  "literal": "Love to give charity.",
+  "meaning": "Love giving to those in need. Let charity be a joy, not a burden.",
+  "themes": [
+   "charity",
+   "donation",
+   "generosity",
+   "the poor",
+   "kindness"
+  ],
+  "situations": [
+   "Should I donate part of my salary?",
+   "I want to help poor people",
+   "Is charity really useful?",
+   "I feel bad seeing beggars but don't give",
+   "How much should I give to others?"
+  ]
+ },
+ {
+  "no": 57,
+  "letter": "தி",
+  "tamil": "திருமாலுக்கு அடிமை செய்",
+  "translit": "thirumalukku adimai sei",
+  "tamil_meaning": "நாராயணமூர்த்திக்குத் தொண்டு செய்",
+  "source_english": "Serve Tirumal.[1]",
+  "literal": "Serve Thirumal (the Divine).",
+  "meaning": "Devote yourself in service to God (Thirumal). Humble service to the divine and to all beings purifies the heart.",
+  "themes": [
+   "devotion",
+   "faith",
+   "God",
+   "spirituality",
+   "prayer",
+   "service"
+  ],
+  "situations": [
+   "I've lost touch with God",
+   "Should I pray even when life is good?",
+   "How do I find peace through faith?",
+   "I want to be more spiritual",
+   "I feel empty, does devotion help?"
+  ]
+ },
+ {
+  "no": 58,
+  "letter": "தீ",
+  "tamil": "தீவினை அகற்று",
+  "translit": "theevinai akatru",
+  "tamil_meaning": "பாவச் செயல்களைச் செய்யாமல் இரு.",
+  "source_english": "Don't sin.",
+  "literal": "Remove evil deeds.",
+  "meaning": "Keep away from sinful actions. Bad deeds return to the doer.",
+  "themes": [
+   "sin",
+   "evil deeds",
+   "karma",
+   "wrongdoing",
+   "guilt"
+  ],
+  "situations": [
+   "I've done a lot of bad things, can I change?",
+   "Does karma really come back?",
+   "I feel guilty for something wrong I did",
+   "I'm tempted to do something wicked",
+   "How do I stop doing wrong things?"
+  ]
+ },
+ {
+  "no": 59,
+  "letter": "து",
+  "tamil": "துன்பத்திற்கு இடம் கொடேல்",
+  "translit": "thunpaththirku idam kodael",
+  "tamil_meaning": "முயற்சி செய்யும் பொழுது வரும் உடம்பின் வருத்தத்திற்கு அஞ்சி அதனை விட்டு விடாதே.",
+  "source_english": "Don't attract suffering.",
+  "literal": "Do not give room to (fear of) hardship.",
+  "meaning": "Do not give up your effort because of the bodily pain and hardship that come with it. Don't let hardship defeat you.",
+  "themes": [
+   "hardship",
+   "struggle",
+   "pain",
+   "resilience",
+   "depression",
+   "sadness",
+   "hard work"
+  ],
+  "situations": [
+   "Training for the marathon is so painful I want to stop",
+   "Life is so hard, I feel like crying all the time",
+   "I feel depressed and stuck",
+   "Hard work is exhausting, should I give up?",
+   "Everything is going wrong in my life",
+   "romba kastama irukku"
+  ]
+ },
+ {
+  "no": 60,
+  "letter": "தூ",
+  "tamil": "தூக்கி வினை செய்",
+  "translit": "thookki vinai sei",
+  "tamil_meaning": "ஒரு வேளையை முடிப்பதற்கான வழிமுறைகளை நன்கு ஆராய்ந்து அறிந்த பின்பு அச்செயலைச் செய்யத் தொடங்கவும்",
+  "source_english": "Deliberate every action.",
+  "literal": "Weigh well, then act.",
+  "meaning": "Think carefully about the means and consequences before starting any task. Plan, then act.",
+  "themes": [
+   "planning",
+   "thinking before acting",
+   "impulsive decisions",
+   "decision making",
+   "strategy"
+  ],
+  "situations": [
+   "I make impulsive decisions and regret them",
+   "Should I quit my job without a plan?",
+   "How do I make big decisions?",
+   "I jumped into a business without thinking and it failed",
+   "I want to invest but I haven't researched"
+  ]
+ },
+ {
+  "no": 61,
+  "letter": "தெ",
+  "tamil": "தெய்வம் இகழேல்",
+  "translit": "theivam ikazhel",
+  "tamil_meaning": "கடவுளைப் பழிக்காதே.",
+  "source_english": "Don't defame the divine.",
+  "literal": "Do not scorn the Divine.",
+  "meaning": "Do not mock or insult God or what others hold sacred.",
+  "themes": [
+   "respecting faith",
+   "mocking religion",
+   "God",
+   "belief",
+   "respect"
+  ],
+  "situations": [
+   "I make fun of my friend's religion",
+   "I'm angry at God for my suffering",
+   "Is it okay to mock people's beliefs?",
+   "I disrespected a temple",
+   "I don't believe, should I still respect it?"
+  ]
+ },
+ {
+  "no": 62,
+  "letter": "தே",
+  "tamil": "தேசத்தோடு ஒட்டி வாழ்",
+  "translit": "thaesathodu otti vaazh",
+  "tamil_meaning": "உன் நாட்டில் வசிக்கும் மக்களுடன் பகை இல்லாமல் வாழ்",
+  "source_english": "Live in unison with your countrymen.",
+  "literal": "Live in harmony with your country(men).",
+  "meaning": "Live peacefully with the people of your land, without hostility.",
+  "themes": [
+   "harmony",
+   "community",
+   "neighbours",
+   "nation",
+   "conflict with people",
+   "unity"
+  ],
+  "situations": [
+   "I have fights with my neighbours",
+   "I don't get along with people from other communities",
+   "How do I live peacefully in my society?",
+   "There's tension in my apartment association",
+   "I feel hatred towards people of another region"
+  ]
+ },
+ {
+  "no": 63,
+  "letter": "தை",
+  "tamil": "தையல் சொல் கேளேல்",
+  "translit": "thaiyal sol kelael",
+  "tamil_meaning": "மனைவி சொல் கேட்டு ஆராயாமல் நடவாதே.",
+  "source_english": "Don't listen to malicious speech.[2]",
+  "literal": "Do not blindly heed whispered counsel (traditionally: a spouse's word) without examining it.",
+  "meaning": "Do not act on what someone close whispers to you without examining it yourself. Think for yourself before acting on advice, however dear the adviser.",
+  "themes": [
+   "blind trust",
+   "being influenced",
+   "advice",
+   "thinking for yourself",
+   "manipulation"
+  ],
+  "situations": [
+   "I always do whatever my partner says without thinking",
+   "Someone keeps filling my ears against my family",
+   "Should I follow advice blindly?",
+   "I made a bad decision because someone influenced me",
+   "How do I think independently?"
+  ]
+ },
+ {
+  "no": 64,
+  "letter": "தொ",
+  "tamil": "தொன்மை மறவேல்",
+  "translit": "thonmai maravel",
+  "tamil_meaning": "பழைமையை மறவாதிருக்க வேண்டும் (பழங்கால மற்றும் பண்டைய முறையிலான நம் தமிழ் கலாச்சாரத்தை விட்டுக் கொடுக்காமல் இயற்கையோடு ஒத்து வாழ வேண்டும்)",
+  "source_english": "Don't forget the past.",
+  "literal": "Do not forget the ancient (heritage).",
+  "meaning": "Do not forget your heritage, traditions and roots. Respect the wisdom of the past.",
+  "themes": [
+   "heritage",
+   "tradition",
+   "roots",
+   "culture",
+   "forgetting origins",
+   "Tamil culture"
+  ],
+  "situations": [
+   "I've forgotten my culture after moving abroad",
+   "My kids don't speak Tamil",
+   "Are traditions still relevant?",
+   "I feel ashamed of my village roots",
+   "How do I stay connected to my heritage?"
+  ]
+ },
+ {
+  "no": 65,
+  "letter": "தோ",
+  "tamil": "தோற்பன தொடரேல்",
+  "translit": "thorpana thodarel",
+  "tamil_meaning": "ஒரு செயலைச் செய்தால் தோல்வியில் தான் முடியும் எனத் தெரிந்தே அதைத் தொடங்காதே.",
+  "source_english": "Don't compete if defeat is certain.",
+  "literal": "Do not pursue what will surely fail.",
+  "meaning": "Do not start or continue something you know will end in defeat. Choose your battles wisely.",
+  "themes": [
+   "choosing battles",
+   "sunk cost",
+   "futile efforts",
+   "knowing when to stop",
+   "strategy"
+  ],
+  "situations": [
+   "Should I keep fighting a case I'm sure to lose?",
+   "I keep chasing someone who doesn't love me",
+   "My business is clearly failing, should I keep putting money in?",
+   "Should I compete with a much stronger rival?",
+   "When should I let go of a dream?"
+  ]
+ },
+ {
+  "no": 66,
+  "letter": "ந",
+  "tamil": "நன்மை கடைப்பிடி",
+  "translit": "nanmai kadaipadi",
+  "tamil_meaning": "நல்வினை செய்தலை எவ்வளவு இடையுறு வந்தாலும் உறுதியாகத் தொடரவும்",
+  "source_english": "Adhere to the beneficial.",
+  "literal": "Hold firmly to the good.",
+  "meaning": "Keep doing good firmly, however many obstacles come.",
+  "themes": [
+   "persistence in good",
+   "obstacles",
+   "staying good",
+   "commitment",
+   "virtue"
+  ],
+  "situations": [
+   "I try to be good but people mock me",
+   "Doing the right thing is getting me into trouble",
+   "Should I keep helping even when it's hard?",
+   "Obstacles keep stopping my good work",
+   "How do I stay committed to doing good?"
+  ]
+ },
+ {
+  "no": 67,
+  "letter": "நா",
+  "tamil": "நாடு ஒப்பன செய்",
+  "translit": "naadu oppan sei",
+  "tamil_meaning": "நாட்டில் உள்ள பலரும் ஒத்துக்கொள்ளத்தக்க நல்ல காரியங்களைச் செய்",
+  "source_english": "Do what is acceptable to the nation.",
+  "literal": "Do what the land approves.",
+  "meaning": "Do things that most good people in society would agree are right and beneficial.",
+  "themes": [
+   "social acceptance",
+   "public good",
+   "community approval",
+   "ethics",
+   "reputation"
+  ],
+  "situations": [
+   "Is my plan good for society?",
+   "My actions are legal but people disapprove",
+   "How do I know if what I'm doing is right?",
+   "My business harms the local people",
+   "Should I care what society thinks?"
+  ]
+ },
+ {
+  "no": 68,
+  "letter": "நி",
+  "tamil": "நிலையில் பிரியேல்",
+  "translit": "nilaiyil piriyel",
+  "tamil_meaning": "உன்னுடைய நல்ல நிலையில் இருந்து என்றும் தாழ்ந்து விடாதே.",
+  "source_english": "Don't depart from good standing.",
+  "literal": "Do not slip from your (good) standing.",
+  "meaning": "Never fall from your good position and principles. Hold on to the dignity you have earned.",
+  "themes": [
+   "self-respect",
+   "standards",
+   "dignity",
+   "falling from grace",
+   "consistency"
+  ],
+  "situations": [
+   "I used to be disciplined and now I've fallen apart",
+   "I'm lowering my standards to please people",
+   "How do I not lose my position after success?",
+   "I compromised my dignity for a relationship",
+   "I'm slipping back into old bad habits"
+  ]
+ },
+ {
+  "no": 69,
+  "letter": "நீ",
+  "tamil": "நீர் விளையாடேல்",
+  "translit": "neer vilaiyadel",
+  "tamil_meaning": "வெள்ளபெருக்கில் நீந்தி விளையாடாதே",
+  "source_english": "Don't jump into a watery grave.",
+  "literal": "Do not play in (flood) waters.",
+  "meaning": "Do not play in dangerous floods or deep waters. Respect forces stronger than you and avoid reckless risks.",
+  "themes": [
+   "safety",
+   "reckless risks",
+   "danger",
+   "nature",
+   "thrill seeking"
+  ],
+  "situations": [
+   "My friends want to swim in a flooded river",
+   "Is it okay to take risky selfies at waterfalls?",
+   "I like adrenaline adventures without safety",
+   "Should I go to the beach during a storm?",
+   "I take dangerous risks to feel alive"
+  ]
+ },
+ {
+  "no": 70,
+  "letter": "நு",
+  "tamil": "நுண்மை நுகரேல்",
+  "translit": "nunmai nugaral",
+  "tamil_meaning": "நோயைத் தரும் சிற்றுண்டிகளை அதிகமாக உண்ணாதே",
+  "source_english": "Don't oversnack.",
+  "literal": "Do not overindulge in (rich) snacks.",
+  "meaning": "Do not eat too many unhealthy snacks that bring illness.",
+  "themes": [
+   "junk food",
+   "snacking",
+   "diet",
+   "health",
+   "eating habits"
+  ],
+  "situations": [
+   "I eat junk food every day",
+   "I can't stop snacking at night",
+   "I'm addicted to chips and sweets",
+   "How do I eat healthier?",
+   "Fast food is making me sick"
+  ]
+ },
+ {
+  "no": 71,
+  "letter": "நூ",
+  "tamil": "நூல் பல கல்",
+  "translit": "nool pala kal",
+  "tamil_meaning": "அறிவை வளர்க்கும் பல நூல்களைப் படி",
+  "source_english": "Read lot of books.",
+  "literal": "Learn many books.",
+  "meaning": "Read many books that grow your knowledge and wisdom.",
+  "themes": [
+   "reading",
+   "books",
+   "knowledge",
+   "wisdom",
+   "learning"
+  ],
+  "situations": [
+   "I want to start reading books",
+   "Is reading still useful in the age of YouTube?",
+   "I only read for exams",
+   "What should I read to become wiser?",
+   "I haven't read a book in years"
+  ]
+ },
+ {
+  "no": 72,
+  "letter": "நெ",
+  "tamil": "நெற்பயிர் விளைவு செய்",
+  "translit": "nerpayir vilaivu sei",
+  "tamil_meaning": "நெற்பயிரை விளையச் செய்வதை உன் வாழ்க்கை தொழிலாகக் கொண்டு வாழ்.",
+  "source_english": "Engage in agriculture.",
+  "literal": "Cultivate paddy (agriculture).",
+  "meaning": "Take up farming and producing food as an honourable livelihood; value those who grow what we eat.",
+  "themes": [
+   "farming",
+   "agriculture",
+   "livelihood",
+   "productive work",
+   "food"
+  ],
+  "situations": [
+   "Should I leave my IT job and take up farming?",
+   "Is farming a respectable career?",
+   "My family owns land, should I cultivate it?",
+   "I want to grow my own food",
+   "Young people don't want to farm anymore"
+  ]
+ },
+ {
+  "no": 73,
+  "letter": "நே",
+  "tamil": "நேர்பட ஒழுகு",
+  "translit": "nerpada ozhugu",
+  "tamil_meaning": "ஒழுக்கந் தவறாமல் நேர்வழியில் நட",
+  "source_english": "Exhibit good manners always.",
+  "literal": "Walk the straight path.",
+  "meaning": "Always behave rightly and walk the honest, straight path.",
+  "themes": [
+   "good conduct",
+   "honesty",
+   "discipline",
+   "straightforwardness",
+   "manners"
+  ],
+  "situations": [
+   "How do I stay on the right path?",
+   "I'm tempted to take shortcuts",
+   "I want to live an honest, disciplined life",
+   "Should I be straightforward even when it costs me?",
+   "My manners have gotten bad"
+  ]
+ },
+ {
+  "no": 74,
+  "letter": "நை",
+  "tamil": "நைவினை நணுகேல்",
+  "translit": "naivinai nanugel",
+  "tamil_meaning": "பிறர் வருந்தத் தகுந்த தீ வினைகளைச் செய்யாதே",
+  "source_english": "Don't involve in destruction.",
+  "literal": "Do not go near deeds that cause suffering.",
+  "meaning": "Do not do wicked deeds that make others suffer.",
+  "themes": [
+   "causing suffering",
+   "destruction",
+   "cruelty",
+   "harming others",
+   "vandalism"
+  ],
+  "situations": [
+   "I'm part of a group that harasses people",
+   "I want to damage my ex's car",
+   "Is it wrong to break things when angry?",
+   "My actions are hurting my family",
+   "I joined others in trolling someone online"
+  ]
+ },
+ {
+  "no": 75,
+  "letter": "நொ",
+  "tamil": "நொய்ய உரையேல்",
+  "translit": "noyya uraiyel",
+  "tamil_meaning": "பயன் இல்லாத அற்ப வார்த்தைகளைப் பேசாதே.",
+  "source_english": "Avoid the profane.",
+  "literal": "Do not speak trivial, useless words.",
+  "meaning": "Avoid empty, petty, worthless talk.",
+  "themes": [
+   "useless talk",
+   "chatter",
+   "small talk",
+   "profanity",
+   "wasting words"
+  ],
+  "situations": [
+   "I talk too much nonsense",
+   "I waste hours chatting about nothing",
+   "My friends only talk about petty things",
+   "I use a lot of bad words",
+   "How do I speak more meaningfully?"
+  ]
+ },
+ {
+  "no": 76,
+  "letter": "நோ",
+  "tamil": "நோய்க்கு இடம் கொடேல்",
+  "translit": "noikku idam kodael",
+  "tamil_meaning": "மிகுந்த உணவு உறக்கம் முதலியவற்றால் நோய்க்கு வழிவகை செய்யாதே.",
+  "source_english": "Avoid unhealthy lifestyles.",
+  "literal": "Do not give room to disease.",
+  "meaning": "Do not invite illness through overeating, oversleeping or careless habits. Live healthily.",
+  "themes": [
+   "health",
+   "unhealthy lifestyle",
+   "exercise",
+   "sickness",
+   "bad habits",
+   "smoking",
+   "drinking"
+  ],
+  "situations": [
+   "I never exercise and I'm gaining weight",
+   "I smoke and drink a lot",
+   "My lifestyle is very unhealthy",
+   "I keep falling sick",
+   "I ignore my health for work",
+   "doctor said my sugar is high"
+  ]
+ },
+ {
+  "no": 77,
+  "letter": "ப",
+  "tamil": "பழிப்பன பகரேல்",
+  "translit": "pazhippana pagarel",
+  "tamil_meaning": "பெரியோர்களால் பழிக்கப்படும் இழிவான சொற்களான பொய்,கடுஞ்சொல் ஆகியவற்றைப் பேசாதே.",
+  "source_english": "Speak no vulgarity.",
+  "literal": "Do not utter what is condemned (lies, harsh words).",
+  "meaning": "Do not speak words the wise condemn, such as lies and cruel speech.",
+  "themes": [
+   "vulgar speech",
+   "lies",
+   "harsh words",
+   "swearing",
+   "abuse"
+  ],
+  "situations": [
+   "I swear a lot when I'm angry",
+   "I abused someone verbally",
+   "I use vulgar language with friends",
+   "I lied and insulted someone",
+   "How do I clean up my language?"
+  ]
+ },
+ {
+  "no": 78,
+  "letter": "பா",
+  "tamil": "பாம்பொடு பழகேல்",
+  "translit": "paambodu pazhagel",
+  "tamil_meaning": "பாம்புபோலக் கொடிய குணம் கொண்டவர்கள் உடன் பழகாதே.",
+  "source_english": "Keep away from the vicious.",
+  "literal": "Do not associate with snake-like people.",
+  "meaning": "Keep away from cruel, venomous people who may strike you.",
+  "themes": [
+   "toxic people",
+   "dangerous people",
+   "vicious friends",
+   "manipulators",
+   "abusers"
+  ],
+  "situations": [
+   "My friend is toxic but I can't leave",
+   "My colleague backstabs everyone",
+   "How do I deal with a manipulative person?",
+   "I keep getting close to dangerous people",
+   "My partner is cruel to me"
+  ]
+ },
+ {
+  "no": 79,
+  "letter": "பி",
+  "tamil": "பிழைபடச் சொல்லேல்",
+  "translit": "pizhaipadach sollel",
+  "tamil_meaning": "குற்றம் உண்டாகும்படி எதையும் பேசாதே.",
+  "source_english": "Watch out for self-incrimination.",
+  "literal": "Do not speak so as to cause faults.",
+  "meaning": "Do not say anything that leads to blame, error or harm, including words that incriminate you or others.",
+  "themes": [
+   "careful speech",
+   "incriminating words",
+   "blame",
+   "mistakes",
+   "legal trouble"
+  ],
+  "situations": [
+   "I said something that got me into trouble",
+   "I posted something online that backfired",
+   "I blamed someone wrongly",
+   "Should I admit everything in writing?",
+   "My words were misunderstood and caused a problem"
+  ]
+ },
+ {
+  "no": 80,
+  "letter": "பீ",
+  "tamil": "பீடு பெற நில்",
+  "translit": "peedu pera nil",
+  "tamil_meaning": "பெருமையை அடையும் படியான நல்ல நிலையிலே நில்",
+  "source_english": "Follow the path of honour.",
+  "literal": "Stand so as to win honour.",
+  "meaning": "Stay on the path that brings you honour and dignity.",
+  "themes": [
+   "honour",
+   "pride",
+   "dignity",
+   "self-respect",
+   "achievement"
+  ],
+  "situations": [
+   "How do I earn respect?",
+   "I want to make my family proud",
+   "Should I take a shortcut to success?",
+   "I want to be respected in my field",
+   "I want to live with honour"
+  ]
+ },
+ {
+  "no": 81,
+  "letter": "பு",
+  "tamil": "புகழ்ந்தாரைப் போற்றி வாழ்",
+  "translit": "pugalnadharai potri vaazh",
+  "tamil_meaning": "உன்னையே நம்பியவர்களைக் காப்பாற்றி வாழ்",
+  "source_english": "Protect your benefactor.",
+  "literal": "Protect and cherish those who rely on you.",
+  "meaning": "Take care of those who depend on you and those who stood by you.",
+  "themes": [
+   "dependents",
+   "supporters",
+   "benefactors",
+   "loyalty",
+   "responsibility",
+   "family"
+  ],
+  "situations": [
+   "My employees depend on me",
+   "My old mentor needs help now",
+   "I'm neglecting people who rely on me",
+   "Someone who supported me is struggling",
+   "How do I take care of my team?"
+  ]
+ },
+ {
+  "no": 82,
+  "letter": "பூ",
+  "tamil": "பூமி திருத்தி உண்",
+  "translit": "poomi thiruthi unn",
+  "tamil_meaning": "விளைநிலத்தை உழுது அதில் பயிர்செய்து உண்.(அ)விவசாயத்தை வாழ்க்கைத் தொழிலாகக் கொள்",
+  "source_english": "Cultivate the land and feed.",
+  "literal": "Till the land and eat.",
+  "meaning": "Earn your food by honest labour, such as working the land; live by your own productive work.",
+  "themes": [
+   "honest work",
+   "hard work",
+   "earning",
+   "labour",
+   "farming",
+   "self-reliance"
+  ],
+  "situations": [
+   "I want to earn by my own hard work",
+   "Is physical work beneath me?",
+   "I live off others' money",
+   "How do I value honest labour?",
+   "I want a simple, productive life"
+  ]
+ },
+ {
+  "no": 83,
+  "letter": "பெ",
+  "tamil": "பெரியாரைத் துணைக் கொள்",
+  "translit": "periyarai thunai kol",
+  "tamil_meaning": "அறிவிலே சிறந்த பெரியோர்களை உனக்குத் துணையாகப் பேணிக்கொள்",
+  "source_english": "Seek help from the old and wise.",
+  "literal": "Take the great (wise elders) as your support.",
+  "meaning": "Keep wise, learned elders close as your guides and helpers.",
+  "themes": [
+   "mentors",
+   "elders",
+   "seeking advice",
+   "guidance",
+   "wisdom"
+  ],
+  "situations": [
+   "I don't have anyone to guide me",
+   "Should I ask my grandparents for advice?",
+   "How do I find a mentor?",
+   "I'm confused and need guidance",
+   "I ignore advice from experienced people"
+  ]
+ },
+ {
+  "no": 84,
+  "letter": "பே",
+  "tamil": "பேதைமை அகற்று",
+  "translit": "paedhaimai akatru",
+  "tamil_meaning": "அறியாமையைப் போக்கு",
+  "source_english": "Eradicate ignorance.",
+  "literal": "Remove ignorance.",
+  "meaning": "Get rid of ignorance. Learn, question and see things clearly.",
+  "themes": [
+   "ignorance",
+   "misinformation",
+   "learning",
+   "awareness",
+   "superstition",
+   "fake news"
+  ],
+  "situations": [
+   "I believe everything I see on WhatsApp",
+   "I don't know anything about money management",
+   "How do I stop being so naive?",
+   "I'm ignorant about my own rights",
+   "I fall for fake news"
+  ]
+ },
+ {
+  "no": 85,
+  "letter": "பை",
+  "tamil": "பையலோடு இணங்கேல்",
+  "translit": "paiyalodu inangel",
+  "tamil_meaning": "அறிவில்லாத சிறுவனோடு கூடித் திரியாதே.",
+  "source_english": "Avoid friendships with idiots.",
+  "literal": "Do not mingle with foolish youths.",
+  "meaning": "Do not hang around with immature, senseless people who lead you astray.",
+  "themes": [
+   "bad friends",
+   "immature people",
+   "peer pressure",
+   "foolish company"
+  ],
+  "situations": [
+   "My friends are immature and get me into trouble",
+   "My gang always does stupid things",
+   "Should I stop hanging out with my childhood friends who do nothing?",
+   "My friends make me skip class",
+   "I follow my friends into silly fights"
+  ]
+ },
+ {
+  "no": 86,
+  "letter": "பொ",
+  "tamil": "பொருள்தனைப் போற்றி வாழ்",
+  "translit": "porulthanai potri vaazh",
+  "tamil_meaning": "பொருள்களை(செல்வம் உட்பட)வீண் செலவு செய்யாமற் பாதுகாத்து வாழ்.",
+  "source_english": "Protect and enhance your wealth.",
+  "literal": "Guard your wealth and live.",
+  "meaning": "Protect your wealth and do not waste it on needless spending; save and manage money wisely.",
+  "themes": [
+   "money management",
+   "saving",
+   "overspending",
+   "budget",
+   "wealth",
+   "financial planning"
+  ],
+  "situations": [
+   "I spend my entire salary every month",
+   "How do I start saving money?",
+   "I waste money on online shopping",
+   "I have no savings at 30",
+   "Should I make a budget?",
+   "salary vandha udane kaali aagudhu"
+  ]
+ },
+ {
+  "no": 87,
+  "letter": "போ",
+  "tamil": "போர்த் தொழில் புரியேல்",
+  "translit": "poar thozhil puriyel",
+  "tamil_meaning": "யாருடனும் தேவையில்லாமல் சண்டை பொடுவதை ஒரு வேலையாகச் செய்யாதே",
+  "source_english": "Don't engage in fruitless fights.",
+  "literal": "Do not make fighting your occupation.",
+  "meaning": "Do not pick needless fights and quarrels with people as a habit.",
+  "themes": [
+   "fighting",
+   "quarrels",
+   "arguments",
+   "conflict",
+   "aggression"
+  ],
+  "situations": [
+   "I keep getting into fights",
+   "I argue with everyone online",
+   "My family always quarrels",
+   "How do I stop picking fights?",
+   "I fight with my sibling every day"
+  ]
+ },
+ {
+  "no": 88,
+  "letter": "ம",
+  "tamil": "மனம் தடுமாறேல்",
+  "translit": "manam thadumaarel",
+  "tamil_meaning": "எதனாலும் மனக்கலக்கம் அடையாதே",
+  "source_english": "Don't vacillate.",
+  "literal": "Do not let your mind waver.",
+  "meaning": "Do not let anything shake your mind. Stay steady and clear instead of being confused or anxious.",
+  "themes": [
+   "confusion",
+   "indecision",
+   "anxiety",
+   "overthinking",
+   "mental stability",
+   "focus",
+   "calm"
+  ],
+  "situations": [
+   "I can't decide between two job offers",
+   "I overthink everything",
+   "I feel anxious and confused",
+   "I keep changing my mind",
+   "How do I stay calm under pressure?",
+   "I can't concentrate on studies"
+  ]
+ },
+ {
+  "no": 89,
+  "letter": "மா",
+  "tamil": "மாற்றானுக்கு இடம் கொடேல்",
+  "translit": "maattraanukku idam kodael",
+  "tamil_meaning": "பகைவன் உன்னைத் துன்புறுத்தி உன்னை வெல்வதற்கு இடம் கொடுக்காதே.",
+  "source_english": "Don't accommodate your enemy.",
+  "literal": "Do not give room to your enemy.",
+  "meaning": "Do not leave openings for an enemy to hurt or defeat you. Guard your weaknesses.",
+  "themes": [
+   "enemies",
+   "rivals",
+   "protecting yourself",
+   "vulnerability",
+   "office politics"
+  ],
+  "situations": [
+   "My rival at work is waiting for me to fail",
+   "Someone is trying to bring me down",
+   "How do I protect myself from a jealous colleague?",
+   "I gave my competitor information by mistake",
+   "I'm too open with people who don't like me"
+  ]
+ },
+ {
+  "no": 90,
+  "letter": "மி",
+  "tamil": "மிகைபடச் சொல்லேல்",
+  "translit": "maikaipadach sollel",
+  "tamil_meaning": "சாதாரணமான விஷயத்தை மாயாஜால வார்தைகளால் பெரிதாகக் கூறாதே.",
+  "source_english": "Don't overdramatize.",
+  "literal": "Do not overstate.",
+  "meaning": "Do not blow ordinary things out of proportion with dramatic words.",
+  "themes": [
+   "exaggeration",
+   "overdramatising",
+   "drama",
+   "overreacting"
+  ],
+  "situations": [
+   "I always overreact to small problems",
+   "My friends say I'm a drama queen",
+   "I exaggerate my problems",
+   "I make a big deal out of everything",
+   "I overhype my plans"
+  ]
+ },
+ {
+  "no": 91,
+  "letter": "மீ",
+  "tamil": "மீதூண் விரும்பேல்",
+  "translit": "meedhoon virumpeal",
+  "tamil_meaning": "மிகுதியாக உண்ணுதலை விரும்பாதே.",
+  "source_english": "Don't be a glutton.",
+  "literal": "Do not desire overeating.",
+  "meaning": "Do not crave or indulge in eating too much.",
+  "themes": [
+   "overeating",
+   "gluttony",
+   "diet",
+   "weight",
+   "food cravings",
+   "self-control"
+  ],
+  "situations": [
+   "I eat too much at every meal",
+   "I stress eat",
+   "I can't control my food cravings",
+   "I eat even when I'm not hungry",
+   "How do I stop binge eating?"
+  ]
+ },
+ {
+  "no": 92,
+  "letter": "மு",
+  "tamil": "முனைமுகத்து நில்லேல்",
+  "translit": "munaimukathu nillael",
+  "tamil_meaning": "எப்போதும் யாருடனாவது சண்டையிடுவதற்காகப் போர் முனையிலே நிற்காதே",
+  "source_english": "Don't join an unjust fight.",
+  "literal": "Do not stand at the battle front.",
+  "meaning": "Do not always place yourself at the front of conflicts, eager to fight; avoid joining quarrels and unjust fights.",
+  "themes": [
+   "conflicts",
+   "joining fights",
+   "aggression",
+   "unjust fights",
+   "taking sides"
+  ],
+  "situations": [
+   "My friends want me to join a fight against another group",
+   "I always jump into others' arguments",
+   "Should I join the protest that's turning violent?",
+   "I like confrontation",
+   "I keep getting dragged into other people's conflicts"
+  ]
+ },
+ {
+  "no": 93,
+  "letter": "மூ",
+  "tamil": "மூர்க்கரோடு இணங்கேல்",
+  "translit": "moorkkarodu inangel",
+  "tamil_meaning": "மூர்க்க குணம் கொண்டவர்கள் உடன் பழகாதே",
+  "source_english": "Don't agree with the stubborn.",
+  "literal": "Do not agree with the obstinate.",
+  "meaning": "Do not associate or go along with stubborn, brutish, unreasonable people.",
+  "themes": [
+   "stubborn people",
+   "unreasonable people",
+   "arguing",
+   "aggressive people",
+   "boundaries"
+  ],
+  "situations": [
+   "My uncle is stubborn and never listens",
+   "How do I deal with an aggressive, unreasonable boss?",
+   "My friend never accepts he's wrong",
+   "Should I keep arguing with someone who won't listen?",
+   "I'm stuck with a hot-headed teammate"
+  ]
+ },
+ {
+  "no": 94,
+  "letter": "மெ",
+  "tamil": "மெல்லி நல்லாள் தோள்சேர்",
+  "translit": "melli nallaal tholser",
+  "tamil_meaning": "பிற மாதரை விரும்பாமல் உன் மனைவியுடன் மட்டும் சேர்ந்து வாழ்.",
+  "source_english": "Stick with your exemplary wife.",
+  "literal": "Be faithful to your noble spouse.",
+  "meaning": "Stay faithful to your spouse alone; desire no other.",
+  "themes": [
+   "fidelity",
+   "marriage",
+   "cheating",
+   "loyalty",
+   "relationships",
+   "partner"
+  ],
+  "situations": [
+   "I'm attracted to someone other than my wife",
+   "My marriage is boring, should I look elsewhere?",
+   "How do I stay loyal in a long relationship?",
+   "I'm tempted to cheat on my husband",
+   "How do I keep my marriage strong?"
+  ]
+ },
+ {
+  "no": 95,
+  "letter": "மே",
+  "tamil": "மேன்மக்கள் சொல் கேள்",
+  "translit": "maenmakal sol kel",
+  "tamil_meaning": "நல்லொழுக்கம் உடைய பெரியோர் சொல்லைக் கேட்டு நட.",
+  "source_english": "Listen to the great legends.",
+  "literal": "Listen to the words of the noble.",
+  "meaning": "Listen to and follow the advice of good, virtuous people.",
+  "themes": [
+   "advice",
+   "listening",
+   "wise people",
+   "guidance",
+   "stubbornness"
+  ],
+  "situations": [
+   "I never listen to my teachers",
+   "My elders give advice and I ignore them",
+   "Should I follow my mentor's advice?",
+   "I think I know better than everyone",
+   "Whose advice should I trust?"
+  ]
+ },
+ {
+  "no": 96,
+  "letter": "மை",
+  "tamil": "மை விழியார் மனை அகல்",
+  "translit": "mai vizhiyaar manai akal",
+  "tamil_meaning": "விலைமாந்தர் உடன் உறவு கொள்ளாமல் விலகி நில்",
+  "source_english": "Dissociate from the jealous.",
+  "literal": "Keep away from the house of those who sell love (illicit relations).",
+  "meaning": "Stay away from illicit, transactional relationships that destroy health, wealth and family.",
+  "themes": [
+   "illicit relationships",
+   "temptation",
+   "affairs",
+   "vices",
+   "self-control"
+  ],
+  "situations": [
+   "I'm tempted by illicit relationships",
+   "My friends go to shady places and invite me",
+   "How do I resist temptation?",
+   "I'm wasting money on unhealthy relationships",
+   "I'm drawn to a secret affair"
+  ]
+ },
+ {
+  "no": 97,
+  "letter": "மொ",
+  "tamil": "மொழிவது அற மொழி",
+  "translit": "mozivadhu ara mozhi",
+  "tamil_meaning": "சொல்லப்படும் பொருளைச் சந்தேகம் நீங்கும்படி சொல் பேசுவதைத் தெளிவாகப் பேசு சொல்வதற்கு முன், இதைச் சொல்ல வேண்டுமா? என்று ஆராய்ந்து, பின் சொல்க எதைச் சொல்ல/பேச வேண்டும்? எப்பொழுது சொல்ல/பேச வேண்டும்? எதைச் சொல்லக்/பேசக் கூடாது? எப்பொழுது சொல்லக்/பேசக் கூடாது? எப்படிச் சொல்ல வேண்டும்? எப்படிச் சொல்லக் கூடாது?",
+  "source_english": "Speak with clarity.",
+  "literal": "Speak clearly, free of doubt.",
+  "meaning": "When you speak, speak clearly so there's no confusion. Think whether it needs saying, then say it plainly.",
+  "themes": [
+   "clear communication",
+   "clarity",
+   "misunderstanding",
+   "presentation",
+   "public speaking"
+  ],
+  "situations": [
+   "People misunderstand what I say",
+   "How do I communicate clearly at work?",
+   "I'm nervous about my presentation",
+   "My messages are always confusing",
+   "I ramble when I talk"
+  ]
+ },
+ {
+  "no": 98,
+  "letter": "மோ",
+  "tamil": "மோகத்தை முனி",
+  "translit": "mogathai muni",
+  "tamil_meaning": "நிலையில்லாத பொருள்களின் மேலுள்ள ஆசையை வெறுத்திடு",
+  "source_english": "Hate any desire for lust.",
+  "literal": "Spurn infatuation (craving for transient things).",
+  "meaning": "Reject obsessive desire for passing things such as lust, luxury and possessions. They never satisfy.",
+  "themes": [
+   "desire",
+   "lust",
+   "infatuation",
+   "materialism",
+   "obsession",
+   "craving",
+   "luxury"
+  ],
+  "situations": [
+   "I'm obsessed with buying designer brands",
+   "I'm infatuated with someone and can't focus",
+   "I always want more and more",
+   "My cravings control me",
+   "I want expensive things to feel happy"
+  ]
+ },
+ {
+  "no": 99,
+  "letter": "வ",
+  "tamil": "வல்லமை பேசேல்",
+  "translit": "vallamai pesel",
+  "tamil_meaning": "உன்னுடைய வலிமையை நீயே புகழ்ந்து பேசாதே",
+  "source_english": "Don't self-praise.",
+  "literal": "Do not boast of your strength.",
+  "meaning": "Do not praise your own strength or abilities. Let your deeds speak.",
+  "themes": [
+   "self-praise",
+   "arrogance",
+   "ego",
+   "boasting",
+   "humility",
+   "pride"
+  ],
+  "situations": [
+   "How do I deal with an arrogant person?",
+   "I keep bragging about how smart I am",
+   "My colleague always praises himself",
+   "People say I'm full of myself",
+   "I want to stop showing off my skills"
+  ]
+ },
+ {
+  "no": 100,
+  "letter": "வா",
+  "tamil": "வாது முற்கூறேல்",
+  "translit": "vaadhu murkoorel",
+  "tamil_meaning": "முந்திக்கொண்டு வாதிடாதே",
+  "source_english": "Don't gossip or spread rumours.",
+  "literal": "Do not rush to argue first.",
+  "meaning": "Do not be the first to start an argument or debate; don't jump into disputes eagerly.",
+  "themes": [
+   "arguing",
+   "debates",
+   "picking arguments",
+   "patience",
+   "listening first"
+  ],
+  "situations": [
+   "I always start arguments in meetings",
+   "I jump in to argue before hearing people out",
+   "I love debating everything",
+   "My family says I argue too much",
+   "How do I stop being argumentative?"
+  ]
+ },
+ {
+  "no": 101,
+  "letter": "வி",
+  "tamil": "வித்தை விரும்பு",
+  "translit": "vithai virumbu",
+  "tamil_meaning": "கல்வியாகிய நற்பொருளை விரும்பு",
+  "source_english": "Long to learn.",
+  "literal": "Love learning.",
+  "meaning": "Love knowledge and learning as life's true wealth.",
+  "themes": [
+   "love of learning",
+   "curiosity",
+   "education",
+   "studying",
+   "interest"
+  ],
+  "situations": [
+   "I am losing motivation to study",
+   "How do I start enjoying studying?",
+   "I find learning boring",
+   "I want to love what I learn",
+   "I study only for marks"
+  ]
+ },
+ {
+  "no": 102,
+  "letter": "வீ",
+  "tamil": "வீடு பெற நில்",
+  "translit": "veedu pera nil",
+  "tamil_meaning": "முக்தியை பெறுவதற்கான சன்மார்க்கத்திலே வாழ்க்கையை நடத்து",
+  "source_english": "Work for a peaceful life.",
+  "literal": "Stand so as to attain liberation (peace).",
+  "meaning": "Live a righteous life that leads to inner peace and spiritual freedom.",
+  "themes": [
+   "inner peace",
+   "spirituality",
+   "liberation",
+   "meaning of life",
+   "contentment"
+  ],
+  "situations": [
+   "I want peace of mind",
+   "What is the purpose of life?",
+   "I feel empty despite having everything",
+   "How do I find inner peace?",
+   "I'm restless and can't find happiness"
+  ]
+ },
+ {
+  "no": 103,
+  "letter": "உ",
+  "tamil": "உத்தமனாய் இரு",
+  "translit": "uththamanai iru",
+  "tamil_meaning": "உயர்ந்த குணங்கள் கொண்டவனாக வாழ்.",
+  "source_english": "Lead an exemplary life.",
+  "literal": "Be a noble person.",
+  "meaning": "Live as a person of excellent character, an example to others.",
+  "themes": [
+   "role model",
+   "excellence of character",
+   "integrity",
+   "being a good person"
+  ],
+  "situations": [
+   "How do I become a good role model for my kids?",
+   "I want to be a better person",
+   "What makes someone truly good?",
+   "I want people to look up to me",
+   "How do I live an exemplary life?"
+  ]
+ },
+ {
+  "no": 104,
+  "letter": "ஊ",
+  "tamil": "ஊருடன் கூடி வாழ்",
+  "translit": "oorudan koodi vaazh",
+  "tamil_meaning": "ஊராருடன் நன்மை தீமைகளில் கலந்து வாழ்",
+  "source_english": "Live amicably.",
+  "literal": "Live together with the community.",
+  "meaning": "Live with your community and take part in their joys and sorrows.",
+  "themes": [
+   "community",
+   "neighbours",
+   "isolation",
+   "loneliness",
+   "belonging",
+   "social life"
+  ],
+  "situations": [
+   "I feel lonely and isolated",
+   "I don't know my neighbours",
+   "I avoid family functions",
+   "How do I feel part of a community?",
+   "I live alone in a new city and have no one"
+  ]
+ },
+ {
+  "no": 105,
+  "letter": "வெ",
+  "tamil": "வெட்டெனப் பேசேல்",
+  "translit": "vettanap pesel",
+  "tamil_meaning": "யாருடனும் கடினமாகப் பேசாதே",
+  "source_english": "Don't be harsh with your words and deeds.",
+  "literal": "Do not speak curtly.",
+  "meaning": "Do not speak harshly or bluntly. Hurtful words can't be taken back.",
+  "themes": [
+   "harsh words",
+   "bluntness",
+   "rudeness",
+   "tone",
+   "relationships"
+  ],
+  "situations": [
+   "I'm too blunt with people",
+   "I speak harshly to my wife when stressed",
+   "My words hurt my team",
+   "People say I'm rude",
+   "I said something cruel in an argument"
+  ]
+ },
+ {
+  "no": 106,
+  "letter": "வே",
+  "tamil": "வேண்டி வினை செயேல்",
+  "translit": "vaendi vinai seyel",
+  "tamil_meaning": "வேண்டுமென்றே தீய செயல்களைச் செய்யாதே",
+  "source_english": "Don't premeditate harm.",
+  "literal": "Do not deliberately do evil.",
+  "meaning": "Never plan or do harm on purpose.",
+  "themes": [
+   "intentional harm",
+   "plotting",
+   "malice",
+   "revenge",
+   "scheming"
+  ],
+  "situations": [
+   "I'm planning to get back at my ex",
+   "I want to deliberately ruin his reputation",
+   "I'm plotting against my colleague",
+   "I knowingly did something to hurt her",
+   "I feel like harming someone on purpose"
+  ]
+ },
+ {
+  "no": 107,
+  "letter": "வை",
+  "tamil": "வைகறைத் துயில் எழு",
+  "translit": "vaigaraith thuyil ezhu",
+  "tamil_meaning": "விடியற்காலையில் தூக்கத்திலிருந்து எழு நாள்தோறும் சூரியன் உதிக்கும் முன்பே தூக்கத்தில் இருந்து எழுந்திரு",
+  "source_english": "Be an early-riser.",
+  "literal": "Rise before dawn.",
+  "meaning": "Wake up early, before sunrise. The early morning brings health and clarity.",
+  "themes": [
+   "waking early",
+   "morning routine",
+   "discipline",
+   "productivity",
+   "habits"
+  ],
+  "situations": [
+   "I want to wake up early",
+   "My mornings are chaotic",
+   "How do I become a morning person?",
+   "I wake up at noon every day",
+   "How do I build a good daily routine?"
+  ]
+ },
+ {
+  "no": 108,
+  "letter": "ஒ",
+  "tamil": "ஒன்னாரைத் தேறேல்",
+  "translit": "onnaarai therael",
+  "tamil_meaning": "பகைவர்களை நம்பாதே",
+  "source_english": "Never join your enemy.",
+  "literal": "Do not trust your foes.",
+  "meaning": "Do not put your trust in those who are against you.",
+  "themes": [
+   "betrayal",
+   "enemies",
+   "trust",
+   "fake friends",
+   "backstabbing"
+  ],
+  "situations": [
+   "My friend betrayed my trust",
+   "Should I trust someone who hurt me before?",
+   "My ex wants to be friends again",
+   "A rival is suddenly being nice to me",
+   "I keep trusting people who betray me"
+  ]
+ },
+ {
+  "no": 109,
+  "letter": "ஓ",
+  "tamil": "ஓரம் சொல்லேல்",
+  "translit": "oram sollel",
+  "tamil_meaning": "நம்மைச் சுற்றி உள்ளவர்களைப் பற்றி பிறரிடம் குறை சொல்லக் கூடாது அடுத்தவரைப் பற்றிப் புறம் (தவறாகப்) பேசக் கூடாது எந்த வழக்கிலும் ஒருபுடைச் சார்பாகப் பேசாமல் நடுநிலையுடன் பேசு. திருக்குறள் அதிகாரம் 19 - புறங்கூறாமை",
+  "source_english": "Be impartial in your judgement.",
+  "literal": "Do not speak partially (take sides unfairly).",
+  "meaning": "Be impartial; do not take sides unfairly or speak ill behind people's backs.",
+  "themes": [
+   "fairness",
+   "impartiality",
+   "favouritism",
+   "bias",
+   "backbiting",
+   "judging"
+  ],
+  "situations": [
+   "As a team lead I favour my friends",
+   "My parents always take my brother's side",
+   "I have to settle a dispute between two friends",
+   "I talk behind my friends' backs",
+   "How do I judge fairly?"
+  ]
+ }
+]

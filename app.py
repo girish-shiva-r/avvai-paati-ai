@@ -1,8 +1,7 @@
-import streamlit as st
+"""Streamlit UI for Avvaiyar Paatti. Set API_URL to use the hosted backend; leave empty to run the engine in-process."""
+import io, json, os, time
 import requests
-import time
-from gtts import gTTS
-import io
+import streamlit as st
 
 # ── Page config ──────────────────────────────────────────────────
 st.set_page_config(
@@ -271,151 +270,146 @@ st.markdown("""
 </script>
 """, unsafe_allow_html=True)
 
-# ── Backend URLs ──────────────────────────────────────────────────
-API_URL_TEXT = st.secrets.get("API_URL", "https://GSR-608001-avvaiyar-brain.hf.space/chat")
-API_URL_AUDIO = API_URL_TEXT.replace("/chat", "/chat_audio")
+st.markdown("""
+<style>
+.verse-card{background:linear-gradient(135deg,#7A3B00,#A0522D);color:#FFF3DC;border-radius:14px;
+  padding:.9rem 1.1rem;margin:.2rem 0 .7rem 0;border:1px solid #C47A2B}
+.verse-card .vno{font-size:.75rem;letter-spacing:.08em;text-transform:uppercase;opacity:.85}
+.verse-card .ta{font-family:'Noto Serif Tamil','Noto Serif',serif;font-size:1.35rem;font-weight:700;margin:.15rem 0}
+.verse-card .tr{font-style:italic;opacity:.92}
+.verse-card .lit{font-size:.9rem;margin-top:.3rem;opacity:.95}
+</style>""", unsafe_allow_html=True)
 
-def play_paatti_voice(text):
-    """Synthesizes text and plays audio natively in Streamlit."""
+
+def _secret(name, default=None):
     try:
-        # 'co.in' provides a natural Indian English cadence ideal for Tamil/English mixes
-        tts = gTTS(text=text, lang='en', tld='co.in') 
-        audio_fp = io.BytesIO()
-        tts.write_to_fp(audio_fp)
-        audio_fp.seek(0)
-        st.audio(audio_fp, format='audio/mp3', autoplay=True)
-    except Exception as e:
-        st.error(f"Failed to generate voice: {e}")
+        return st.secrets.get(name, os.getenv(name, default))
+    except Exception:
+        return os.getenv(name, default)
 
-# ── Header ────────────────────────────────────────────────────────
+
+API_URL = _secret("API_URL")  # e.g. https://GSR-608001-avvaiyar-brain.hf.space  (empty -> run engine in-process)
+for k in ("GOOGLE_API_KEY", "PAATTI_EMBEDDER", "PAATTI_LLM", "PAATTI_LLM_FALLBACK", "PAATTI_THINKING_LEVEL"):
+    if _secret(k) and not os.getenv(k):
+        os.environ[k] = _secret(k)
+
+
+@st.cache_resource(show_spinner="Paatti is waking up…")
+def local_bot():
+    from paatti import Paatti
+    return Paatti()
+
+
+def ask(query, history, audio=None):
+    hist = [{"role": m["role"], "content": m["content"], "verse_no": m.get("verse_no")} for m in history
+            if m.get("role") in ("user", "assistant")]
+    if API_URL:
+        base = API_URL.rstrip("/").removesuffix("/chat")
+        if audio is not None:
+            r = requests.post(f"{base}/chat_audio", files={"file": (audio.name, audio.getvalue(), "audio/wav")},
+                              data={"history": json.dumps(hist)}, timeout=90)
+        else:
+            r = requests.post(f"{base}/chat", json={"query": query, "history": hist}, timeout=90)
+        if r.status_code == 503:
+            raise RuntimeError("Paatti is waking up — please send again in a few seconds 🙏")
+        r.raise_for_status()
+        return r.json()
+    bot = local_bot()
+    if audio is not None:
+        text = bot.llm.transcribe(audio.getvalue(), "audio/wav")
+        out = bot.answer(text, hist); out["transcribed_text"] = text
+        return out
+    return bot.answer(query, hist)
+
+
+def verse_card_html(v):
+    return (f"<div class='verse-card'><div class='vno'>Aathichoodi · {v['no']}</div>"
+            f"<div class='ta'>{v['tamil']}</div><div class='tr'>{v['translit']}</div>"
+            f"<div class='lit'>“{v['literal']}”</div></div>")
+
+
+def speak(text):
+    try:
+        from gtts import gTTS
+        fp = io.BytesIO(); gTTS(text=text, lang="en", tld="co.in").write_to_fp(fp); fp.seek(0)
+        st.audio(fp, format="audio/mp3", autoplay=True)
+    except Exception as e:
+        st.caption(f"(voice unavailable: {e})")
+
+
+# ── Header ──
 st.markdown("""
 <div class="paatti-header">
     <h1>👵 Avvaiyar Paatti AI</h1>
     <div class="tamil-sub">ஔவையார் பாட்டி</div>
     <div class="tagline">Ancient Tamil wisdom for modern life — ask me anything</div>
-</div>
-""", unsafe_allow_html=True)
-
+</div>""", unsafe_allow_html=True)
 st.divider()
 
-# ── Sidebar ───────────────────────────────────────────────────────
+# ── Sidebar ──
 with st.sidebar:
-    st.markdown("<h3 style='color:#7A3B00; font-size:1rem; margin-bottom:0.5rem;'>💬 Ask Paatti about...</h3>", unsafe_allow_html=True)
-    examples = [
-        "I keep procrastinating my work",
-        "My friend betrayed my trust",
-        "I am losing motivation to study",
-        "How do I deal with an arrogant person?",
-        "I want to succeed but feel lost",
-        "I feel lazy and unmotivated",
-        "I get angry very easily",
-        "I lied to someone I care about",
-        "I feel jealous of others' success",
-        "I never appreciate what I have",
-    ]
-    for ex in examples:
+    st.markdown("<h3 style='color:#7A3B00;font-size:1rem;margin-bottom:.5rem;'>💬 Ask Paatti about...</h3>", unsafe_allow_html=True)
+    for ex in ["I keep procrastinating my work", "My friend betrayed my trust", "I am losing motivation to study",
+               "I get angry very easily", "I spend my whole salary every month", "I feel jealous of others' success",
+               "enakku romba kovam varudhu", "What does verse 54 mean?"]:
         if st.button(ex, key=ex, use_container_width=True):
             st.session_state["prefill"] = ex
-
     st.divider()
-    st.markdown("""
-    <div style='font-size:0.78rem; color:#5A3000; line-height:1.6;'>
-    <b>About</b><br>
-    Avvaiyar Paatti gives life advice rooted in the 2,000-year-old Tamil text <i>Aathichoodi</i> by poet Avvaiyar.<br><br>
-    <b>Stack</b><br>
-    Fine-tuned Embeddings · FAISS · Gemini 2.0 Flash · FastAPI · Streamlit
-    </div>
-    """, unsafe_allow_html=True)
-
+    voice_on = st.toggle("🔊 Paatti's voice", value=False)
+    show_debug = st.toggle("🔎 Show retrieval details", value=False)
+    st.markdown("""<div style='font-size:.78rem;color:#5A3000;line-height:1.6;'><b>About</b><br>
+    Life advice rooted in the <i>Aathichoodi</i> of Avvaiyar (109 verses).<br><br>
+    <b>Stack</b><br>Curated verse KB · Hybrid BM25 + embeddings · Gemini · FastAPI · Streamlit</div>""",
+                unsafe_allow_html=True)
     st.divider()
     if st.button("🗑️ Clear chat", use_container_width=True):
         st.session_state.messages = []
         st.rerun()
 
-# ── Chat history ──────────────────────────────────────────────────
+# ── History ──
 if "messages" not in st.session_state:
     st.session_state.messages = []
-    st.session_state.messages.append({
-        "role": "assistant",
-        "content": "வணக்கம் Kanna! 🙏\n\nI am Avvaiyar Paatti. \n\nThe ancient wisdom of Aathichoodi has guided hearts for 2,000 years. What is on your mind today?"
-    })
+if not st.session_state.messages:
+    with st.chat_message("assistant", avatar="👵"):
+        st.markdown("வணக்கம் Kanna! 🙏\n\nI am Avvaiyar Paatti. Tell me what is on your mind, "
+                    "in English, தமிழ், or Tanglish, and I will share a verse of Aathichoodi to guide you.")
 
-for msg in st.session_state.messages:
-    avatar = "👵" if msg["role"] == "assistant" else "🧑"
-    with st.chat_message(msg["role"], avatar=avatar):
-        st.markdown(msg["content"])
+for m in st.session_state.messages:
+    with st.chat_message(m["role"], avatar="👵" if m["role"] == "assistant" else "🧑"):
+        if m.get("verse"):
+            st.markdown(verse_card_html(m["verse"]), unsafe_allow_html=True)
+        st.markdown(m["content"])
 
-# ── Handle sidebar button prefill ────────────────────────────────
 prefill = st.session_state.pop("prefill", None)
+audio_value = st.audio_input("🎙️ Speak to Paatti")
+user_input = st.chat_input("Type to Paatti…") or prefill
 
-# ── Chat & Audio Input ────────────────────────────────────────────
-# Place the audio input above the chat input box
-audio_value = st.audio_input("🎙️ Speak your mind to Paatti...")
-user_input = st.chat_input("...Or type to Paatti") or prefill
-
-if user_input:
-    st.session_state.messages.append({"role": "user", "content": user_input})
+if user_input or audio_value:
+    if audio_value and st.session_state.get("last_audio") == audio_value.getvalue()[:2048] and not user_input:
+        st.stop()  # don't resend the same recording on rerun
+    shown = user_input or "🎤 (voice message)"
     with st.chat_message("user", avatar="🧑"):
-        st.markdown(user_input)
-
+        st.markdown(shown)
     with st.chat_message("assistant", avatar="👵"):
-        placeholder = st.empty()
-        with st.spinner("Paatti is thinking... 🤔"):
+        with st.spinner("Paatti is thinking… 🌿"):
             try:
-                resp = requests.post(API_URL_TEXT, json={"query": user_input}, timeout=60)
-                if resp.status_code == 200:
-                    bot_text = resp.json().get("response", "")
-                    displayed = ""
-                    for word in bot_text.split():
-                        displayed += word + " "
-                        placeholder.markdown(displayed + "▌")
-                        time.sleep(0.03)
-                    placeholder.markdown(displayed.strip())
-
-                    st.session_state.messages.append({"role": "assistant", "content": displayed.strip()})
-                    play_paatti_voice(displayed.strip())
-
-                elif resp.status_code == 503:
-                    placeholder.warning("Paatti is waking up — please send your message again in a few seconds 🙏")
-                else:
-                    placeholder.error(f"Something went wrong (error {resp.status_code}). Please try again.")
+                out = ask(user_input, st.session_state.messages, None if user_input else audio_value)
             except Exception as e:
-                placeholder.error(f"Unexpected error: {str(e)}")
-
-elif audio_value:
-    st.session_state.messages.append({"role": "user", "content": "🎤 *(Audio Message sent to Paatti)*"})
-    with st.chat_message("user", avatar="🧑"):
-        st.markdown("🎤 *(Audio Message sent to Paatti)*")
-        st.audio(audio_value)
-        
-    with st.chat_message("assistant", avatar="👵"):
-        placeholder = st.empty()
-        transcription_placeholder = st.empty()
-        
-        with st.spinner("Paatti is listening to you... 🎧"):
-            try:
-                files = {"file": (audio_value.name, audio_value.getvalue(), "audio/wav")}
-                resp = requests.post(API_URL_AUDIO, files=files, timeout=60)
-                
-                if resp.status_code == 200:
-                    data = resp.json()
-                    bot_text = data.get("response", "")
-                    user_transcription = data.get("transcribed_text", "")
-                    
-                    if user_transcription:
-                        transcription_placeholder.caption(f"*Paatti heard: {user_transcription}*")
-                        st.session_state.messages[-1]["content"] += f"\n\n*Transcribed: {user_transcription}*"
-                        
-                    displayed = ""
-                    for word in bot_text.split():
-                        displayed += word + " "
-                        placeholder.markdown(displayed + "▌")
-                        time.sleep(0.03)
-                    placeholder.markdown(displayed.strip())
-                    
-                    st.session_state.messages.append({"role": "assistant", "content": displayed.strip()})
-                    play_paatti_voice(displayed.strip())
-                else:
-                    placeholder.error(f"Error {resp.status_code}: Paatti couldn't hear clearly.")
-            except Exception as e:
-                placeholder.error(f"Unexpected error: {str(e)}")
+                st.error(str(e)); st.stop()
+        if not user_input:
+            st.session_state["last_audio"] = audio_value.getvalue()[:2048]
+            shown = f"🎤 *{out.get('transcribed_text', '')}*"
+        if out.get("verse"):
+            st.markdown(verse_card_html(out["verse"]), unsafe_allow_html=True)
+        placeholder, typed = st.empty(), ""
+        for w in out["response"].split(" "):
+            typed += w + " "; placeholder.markdown(typed + "▌"); time.sleep(0.015)
+        placeholder.markdown(out["response"])
+        if show_debug:
+            st.caption(f"intent={out.get('intent')} · verse={out.get('verse_no')} · candidates={out.get('candidates')} "
+                       f"· {out.get('latency')}s · {out.get('reason', '')}")
+        if voice_on:
+            speak(out["response"])
+    st.session_state.messages.append({"role": "user", "content": shown.replace("🎤 ", "").strip("*") if not user_input else shown})
+    st.session_state.messages.append({"role": "assistant", "content": out["response"], "verse": out.get("verse"),
+                                      "verse_no": out.get("verse_no")})

@@ -1,0 +1,115 @@
+"""Avvaiyar Paatti engine: safety -> lookup -> hybrid retrieval -> LLM selection+answer -> validation."""
+from __future__ import annotations
+import logging, os, time
+from typing import Optional
+
+from .kb import KnowledgeBase
+from .llm import LLM, PaattiReply, make_llm
+from .retrieval import HybridRetriever, make_embedder
+from .safety import CRISIS_RESPONSE, is_crisis
+
+log = logging.getLogger("paatti")
+
+SYSTEM = """You are Avvaiyar Paatti (ஔவையார் பாட்டி), the beloved Tamil poet Avvaiyar speaking as a warm, wise grandmother.
+You guide your grandchild using ONLY the 109 verses of Aathichoodi (ஆத்திசூடி).
+
+How to answer:
+1. Decide the intent:
+   - "advice": the grandchild shares a problem, feeling, dilemma or question about life.
+   - "lookup": they ask what a specific verse means (a forced verse may be given to you).
+   - "smalltalk": greetings, thanks, or chit-chat with no problem yet.
+   - "offtopic": requests unrelated to life guidance (code, news, weather, trivia).
+2. For advice, pick the ONE verse whose teaching most directly addresses the root of their situation.
+   Read the CANDIDATE VERSES first (retrieved for this message); you may pick any verse from the FULL LIST
+   if it fits clearly better. Think about the underlying issue (e.g. "my friend shared my secret" is about
+   trusting the wrong people, not about speech). If they ask for "another verse", choose a different one
+   from the ones already used in this conversation.
+3. Write "response" as Paatti:
+   - Address them as "Kanna" or "en chellame". Acknowledge their specific situation in one line.
+   - Explain what the verse teaches in simple words, faithful to its meaning (never invent meanings).
+     Refer to it by its transliteration (e.g. "Aaruvadhu sinam"); do NOT write the Tamil script verse text,
+     the app displays the verse card above your words.
+   - Give 1-2 concrete, practical steps for today. End with one short, loving line.
+   - 4-7 sentences. Warm, simple, not preachy. At most 2 emojis.
+   - Reply in the grandchild's language and style: English -> English; Tamil script -> Tamil;
+     Tanglish (Tamil in Latin letters) -> simple Tanglish/English mix.
+   - For serious medical, legal, financial or safety matters, also gently suggest talking to a doctor,
+     counsellor, lawyer or trusted elder.
+4. For "smalltalk": greet warmly, invite them to share what is on their mind; verse_no may be null.
+   For "offtopic": kindly say Paatti only shares Aathichoodi's wisdom for life, and invite a life question; verse_no null.
+5. "reason": one short sentence on why this verse fits (for logging, not shown to the user).
+Return JSON only."""
+
+
+class Paatti:
+    def __init__(self, kb: Optional[KnowledgeBase] = None, llm: Optional[LLM] = None,
+                 embedder_spec: Optional[str] = None, k: int = 8, history_turns: int = 6):
+        self.kb = kb or KnowledgeBase()
+        self.llm = llm or make_llm()
+        spec = embedder_spec if embedder_spec is not None else os.getenv("PAATTI_EMBEDDER", "mpnet-ml")
+        try:
+            emb = make_embedder(spec)
+        except Exception as e:  # never fail startup because of embeddings: BM25 still works
+            log.warning("embedder %s unavailable (%s); using BM25 only", spec, e)
+            emb = None
+        self.retriever = HybridRetriever(self.kb, emb)
+        self.k, self.history_turns = k, history_turns
+        self.full_list = "\n".join(v.compact() for v in self.kb.verses)
+
+    # ----------------------------------------------------------
+    def _retrieval_query(self, query: str, history: list[dict]) -> str:
+        prev = [t["content"] for t in history if t["role"] == "user"][-1:]
+        if prev and len(query.split()) < 8:  # short follow-ups need context
+            return prev[0] + " " + query
+        return query
+
+    def answer(self, query: str, history: Optional[list[dict]] = None) -> dict:
+        t0 = time.time()
+        history = (history or [])[-2 * self.history_turns:]
+        query = (query or "").strip()
+        if not query:
+            return {"response": "Kanna, tell Paatti what is on your mind.", "verse": None, "intent": "smalltalk"}
+
+        if is_crisis(query):
+            return {"response": CRISIS_RESPONSE, "verse": None, "intent": "crisis", "latency": time.time() - t0}
+
+        forced = self.kb.lookup(query)
+        try:
+            hits = self.retriever.search(self._retrieval_query(query, history), k=self.k)
+        except Exception as e:
+            log.warning("retrieval failed: %s", e)
+            hits = []
+        cand_nos = [n for n, _ in hits]
+        if forced and forced not in cand_nos:
+            cand_nos = [forced] + cand_nos
+        used = [t.get("verse_no") for t in history if t.get("verse_no")]
+
+        user_block = (
+            (f"FORCED VERSE (the user is asking about this exact verse; intent=lookup, verse_no={forced}).\n\n" if forced else "")
+            + "CANDIDATE VERSES (retrieved, best first):\n"
+            + "\n".join(self.kb.get(n).prompt_block() for n in cand_nos)
+            + f"\n\nFULL LIST OF 109 VERSES:\n{self.full_list}\n\n"
+            + (f"Verses already used in this conversation: {used}\n\n" if used else "")
+            + f"GRANDCHILD'S MESSAGE:\n{query}"
+        )
+        turns = [{"role": t["role"], "content": t["content"]} for t in history] + [{"role": "user", "content": user_block}]
+
+        try:
+            rep: PaattiReply = self.llm.reply(SYSTEM, turns)
+        except Exception as e:
+            log.exception("LLM failed")
+            v = self.kb.get(forced or (cand_nos[0] if cand_nos else 1))
+            return {"response": f"Kanna, Paatti is a little tired right now, but remember this: {v.meaning}",
+                    "verse": v.card(), "verse_no": v.no, "intent": "fallback", "error": str(e)[:300],
+                    "candidates": cand_nos, "latency": time.time() - t0}
+
+        # ---- validation: verse text always comes from the KB, never from the LLM ----
+        vno = forced if forced else rep.verse_no
+        if rep.intent in ("advice", "lookup") and (vno is None or self.kb.get(vno) is None):
+            vno = cand_nos[0] if cand_nos else None
+        if rep.intent in ("smalltalk", "offtopic") and not forced:
+            vno = None
+        verse = self.kb.get(vno) if vno else None
+        return {"response": rep.response.strip(), "verse": verse.card() if verse else None,
+                "verse_no": vno, "intent": "lookup" if forced else rep.intent, "reason": rep.reason,
+                "candidates": cand_nos, "latency": round(time.time() - t0, 2)}

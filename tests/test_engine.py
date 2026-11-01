@@ -1,0 +1,342 @@
+"""Offline tests (no API keys needed): python -m pytest -q"""
+import sys
+from pathlib import Path
+sys.path.insert(0, str(Path(__file__).resolve().parent.parent))
+
+import pytest
+from paatti import KnowledgeBase, Paatti
+from paatti.llm import LLM, MockLLM, PaattiReply
+from paatti.safety import is_crisis
+
+KB = KnowledgeBase()
+
+
+def test_kb_complete():
+    assert len(KB) == 109 and [v.no for v in KB.verses] == list(range(1, 110))
+    assert all(v.situations and v.meaning for v in KB.verses)
+
+
+@pytest.mark.parametrize("q,n", [
+    ("What does verse 54 mean?", 54), ("Explain ஆறுவது சினம்", 2), ("meaning of nandri maravel", 21),
+    ("tell me the 100th aathichoodi", 100), ("what is the last verse", 109), ("ஓதுவது ஒழியேல் meaning", 11),
+])
+def test_lookup(q, n):
+    assert KB.lookup(q) == n
+
+
+@pytest.mark.parametrize("q", ["I get angry easily", "hi paatti", "my friend cheated me", "I lost 5 kg"])
+def test_no_false_lookup(q):
+    assert KB.lookup(q) is None
+
+
+def test_crisis():
+    assert is_crisis("I don't want to live anymore") and is_crisis("thinking of suicide")
+    assert not is_crisis("I want to live a better life")
+
+
+class BadLLM(LLM):
+    """Returns a hallucinated verse number to check validation."""
+    name = "bad"
+    def reply(self, system, turns):
+        return PaattiReply(intent="advice", verse_no=999, response="Kanna...")
+
+
+class OfftopicLLM(LLM):
+    name = "off"
+    def reply(self, system, turns):
+        return PaattiReply(intent="offtopic", verse_no=5, response="Kanna, Paatti only knows life wisdom.")
+
+
+def test_pipeline_mock():
+    bot = Paatti(llm=MockLLM(), embedder_spec="none")
+    o = bot.answer("I keep procrastinating and postponing my work")
+    assert o["verse"]["no"] == o["verse_no"] and o["verse"]["tamil"] == KB.get(o["verse_no"]).tamil
+    assert o["verse_no"] in o["candidates"]
+
+
+def test_crisis_short_circuits():
+    o = Paatti(llm=BadLLM(), embedder_spec="none").answer("I want to die")
+    assert o["intent"] == "crisis" and o["verse"] is None and "14416" in o["response"]
+
+
+def test_hallucinated_verse_is_replaced():
+    o = Paatti(llm=BadLLM(), embedder_spec="none").answer("I get angry very easily")
+    assert KB.get(o["verse_no"]) is not None
+
+
+def test_offtopic_has_no_verse():
+    o = Paatti(llm=OfftopicLLM(), embedder_spec="none").answer("write bubble sort in python")
+    assert o["verse"] is None
+
+
+def test_lookup_forces_verse():
+    o = Paatti(llm=OfftopicLLM(), embedder_spec="none").answer("What does verse 54 mean?")
+    assert o["verse_no"] == 54 and o["intent"] == "lookup"
+
+
+def test_llm_failure_falls_back():
+    class Boom(LLM):
+        def reply(self, s, t): raise RuntimeError("quota")
+    o = Paatti(llm=Boom(), embedder_spec="none").answer("I am lazy")
+    assert o["intent"] == "fallback" and o["verse"]
+
+
+def test_api():
+    from fastapi.testclient import TestClient
+    import os
+    os.environ["PAATTI_LLM_PROVIDER"] = "mock"; os.environ["PAATTI_EMBEDDER"] = "none"
+    import api
+    with TestClient(api.app) as c:
+        assert c.get("/health").json()["status"] == "ok"
+        r = c.post("/chat", json={"query": "I spend all my salary", "history": [
+            {"role": "user", "content": "hi"}, {"role": "assistant", "content": "hello kanna", "verse_no": None}]})
+        assert r.status_code == 200 and r.json()["verse"]
+        assert c.get("/verse/2").json()["tamil"] == "ஆறுவது சினம்"
+        assert c.get("/verse/500").status_code == 404
+
+
+def test_registry_prompts_applied(monkeypatch):
+    """STEmbedder must prepend the registry's query/doc prompts (no network: fake SentenceTransformer)."""
+    import types, numpy as np
+    seen = {}
+    class FakeST:
+        def __init__(self, mid, **kw): seen["id"], seen["remote"] = mid, kw.get("trust_remote_code")
+        def get_sentence_embedding_dimension(self): return 4
+        def encode(self, texts, **kw):
+            seen.setdefault("texts", []).extend(texts); return np.ones((len(texts), 4))
+    monkeypatch.setitem(sys.modules, "sentence_transformers", types.SimpleNamespace(SentenceTransformer=FakeST))
+    from paatti.retrieval import make_embedder
+    e = make_embedder("e5-large"); e.encode(["hi"], True); e.encode(["doc"], False)
+    assert seen["id"] == "intfloat/multilingual-e5-large" and seen["texts"] == ["query: hi", "passage: doc"]
+    seen.clear(); e = make_embedder("qwen3-0.6b"); e.encode(["x"], True); e.encode(["y"], False)
+    assert seen["texts"][0].startswith("Instruct: ") and seen["texts"][1] == "y"
+    seen.clear(); make_embedder("gte-ml"); assert seen["remote"] is True
+
+
+def test_no_finetuned_models_in_registry():
+    from paatti.embedders import MODELS
+    assert not any(m["id"].startswith("GSR-608001/") for m in MODELS.values())
+
+
+class _FakeEmb:
+    """Deterministic bag-of-words embedder for offline tests."""
+    name = "fake"
+    def encode(self, texts, is_query):
+        import hashlib, numpy as np
+        from paatti.retrieval import tokenize
+        v = np.zeros((len(texts), 256), dtype=np.float32)
+        for i, t in enumerate(texts):
+            for w in tokenize(t) or ["_empty_"]:
+                v[i, int(hashlib.md5(w.encode()).hexdigest(), 16) % 256] += 1
+        return v / np.linalg.norm(v, axis=1, keepdims=True)
+
+
+def test_dense_only_by_default(tmp_path):
+    from paatti.retrieval import HybridRetriever
+    r = HybridRetriever(KB, _FakeEmb(), cache_dir=tmp_path)
+    assert r.bm25 is None and r.bm25_weight == 0
+    r2 = HybridRetriever(KB, _FakeEmb(), cache_dir=tmp_path, bm25_weight=0.3)
+    assert r2.bm25 is not None and r2.search("I get angry", k=3)
+
+
+def test_bm25_skipped_when_no_keyword_overlap(tmp_path):
+    """Tamil-script query: BM25 scores are all zero, so fusion must equal dense-only ranking."""
+    from paatti.retrieval import HybridRetriever
+    q = "என் நண்பன் என்னை ஏமாற்றிவிட்டான்"
+    dense = [n for n, _ in HybridRetriever(KB, _FakeEmb(), cache_dir=tmp_path, use_bm25=False).search(q, k=10)]
+    fused = [n for n, _ in HybridRetriever(KB, _FakeEmb(), cache_dir=tmp_path, bm25_weight=1.0).search(q, k=10)]
+    assert dense == fused
+
+
+def test_keyword_only_without_embedder():
+    from paatti.retrieval import HybridRetriever
+    r = HybridRetriever(KB, None)
+    assert r.search("I spend my whole salary on shopping", k=5)
+    assert r.search("என் நண்பன்", k=5)  # no overlap still returns something
+
+
+def test_api_key_read_from_dotenv(tmp_path, monkeypatch):
+    import paatti.retrieval as R
+    for k in R._KEY_NAMES:
+        monkeypatch.delenv(k, raising=False)
+    (tmp_path / ".env").write_text('GOOGLE_API_KEY = "abc123"\n')
+    monkeypatch.chdir(tmp_path)
+    monkeypatch.setattr(R, "__file__", str(tmp_path / "x" / "paatti" / "retrieval.py"))  # project .env absent
+    assert R._api_key() == "abc123"
+
+
+def _fake_gemini(monkeypatch, behaviour):
+    """GeminiLLM with a fake client. behaviour(config) -> response or raises."""
+    from types import SimpleNamespace
+    from google.genai import errors
+    import paatti.llm as L
+    calls = []
+    class Models:
+        def generate_content(self, model, contents, config):
+            calls.append(config)
+            return behaviour(config, errors, SimpleNamespace)
+    monkeypatch.setenv("GOOGLE_API_KEY", "x")
+    monkeypatch.setattr("google.genai.Client", lambda api_key, **kw: SimpleNamespace(models=Models()))
+    monkeypatch.setattr("time.sleep", lambda s: None)
+    return L.GeminiLLM(), calls
+
+
+def test_gemini3_config_no_temperature(monkeypatch):
+    pytest.importorskip("google.genai")
+    def ok(cfg, errors, NS):
+        return NS(parsed=PaattiReply(intent="advice", verse_no=2, response="Kanna"), text="")
+    llm, calls = _fake_gemini(monkeypatch, ok)
+    assert llm.model == "gemini-3.5-flash-lite"
+    r = llm.reply("sys", [{"role": "user", "content": "angry"}])
+    assert r.verse_no == 2
+    cfg = calls[0]
+    assert cfg.temperature is None and cfg.thinking_config.thinking_level is not None
+    assert cfg.thinking_config.thinking_budget is None and cfg.response_schema is not None
+
+
+def test_schema_rejected_falls_back_to_json(monkeypatch):
+    pytest.importorskip("google.genai")
+    def beh(cfg, errors, NS):
+        if cfg.response_schema is not None:
+            raise errors.ClientError(400, {"error": {"code": 400, "message": "schema unsupported", "status": "INVALID_ARGUMENT"}})
+        return NS(parsed=None, text='{"intent":"advice","verse_no":54,"reason":"r","response":"Kanna"}')
+    llm, calls = _fake_gemini(monkeypatch, beh)
+    assert llm.reply("sys", [{"role": "user", "content": "lazy"}]).verse_no == 54
+    assert llm._schema_ok is False and calls[1].response_mime_type == "application/json"
+
+
+def test_model_404_gives_clear_error(monkeypatch):
+    pytest.importorskip("google.genai")
+    def beh(cfg, errors, NS):
+        raise errors.ClientError(404, {"error": {"code": 404, "message": "no longer available", "status": "NOT_FOUND"}})
+    llm, _ = _fake_gemini(monkeypatch, beh)
+    with pytest.raises(RuntimeError, match="PAATTI_LLM"):
+        llm.reply("sys", [{"role": "user", "content": "x"}])
+
+
+def test_503_is_retried_then_succeeds(monkeypatch):
+    pytest.importorskip("google.genai")
+    n = {"c": 0}
+    def beh(cfg, errors, NS):
+        n["c"] += 1
+        if n["c"] < 3:
+            raise errors.ServerError(503, {"error": {"code": 503, "message": "high demand", "status": "UNAVAILABLE"}})
+        return NS(parsed=PaattiReply(intent="advice", verse_no=6, response="Kanna"), text="")
+    llm, calls = _fake_gemini(monkeypatch, beh)
+    assert llm.reply("s", [{"role": "user", "content": "x"}]).verse_no == 6 and n["c"] == 3
+
+
+def test_503_exhausted_uses_fallback_model(monkeypatch):
+    pytest.importorskip("google.genai")
+    monkeypatch.setenv("PAATTI_LLM_FALLBACK", "gemini-backup")
+    monkeypatch.setenv("PAATTI_LLM_RETRIES", "1")
+    from types import SimpleNamespace
+    from google.genai import errors
+    import paatti.llm as L
+    used = []
+    class Models:
+        def generate_content(self, model, contents, config):
+            used.append(model)
+            if model != "gemini-backup":
+                raise errors.ServerError(503, {"error": {"code": 503, "message": "busy", "status": "UNAVAILABLE"}})
+            return SimpleNamespace(parsed=PaattiReply(intent="advice", verse_no=2, response="k"), text="")
+    monkeypatch.setenv("GOOGLE_API_KEY", "x")
+    monkeypatch.setattr("google.genai.Client", lambda api_key, **kw: SimpleNamespace(models=Models()))
+    monkeypatch.setattr("time.sleep", lambda s: None)
+    assert L.GeminiLLM().reply("s", [{"role": "user", "content": "x"}]).verse_no == 2
+    assert used == ["gemini-3.5-flash-lite", "gemini-3.5-flash-lite", "gemini-backup"]
+
+
+def test_eval_resume_retries_failed_rows(tmp_path, monkeypatch):
+    import json as _j, argparse
+    sys.path.insert(0, str(Path(__file__).resolve().parent.parent / "eval"))
+    import run_eval as R
+    monkeypatch.setattr(R, "EVAL", R.EVAL[:3])
+    out = tmp_path / "res.jsonl"
+    # row 0 done, row 1 failed earlier -> should be rerun along with row 2
+    out.write_text(_j.dumps({"id": 0, "intent": "advice", "verse_no": 2, "type": "advice", "correct": True}) + "\n"
+                   + _j.dumps({"id": 1, "intent": "fallback", "verse_no": 5, "type": "advice", "correct": False}) + "\n")
+    a = argparse.Namespace(llm="mock", embedder="none", judge=False, judge_llm="same", rpm=0, limit=0, resume=str(out), sleep=0)
+    R.cmd_pipeline(a)
+    lines = [_j.loads(l) for l in out.read_text().splitlines()]
+    assert [l["id"] for l in lines] == [0, 1, 1, 2]
+
+
+_DAILY = {"error": {"code": 429, "message": "Quota exceeded ... requests per day ... Please retry in 12h16m31s.",
+                    "status": "RESOURCE_EXHAUSTED", "details": [{"retryDelay": "44191s"}]}}
+
+
+def test_daily_quota_stops_without_retrying(monkeypatch):
+    pytest.importorskip("google.genai")
+    from paatti.llm import DailyQuotaExceeded
+    n = {"c": 0}
+    def beh(cfg, errors, NS):
+        n["c"] += 1
+        raise errors.ClientError(429, _DAILY)
+    llm, _ = _fake_gemini(monkeypatch, beh)
+    with pytest.raises(DailyQuotaExceeded):
+        llm.reply("s", [{"role": "user", "content": "x"}])
+    assert n["c"] == 1
+
+
+def test_thinking_rejected_is_dropped(monkeypatch):
+    pytest.importorskip("google.genai")
+    def beh(cfg, errors, NS):
+        if cfg.thinking_config is not None:
+            raise errors.ClientError(400, {"error": {"code": 400, "message": "thinking_level is not supported", "status": "INVALID_ARGUMENT"}})
+        return NS(parsed=PaattiReply(intent="advice", verse_no=7, response="k"), text="")
+    llm, calls = _fake_gemini(monkeypatch, beh)
+    assert llm.reply("s", [{"role": "user", "content": "x"}]).verse_no == 7 and llm._thinking_ok is False
+
+
+def test_eval_stops_cleanly_on_daily_quota(tmp_path, monkeypatch, capsys):
+    import argparse
+    sys.path.insert(0, str(Path(__file__).resolve().parent.parent / "eval"))
+    import run_eval as R
+    from paatti.llm import MockLLM
+    class QuotaAfterOne(MockLLM):
+        n = 0
+        def reply(self, system, turns):
+            QuotaAfterOne.n += 1
+            if QuotaAfterOne.n > 2:  # preflight + first query succeed
+                from paatti.llm import DailyQuotaExceeded
+                raise DailyQuotaExceeded("Daily free-tier quota used up for m.")
+            return super().reply(system, turns)
+    monkeypatch.setattr("paatti.llm.make_llm", lambda spec=None: QuotaAfterOne())
+    monkeypatch.setattr(R, "EVAL", R.EVAL[:5])
+    out = tmp_path / "r.jsonl"
+    R.cmd_pipeline(argparse.Namespace(llm="mock", embedder="none", judge=False, judge_llm="same", rpm=0,
+                                      limit=0, resume=str(out), sleep=0))
+    assert len(out.read_text().splitlines()) == 1 and "--resume" in capsys.readouterr().out
+
+
+def test_throttle_spaces_requests(monkeypatch):
+    pytest.importorskip("google.genai")
+    monkeypatch.setenv("PAATTI_LLM_RPM", "6")  # 10 s apart
+    slept = []
+    def ok(cfg, errors, NS):
+        return NS(parsed=PaattiReply(intent="advice", verse_no=1, response="k"), text="")
+    llm, _ = _fake_gemini(monkeypatch, ok)
+    monkeypatch.setattr("time.sleep", lambda s: slept.append(s))
+    llm._last_call.clear()
+    llm.reply("s", [{"role": "user", "content": "a"}]); llm.reply("s", [{"role": "user", "content": "b"}])
+    assert slept and 9 < slept[0] <= 10
+
+
+def test_rejudge_fills_missing_scores(tmp_path, monkeypatch):
+    import json as _j, argparse
+    sys.path.insert(0, str(Path(__file__).resolve().parent.parent / "eval"))
+    import run_eval as R
+    class J:
+        name = "fakejudge"
+        def generate_json(self, prompt):
+            return {"relevance": 5, "faithfulness": 4, "warmth": 5, "actionability": 3}
+    monkeypatch.setattr("paatti.llm.make_llm", lambda spec=None: J())
+    v = KB.get(2).card()
+    rows = [{"id": 0, "type": "advice", "intent": "advice", "verse": v, "verse_no": 2, "correct": True, "query": "q", "response": "r", "judge": None},
+            {"id": 1, "type": "advice", "intent": "advice", "verse": v, "verse_no": 2, "correct": True, "query": "q", "response": "r",
+             "judge": {"relevance": 1, "faithfulness": 1, "warmth": 1, "actionability": 1}}]
+    f = tmp_path / "r.jsonl"; f.write_text("".join(_j.dumps(r) + "\n" for r in rows))
+    R.cmd_rejudge(argparse.Namespace(file=str(f), judge_llm="x", rpm=0))
+    out = [_j.loads(l) for l in f.read_text().splitlines()]
+    assert out[0]["judge"]["faithfulness"] == 4 and out[1]["judge"]["relevance"] == 1
